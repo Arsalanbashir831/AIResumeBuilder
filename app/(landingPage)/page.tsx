@@ -362,7 +362,7 @@ const LandingPage = () => {
 						</h2>
 						<p className='text-gray-600 mb-8 text-base sm:text-lg'>
 							Nike, Apple, Facebook — learn from resumes that helped our
-							customers land jobs with the world's top companies. Browse
+							customers land jobs with the world&apos;s top companies. Browse
 							profession-specific guides that will help you write an excellent
 							resume and cover letter no matter what. All this knowledge works
 							wonders when used in combination with our AI Resume Writer. After
