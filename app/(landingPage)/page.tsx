@@ -142,6 +142,7 @@ const LandingPage = () => {
 							className='rounded-lg'
 							width={600}
 							height={400}
+							unoptimized={true}
 						/>
 					</div>
 

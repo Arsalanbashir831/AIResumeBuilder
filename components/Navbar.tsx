@@ -1,12 +1,16 @@
 "use client";
+
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
 const Navbar = () => {
 	const [isScrolled, setIsScrolled] = useState(false);
 	const [showNavbar, setShowNavbar] = useState(true);
 	const [lastScrollY, setLastScrollY] = useState(0);
+
+	const router = useRouter();
 
 	useEffect(() => {
 		const handleScroll = () => {
@@ -44,9 +48,17 @@ const Navbar = () => {
 				</div>
 
 				<div className='flex items-center gap-4'>
-					{/* <Button variant='outline'>Log In</Button> */}
-					{/* <Button>Create My Resume</Button> */}
-					<Button className='px-4 font-medium'>Log In</Button>
+					<Button
+						variant='outline'
+						onClick={() => router.push("/signup")}
+						className='px-4 font-medium'>
+						Sign Up
+					</Button>
+					<Button
+						onClick={() => router.push("/signin")}
+						className='px-4 font-medium'>
+						Sign In
+					</Button>
 				</div>
 			</div>
 		</nav>
