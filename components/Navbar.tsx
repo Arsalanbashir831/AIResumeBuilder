@@ -40,13 +40,13 @@ const Navbar = () => {
 			} ${showNavbar ? "translate-y-0" : "-translate-y-full"}`}>
 			<div className='max-w-7xl mx-auto flex items-center justify-between px-4 py-3'>
 				<div className='flex items-center gap-2'>
-					<Image src='/logo.png' alt='GetSetCV' width={150} height={100} />
+					<Image src='/logo.png' alt='GetSetCV' width={180} height={100} />
 				</div>
 
 				<div className='flex items-center gap-4'>
 					{/* <Button variant='outline'>Log In</Button> */}
 					{/* <Button>Create My Resume</Button> */}
-					<Button className='px-6 py-3 sm:py-4'>Log In</Button>
+					<Button className='px-4 font-medium'>Log In</Button>
 				</div>
 			</div>
 		</nav>

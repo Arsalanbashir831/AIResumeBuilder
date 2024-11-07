@@ -1,4 +1,3 @@
-import React from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import {
@@ -11,6 +10,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Navbar from "@/components/Navbar";
+import AnimatedLogos from "@/components/AnimatedLogos";
 
 const LandingPage = () => {
 	const companies = [
@@ -19,7 +19,6 @@ const LandingPage = () => {
 		{ name: "Amazon", role: "Senior Solution Architect", logo: "amazon" },
 		{ name: "Dell", role: "GCP Program Manager", logo: "dell" },
 		{ name: "Microsoft", role: "Cloud Program Manager", logo: "microsoft" },
-		{ name: "Apple", role: "Customer Support", logo: "apple" },
 	];
 
 	return (
@@ -40,7 +39,7 @@ const LandingPage = () => {
 			<Navbar />
 
 			{/* Hero Section */}
-			<div className='max-w-7xl mx-auto px-4 py-16 md:py-24'>
+			<section className='max-w-7xl mx-auto px-4 py-16 md:py-24'>
 				<div className='grid grid-cols-1 md:grid-cols-2 gap-12 items-center'>
 					<div className='mt-10 md:mt-0'>
 						<span className='text-gray-700 font-medium mb-2 text-sm uppercase tracking-wide'>
@@ -65,20 +64,10 @@ const LandingPage = () => {
 
 						<div className='mt-12'>
 							<p className='text-gray-600 mb-6'>
-								Trusted by 5 million successful job seekers worldwide.
+								Trusted by thousands of job seekers worldwide and still growing.
 							</p>
-							<div className='flex flex-wrap gap-4 items-center'>
-								<Image src='/google.svg' alt='Google' width={70} height={40} />
-								<Image src='/apple.svg' alt='Apple' width={20} height={20} />
-								<Image
-									src='/facebook.svg'
-									alt='Facebook'
-									width={90}
-									height={40}
-								/>
-								<Image src='/nasa.svg' alt='NASA' width={60} height={40} />
-								<Image src='/nike.svg' alt='Nike' width={50} height={40} />
-							</div>
+
+							<AnimatedLogos />
 						</div>
 					</div>
 
@@ -92,9 +81,10 @@ const LandingPage = () => {
 						/>
 					</div>
 				</div>
-			</div>
+			</section>
 
-			<div className='max-w-7xl mx-auto px-4 py-8 md:py-16'>
+			{/* Trustpilot and Google Rating */}
+			<section className='max-w-7xl mx-auto px-4 py-8 md:py-16'>
 				<div className='flex flex-wrap justify-center gap-6 sm:gap-12 mb-12'>
 					{/* Trustpilot Rating */}
 					<div className='flex flex-col items-center'>
@@ -139,32 +129,11 @@ const LandingPage = () => {
 						</div>
 						<div className='text-sm text-gray-600 mt-1'>4.7 / 5</div>
 					</div>
-
-					{/* App Store Rating */}
-					<div className='flex flex-col items-center'>
-						<Image
-							src='/applestore-logo.svg'
-							alt='App Store'
-							width={140}
-							height={16}
-							className='mb-2'
-						/>
-						<div className='flex gap-1'>
-							{[1, 2, 3, 4].map((_, i) => (
-								<Star
-									key={i}
-									className='w-5 h-5 fill-yellow-400 text-yellow-400'
-								/>
-							))}
-							<Star className='w-5 h-5 fill-yellow-400/50 text-yellow-400' />
-						</div>
-						<div className='text-sm text-gray-600 mt-1'>4.6 / 5</div>
-					</div>
 				</div>
-			</div>
+			</section>
 
 			{/* Main Content */}
-			<div className='max-w-7xl mx-auto px-4 py-16 md:py-24'>
+			<section className='max-w-7xl mx-auto px-4 py-16 md:py-24'>
 				<div className='grid md:grid-cols-2 gap-12 items-center'>
 					<div className='bg-gray-50 p-6 rounded-lg shadow-md order-last md:order-first'>
 						<Image
@@ -193,7 +162,7 @@ const LandingPage = () => {
 								"Powered by GPT-4",
 								"Generated in seconds",
 								"Produces human-like text",
-								"Nobody's gonna know",
+								"Safe and secure",
 							].map((feature, i) => (
 								<div key={i} className='flex items-center gap-2'>
 									<Check className='w-5 h-5 text-orange-500' />
@@ -207,9 +176,9 @@ const LandingPage = () => {
 						</Button>
 					</div>
 				</div>
-			</div>
+			</section>
 
-			<div className='max-w-7xl mx-auto px-4 py-16 md:py-24'>
+			<section className='max-w-7xl mx-auto px-4 py-16 md:py-24'>
 				<div className='grid grid-cols-1 md:grid-cols-2 gap-12 items-center'>
 					{/* Left Side - Content */}
 					<div>
@@ -263,9 +232,9 @@ const LandingPage = () => {
 						/>
 					</div>
 				</div>
-			</div>
+			</section>
 
-			<div className='bg-[#0B1437] text-white relative overflow-hidden'>
+			<section className='bg-[#0B1437] text-white relative overflow-hidden'>
 				{/* Wave SVG at the bottom */}
 				<div className='absolute bottom-0 left-0 w-full'>
 					<svg
@@ -328,9 +297,9 @@ const LandingPage = () => {
 						</div>
 					</div>
 				</div>
-			</div>
+			</section>
 
-			<div className='max-w-7xl mx-auto px-4 py-16'>
+			<section className='max-w-7xl mx-auto px-4 py-16'>
 				<div className='grid lg:grid-cols-2 gap-12 items-center'>
 					{/* Left side - Resume Grid */}
 					<Card className='p-6 bg-gray-50'>
@@ -361,8 +330,8 @@ const LandingPage = () => {
 							Get inspired by real resume examples.
 						</h2>
 						<p className='text-gray-600 mb-8 text-base sm:text-lg'>
-							Nike, Apple, Facebook — learn from resumes that helped our
-							customers land jobs with the world&apos;s top companies. Browse
+							Nike, Facebook — learn from resumes that helped our customers land
+							jobs with the world&apos;s top companies. Browse
 							profession-specific guides that will help you write an excellent
 							resume and cover letter no matter what. All this knowledge works
 							wonders when used in combination with our AI Resume Writer. After
@@ -387,9 +356,44 @@ const LandingPage = () => {
 						</Button>
 					</div>
 				</div>
-			</div>
+			</section>
 
-			<footer className='bg-[#FDF8F4] border-t border-[#FDF8F4] py-6'>
+			<section className='bg-[#0B1437] text-white relative overflow-hidden'>
+				<div className='absolute top-0 left-0 w-full'>
+					<svg
+						viewBox='0 0 1440 100'
+						className='w-full h-auto transform rotate-180'
+						preserveAspectRatio='none'>
+						<path
+							fill='white'
+							d='M0,0 C320,100 480,100 720,50 C960,0 1120,0 1440,100 L1440,100 L0,100 Z'
+						/>
+					</svg>
+				</div>
+
+				<div className='max-w-3xl mx-auto space-y-4 px-4 pt-28 pb-16 text-center'>
+					<div className='font-medium mb-2 text-sm uppercase tracking-wide text-gray-300'>
+						One-Time Payment
+					</div>
+
+					<h2 className='text-3xl sm:text-4xl md:text-5xl font-serif mt-4'>
+						No subscriptions. No ads. Just a one-time payment.
+					</h2>
+
+					<p className='text-gray-300 mb-8 text-base sm:text-lg'>
+						Enjoy lifetime access to all features with a simple, one-time fee.
+						No recurring subscriptions, no hidden charges, and absolutely no
+						ads. Get all the benefits of our AI-powered resume tools without the
+						hassle.
+					</p>
+
+					<Button className='px-6 sm:px-8 py-3 sm:py-5 mt-6'>
+						Get Started with One-Time Access
+					</Button>
+				</div>
+			</section>
+
+			<footer className='bg-[#FDF8F4] border-t border-[#FDF8F4] py-3'>
 				<div className='container mx-auto px-4 flex flex-col sm:flex-row justify-between items-center'>
 					<p className='text-[#f97316] text-sm'>
 						&copy; {new Date().getFullYear()} GetSetCV. All rights reserved.
