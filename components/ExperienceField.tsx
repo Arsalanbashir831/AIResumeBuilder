@@ -28,12 +28,14 @@ interface ExperienceFieldProps {
 		value: string | boolean | string[],
 		index: number
 	) => void;
+	handleCheckboxChange: (index: number, checked: boolean) => void;
 	index: number;
 }
 
 const ExperienceField: React.FC<ExperienceFieldProps> = ({
 	experience,
 	onChange,
+	handleCheckboxChange,
 	index,
 }) => {
 	const formattedStartDate = formatToDateInputValue(experience.startDate);
@@ -76,15 +78,15 @@ const ExperienceField: React.FC<ExperienceFieldProps> = ({
 	};
 
 	// Correctly handle checkbox toggle
-	const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const isChecked = e.target.checked;
-		onChange("isCurrent", isChecked, index);
-		if (isChecked) {
-			onChange("endDate", "", index); // If it's checked, reset the end date to "Present"
-		} else {
-			onChange("endDate", formattedEndDate, index); // Otherwise, keep the formatted end date
-		}
-	};
+	// const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+	// 	const isChecked = e.target.checked;
+	// 	onChange("isCurrent", isChecked, index);
+	// 	if (isChecked) {
+	// 		onChange("endDate", "", index); // If it's checked, reset the end date to "Present"
+	// 	} else {
+	// 		onChange("endDate", formattedEndDate, index); // Otherwise, keep the formatted end date
+	// 	}
+	// };
 
 	return (
 		<div className='my-4 grid grid-cols-1 md:grid-cols-2 gap-6'>
@@ -115,21 +117,6 @@ const ExperienceField: React.FC<ExperienceFieldProps> = ({
 					value={experience.company}
 					onChange={(e) => onChange("company", e.target.value, index)}
 					className='w-full mt-1 p-3 border rounded-lg focus:outline-none focus:ring-2'
-				/>
-			</div>
-
-			{/* Company Name */}
-			<div className='space-y-2'>
-				<label
-					htmlFor={`company-${index}`}
-					className='block text-sm font-semibold text-gray-700'>
-					Company
-				</label>
-				<Input
-					id={`company-${index}`}
-					value={experience.company}
-					onChange={(e) => onChange("company", e.target.value, index)}
-					className='w-full mt-1 p-3 border rounded-lg focus:outline-none focus:ring-2 '
 				/>
 			</div>
 
@@ -193,9 +180,7 @@ const ExperienceField: React.FC<ExperienceFieldProps> = ({
 						id={`isCurrent-${index}`}
 						checked={experience.isCurrent}
 						onCheckedChange={(checked) =>
-							handleCheckboxChange({
-								target: { checked },
-							} as React.ChangeEvent<HTMLInputElement>)
+							handleCheckboxChange(index, checked as boolean)
 						}
 					/>
 					<label

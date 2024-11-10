@@ -34,7 +34,9 @@ const Template1 = ({
 					<Skills skills={data.sections.skills} />
 					<Achievements achievements={data.sections.achievements} />
 					<Education educations={data.sections.educations} />
-					<AdditionalExperience />
+					<AdditionalExperience
+						additionalExperience={data.sections.additionalExperience}
+					/>
 				</div>
 			</div>
 		</div>

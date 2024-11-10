@@ -8,19 +8,143 @@ import React, { useState } from "react";
 import { SectionKey, TemplateData } from "@/types/global";
 import InputField from "@/components/InputField";
 import TextAreaField from "@/components/TextAreaField";
-import ExperienceField from "@/components/ExperienceField";
-import { Badge } from "@/components/ui/badge";
+import SkillsStep from "@/components/forms/steps/SkillsStep";
+import AchievementsStep from "@/components/forms/steps/AchievementsStep";
+import EducationStep from "@/components/forms/steps/EducationStep";
+import ExperienceStep from "@/components/forms/steps/ExperienceStep";
+
+// Step component to handle rendering of each section
+const StepContent = ({
+	step,
+	resumeData,
+	handleInputChange,
+}: {
+	step: number;
+	resumeData: TemplateData;
+	handleInputChange: (
+		section: SectionKey,
+		field: string | null,
+		value: any
+	) => void;
+}) => {
+	switch (step) {
+		case 1:
+			return (
+				<div>
+					<h3 className='text-lg font-semibold mb-2'>Personal Information</h3>
+					<InputField
+						label='Name'
+						value={resumeData.sections.personalInfo.name}
+						onChange={(value) =>
+							handleInputChange("personalInfo", "name", value)
+						}
+					/>
+					<InputField
+						label='Position'
+						value={resumeData.sections.personalInfo.title}
+						onChange={(value) =>
+							handleInputChange("personalInfo", "title", value)
+						}
+					/>
+					<InputField
+						label='Email'
+						value={resumeData.sections.personalInfo.contact.email}
+						onChange={(value) =>
+							handleInputChange("personalInfo", "contact", {
+								...resumeData.sections.personalInfo.contact,
+								email: value,
+							})
+						}
+					/>
+					<InputField
+						label='Phone'
+						value={resumeData.sections.personalInfo.contact.phone}
+						onChange={(value) =>
+							handleInputChange("personalInfo", "contact", {
+								...resumeData.sections.personalInfo.contact,
+								phone: value,
+							})
+						}
+					/>
+				</div>
+			);
+		case 2:
+			return (
+				<div>
+					<h3 className='text-lg font-semibold mb-2'>Summary</h3>
+					<TextAreaField
+						label='Professional Summary'
+						value={resumeData.sections.summary}
+						onChange={(value) => handleInputChange("summary", "", value)}
+					/>
+				</div>
+			);
+		case 3:
+			return (
+				<div>
+					<ExperienceStep
+						experiences={resumeData.sections.experience}
+						onChange={(updatedExperiences) =>
+							handleInputChange("experience", "", updatedExperiences)
+						}
+					/>
+				</div>
+			);
+		case 4:
+			return (
+				<div>
+					<SkillsStep
+						skills={resumeData.sections.skills}
+						onChange={(updatedSkills) =>
+							handleInputChange("skills", "", updatedSkills)
+						}
+					/>
+				</div>
+			);
+		case 5:
+			return (
+				<div>
+					<AchievementsStep
+						achievements={resumeData.sections.achievements}
+						onChange={(updatedAchievements) =>
+							handleInputChange("achievements", "", updatedAchievements)
+						}
+					/>
+				</div>
+			);
+		case 6:
+			return (
+				<div>
+					<EducationStep
+						educations={resumeData.sections.educations}
+						onChange={(updatedEducations) =>
+							handleInputChange("educations", "", updatedEducations)
+						}
+					/>
+				</div>
+			);
+		case 7:
+			return (
+				<div>
+					<ExperienceStep
+						experiences={resumeData.sections.additionalExperience}
+						onChange={(updatedExperiences) =>
+							handleInputChange("additionalExperience", "", updatedExperiences)
+						}
+					/>
+				</div>
+			);
+		default:
+			return null;
+	}
+};
 
 export default function TemplateEditor() {
-	// Manage the step state for navigation between resume creation steps
 	const [step, setStep] = useState(1);
-
-	// Initialize resumeData state
 	const [resumeData, setResumeData] = useState<TemplateData>(
 		DUMMY_TEMPLATES_DATA[1]
 	);
 
-	// Handle changes in any section of the resume
 	const handleInputChange = (
 		section: SectionKey,
 		field: string | null,
@@ -42,69 +166,9 @@ export default function TemplateEditor() {
 		}));
 	};
 
-	// Navigate between steps (e.g., between different parts of the resume)
+	// Handle step navigation
 	const handleStepChange = (newStep: React.SetStateAction<number>) => {
 		setStep(newStep);
-	};
-
-	// Handle changes to individual experience items
-	const handleExperienceInputChange = (
-		index: number,
-		field: string,
-		value: string | boolean | string[]
-	) => {
-		setResumeData((prevData) => {
-			const updatedExperience = [...prevData.sections.experience];
-			updatedExperience[index] = {
-				...updatedExperience[index],
-				[field]: value,
-			};
-			return {
-				...prevData,
-				sections: {
-					...prevData.sections,
-					experience: updatedExperience,
-				},
-			};
-		});
-	};
-
-	// Add a new experience entry to the resume
-	const handleAddExperience = () => {
-		setResumeData((prevData) => ({
-			...prevData,
-			sections: {
-				...prevData.sections,
-				experience: [
-					...prevData.sections.experience,
-					{
-						title: "",
-						company: "",
-						startDate: "",
-						endDate: "",
-						isCurrent: false,
-						location: "",
-						achievements: [],
-					},
-				],
-			},
-		}));
-	};
-
-	// Delete an experience entry from the resume
-	const handleDeleteExperience = (index: number) => {
-		setResumeData((prevData) => {
-			const updatedExperience = prevData.sections.experience.filter(
-				(_, i) => i !== index
-			);
-			return {
-				...prevData,
-				sections: {
-					...prevData.sections,
-					experience: updatedExperience,
-				},
-			};
-		});
 	};
 
 	return (
@@ -112,147 +176,40 @@ export default function TemplateEditor() {
 			{/* Step-by-Step Form */}
 			<div className='w-1/2 pr-4'>
 				{/* Navigation Buttons */}
-				<div className='flex space-x-2 mb-4'>
-					<Button
-						variant={step === 1 ? "default" : "secondary"}
-						onClick={() => handleStepChange(1)}>
-						Personal Info
-					</Button>
-					<Button
-						variant={step === 2 ? "default" : "secondary"}
-						onClick={() => handleStepChange(2)}>
-						Summary
-					</Button>
-					<Button
-						variant={step === 3 ? "default" : "secondary"}
-						onClick={() => handleStepChange(3)}>
-						Experience
-					</Button>
-					<Button
-						variant={step === 4 ? "default" : "secondary"}
-						onClick={() => handleStepChange(4)}>
-						Skills
-					</Button>
+				<div className='flex space-x-2 mb-4 overflow-x-auto whitespace-nowrap'>
+					{[
+						"Personal Info",
+						"Summary",
+						"Experience",
+						"Skills",
+						"Achievements",
+						"Education",
+						"Additional Experience",
+					].map((label, idx) => (
+						<Button
+							key={label}
+							variant={step === idx + 1 ? "default" : "secondary"}
+							onClick={() => handleStepChange(idx + 1)}>
+							{label}
+						</Button>
+					))}
 				</div>
 
 				<Card className='shadow-lg my-6'>
 					<CardContent className='p-6'>
-						{/* Step 1: Personal Info */}
-						{step === 1 && (
-							<div>
-								<h3 className='text-lg font-semibold mb-2'>
-									Personal Information
-								</h3>
-								<InputField
-									label='Name'
-									value={resumeData.sections.personalInfo.name}
-									onChange={(value) =>
-										handleInputChange("personalInfo", "name", value)
-									}
-								/>
-								<InputField
-									label='Position'
-									value={resumeData.sections.personalInfo.title}
-									onChange={(value) =>
-										handleInputChange("personalInfo", "title", value)
-									}
-								/>
-								<InputField
-									label='Email'
-									value={resumeData.sections.personalInfo.contact.email}
-									onChange={(value) =>
-										handleInputChange("personalInfo", "contact", {
-											...resumeData.sections.personalInfo.contact,
-											email: value,
-										})
-									}
-								/>
-								<InputField
-									label='Phone'
-									value={resumeData.sections.personalInfo.contact.phone}
-									onChange={(value) =>
-										handleInputChange("personalInfo", "contact", {
-											...resumeData.sections.personalInfo.contact,
-											phone: value,
-										})
-									}
-								/>
-							</div>
-						)}
+						{/* Step Content */}
+						<StepContent
+							step={step}
+							resumeData={resumeData}
+							handleInputChange={handleInputChange}
+						/>
 
-						{/* Step 2: Summary */}
-						{step === 2 && (
-							<div>
-								<h3 className='text-lg font-semibold mb-2'>Summary</h3>
-								<TextAreaField
-									label='Professional Summary'
-									value={resumeData.sections.summary}
-									onChange={(value) => handleInputChange("summary", "", value)}
-								/>
-							</div>
-						)}
-
-						{/* Step 3: Experience */}
-						{step === 3 && (
-							<div>
-								<div className='flex justify-between items-center'>
-									<h3 className='text-lg font-semibold mb-2'>Experience</h3>
-									<Button
-										type='button'
-										size='sm'
-										className='mt-4 px-4 py-2 text-white rounded-lg'
-										onClick={handleAddExperience}>
-										Add
-									</Button>
-								</div>
-								{resumeData.sections.experience.map((exp, index) => (
-									<div key={index} className='border-dashed border-b-2 pb-4'>
-										<ExperienceField
-											experience={exp}
-											onChange={(field, value) =>
-												handleExperienceInputChange(index, field, value)
-											}
-											index={index}
-										/>
-										<Button
-											type='button'
-											size='sm'
-											variant='destructive'
-											className='mt-2'
-											onClick={() => handleDeleteExperience(index)}>
-											Delete
-										</Button>
-									</div>
-								))}
-							</div>
-						)}
-
-						{/* Step 4: Skills */}
-						{step === 4 && (
-							<div>
-								<h3 className='text-lg font-semibold mb-2'>Skills</h3>
-
-								<InputField
-									label='Skill'
-									value={resumeData.sections.skills[0]}
-									onChange={(value) => handleInputChange("skills", "", value)}
-								/>
-
-								{/* Display the skills as badges */}
-								<div className='flex flex-wrap gap-2 mt-2'>
-									{resumeData.sections.skills.map((skill, index) => (
-										<Badge key={index}>{skill}</Badge>
-									))}
-								</div>
-							</div>
-						)}
-
-						{/* Navigation buttons */}
+						{/* Navigation Buttons */}
 						<div className='flex justify-between mt-6'>
 							<Button onClick={() => setStep(step - 1)} disabled={step === 1}>
 								Previous
 							</Button>
-							<Button onClick={() => setStep(step + 1)} disabled={step === 3}>
+							<Button onClick={() => setStep(step + 1)} disabled={step === 7}>
 								Next
 							</Button>
 						</div>
