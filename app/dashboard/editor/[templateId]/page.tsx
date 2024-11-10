@@ -24,7 +24,7 @@ const StepContent = ({
 	handleInputChange: (
 		section: SectionKey,
 		field: string | null,
-		value: any
+		value: string | number | object
 	) => void;
 }) => {
 	switch (step) {
@@ -148,7 +148,7 @@ export default function TemplateEditor() {
 	const handleInputChange = (
 		section: SectionKey,
 		field: string | null,
-		value: any
+		value: string | number | object
 	) => {
 		setResumeData((prevData) => ({
 			...prevData,
