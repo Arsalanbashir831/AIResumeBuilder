@@ -4,8 +4,15 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import {
+	DropdownMenu,
+	DropdownMenuTrigger,
+	DropdownMenuContent,
+	DropdownMenuItem,
+} from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
-const Navbar = () => {
+const Navbar = ({ isDashboard = false }) => {
 	const [isScrolled, setIsScrolled] = useState(false);
 	const [showNavbar, setShowNavbar] = useState(true);
 	const [lastScrollY, setLastScrollY] = useState(0);
@@ -42,24 +49,42 @@ const Navbar = () => {
 			className={`fixed top-0 left-0 right-0 w-full transition-all duration-300 z-50 ${
 				isScrolled ? "bg-[#FDF8F4] shadow-md" : "bg-transparent"
 			} ${showNavbar ? "translate-y-0" : "-translate-y-full"}`}>
-			<div className='max-w-7xl mx-auto flex items-center justify-between px-4 py-3'>
+			<div className='container mx-auto flex items-center justify-between px-4 py-3'>
 				<div className='flex items-center gap-2'>
 					<Image src='/logo.png' alt='GetSetCV' width={180} height={100} />
 				</div>
 
-				<div className='flex items-center gap-4'>
-					<Button
-						variant='outline'
-						onClick={() => router.push("/signup")}
-						className='px-4 font-medium'>
-						Sign Up
-					</Button>
-					<Button
-						onClick={() => router.push("/signin")}
-						className='px-4 font-medium'>
-						Sign In
-					</Button>
-				</div>
+				{isDashboard ? (
+					<DropdownMenu>
+						<DropdownMenuTrigger>
+							<Avatar className='cursor-pointer'>
+								<AvatarImage src='/avatar.jpg' alt='Avatar' />
+								<AvatarFallback>JD</AvatarFallback>
+							</Avatar>
+						</DropdownMenuTrigger>
+						<DropdownMenuContent>
+							<DropdownMenuItem>Profile</DropdownMenuItem>
+							<DropdownMenuItem>Settings</DropdownMenuItem>
+							<DropdownMenuItem onClick={() => router.push("/signin")}>
+								Logout
+							</DropdownMenuItem>
+						</DropdownMenuContent>
+					</DropdownMenu>
+				) : (
+					<div className='flex items-center gap-4'>
+						<Button
+							variant='outline'
+							onClick={() => router.push("/signup")}
+							className='px-4 font-medium'>
+							Sign Up
+						</Button>
+						<Button
+							onClick={() => router.push("/signin")}
+							className='px-4 font-medium'>
+							Sign In
+						</Button>
+					</div>
+				)}
 			</div>
 		</nav>
 	);
