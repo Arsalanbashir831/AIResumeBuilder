@@ -4,7 +4,9 @@ const Experience = ({
 	experiences: {
 		title: string;
 		company: string;
-		date: string;
+		startDate: string;
+		endDate: string;
+		isCurrent: boolean;
 		location: string;
 		achievements: string[];
 	}[];
@@ -27,7 +29,9 @@ const Experience = ({
 						</h4>
 
 						<div className='flex gap-x-4 text-xs'>
-							<div>{exp.date}</div>
+							<div>
+								{exp.startDate} - {exp.isCurrent ? "Present" : exp.endDate}
+							</div>
 							<div>📍 {exp.location}</div>
 						</div>
 					</div>

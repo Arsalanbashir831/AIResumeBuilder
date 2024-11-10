@@ -2,8 +2,6 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import Template1 from "@/components/templates/template-1/template-1";
 import { DUMMY_TEMPLATES_DATA } from "@/data/dummy-templates-data";
 import React, { useState } from "react";
@@ -14,38 +12,99 @@ import ExperienceField from "@/components/ExperienceField";
 import { Badge } from "@/components/ui/badge";
 
 export default function TemplateEditor() {
-	const [step, setStep] = useState(1); // Track which step the user is on
-	const [templateData, setTemplateData] = useState<TemplateData>(
+	// Manage the step state for navigation between resume creation steps
+	const [step, setStep] = useState(1);
+
+	// Initialize resumeData state
+	const [resumeData, setResumeData] = useState<TemplateData>(
 		DUMMY_TEMPLATES_DATA[1]
 	);
 
+	// Handle changes in any section of the resume
 	const handleInputChange = (
 		section: SectionKey,
 		field: string | null,
 		value: any
 	) => {
-		setTemplateData((prevData) => {
-			console.log(prevData); // Log the previous state for debugging
+		setResumeData((prevData) => ({
+			...prevData,
+			sections: {
+				...prevData.sections,
+				[section]: field
+					? {
+							...(typeof prevData.sections[section] === "object"
+								? prevData.sections[section]
+								: {}),
+							[field]: value,
+					  }
+					: value,
+			},
+		}));
+	};
+
+	// Navigate between steps (e.g., between different parts of the resume)
+	const handleStepChange = (newStep: React.SetStateAction<number>) => {
+		setStep(newStep);
+	};
+
+	// Handle changes to individual experience items
+	const handleExperienceInputChange = (
+		index: number,
+		field: string,
+		value: string | boolean | string[]
+	) => {
+		setResumeData((prevData) => {
+			const updatedExperience = [...prevData.sections.experience];
+			updatedExperience[index] = {
+				...updatedExperience[index],
+				[field]: value,
+			};
 			return {
 				...prevData,
 				sections: {
 					...prevData.sections,
-					[section]: field
-						? {
-								...(typeof prevData.sections[section] === "object"
-									? prevData.sections[section]
-									: {}),
-								[field]: value,
-						  }
-						: value,
+					experience: updatedExperience,
 				},
 			};
 		});
 	};
 
-	// Handler for navigating steps
-	const handleStepChange = (newStep: React.SetStateAction<number>) => {
-		setStep(newStep);
+	// Add a new experience entry to the resume
+	const handleAddExperience = () => {
+		setResumeData((prevData) => ({
+			...prevData,
+			sections: {
+				...prevData.sections,
+				experience: [
+					...prevData.sections.experience,
+					{
+						title: "",
+						company: "",
+						startDate: "",
+						endDate: "",
+						isCurrent: false,
+						location: "",
+						achievements: [],
+					},
+				],
+			},
+		}));
+	};
+
+	// Delete an experience entry from the resume
+	const handleDeleteExperience = (index: number) => {
+		setResumeData((prevData) => {
+			const updatedExperience = prevData.sections.experience.filter(
+				(_, i) => i !== index
+			);
+			return {
+				...prevData,
+				sections: {
+					...prevData.sections,
+					experience: updatedExperience,
+				},
+			};
+		});
 	};
 
 	return (
@@ -86,34 +145,34 @@ export default function TemplateEditor() {
 								</h3>
 								<InputField
 									label='Name'
-									value={templateData.sections.personalInfo.name}
+									value={resumeData.sections.personalInfo.name}
 									onChange={(value) =>
 										handleInputChange("personalInfo", "name", value)
 									}
 								/>
 								<InputField
 									label='Position'
-									value={templateData.sections.personalInfo.title}
+									value={resumeData.sections.personalInfo.title}
 									onChange={(value) =>
 										handleInputChange("personalInfo", "title", value)
 									}
 								/>
 								<InputField
 									label='Email'
-									value={templateData.sections.personalInfo.contact.email}
+									value={resumeData.sections.personalInfo.contact.email}
 									onChange={(value) =>
 										handleInputChange("personalInfo", "contact", {
-											...templateData.sections.personalInfo.contact,
+											...resumeData.sections.personalInfo.contact,
 											email: value,
 										})
 									}
 								/>
 								<InputField
 									label='Phone'
-									value={templateData.sections.personalInfo.contact.phone}
+									value={resumeData.sections.personalInfo.contact.phone}
 									onChange={(value) =>
 										handleInputChange("personalInfo", "contact", {
-											...templateData.sections.personalInfo.contact,
+											...resumeData.sections.personalInfo.contact,
 											phone: value,
 										})
 									}
@@ -127,7 +186,7 @@ export default function TemplateEditor() {
 								<h3 className='text-lg font-semibold mb-2'>Summary</h3>
 								<TextAreaField
 									label='Professional Summary'
-									value={templateData.sections.summary}
+									value={resumeData.sections.summary}
 									onChange={(value) => handleInputChange("summary", "", value)}
 								/>
 							</div>
@@ -136,16 +195,34 @@ export default function TemplateEditor() {
 						{/* Step 3: Experience */}
 						{step === 3 && (
 							<div>
-								<h3 className='text-lg font-semibold mb-2'>Experience</h3>
-								{templateData.sections.experience?.map((exp, index) => (
-									<ExperienceField
-										key={index}
-										experience={exp}
-										onChange={(field, value) =>
-											handleInputChange("experience", field, value)
-										}
-										index={index}
-									/>
+								<div className='flex justify-between items-center'>
+									<h3 className='text-lg font-semibold mb-2'>Experience</h3>
+									<Button
+										type='button'
+										size='sm'
+										className='mt-4 px-4 py-2 text-white rounded-lg'
+										onClick={handleAddExperience}>
+										Add
+									</Button>
+								</div>
+								{resumeData.sections.experience.map((exp, index) => (
+									<div key={index} className='border-dashed border-b-2 pb-4'>
+										<ExperienceField
+											experience={exp}
+											onChange={(field, value) =>
+												handleExperienceInputChange(index, field, value)
+											}
+											index={index}
+										/>
+										<Button
+											type='button'
+											size='sm'
+											variant='destructive'
+											className='mt-2'
+											onClick={() => handleDeleteExperience(index)}>
+											Delete
+										</Button>
+									</div>
 								))}
 							</div>
 						)}
@@ -157,13 +234,13 @@ export default function TemplateEditor() {
 
 								<InputField
 									label='Skill'
-									value={templateData.sections.skills[0]}
+									value={resumeData.sections.skills[0]}
 									onChange={(value) => handleInputChange("skills", "", value)}
 								/>
 
 								{/* Display the skills as badges */}
 								<div className='flex flex-wrap gap-2 mt-2'>
-									{templateData.sections.skills.map((skill, index) => (
+									{resumeData.sections.skills.map((skill, index) => (
 										<Badge key={index}>{skill}</Badge>
 									))}
 								</div>
@@ -187,7 +264,7 @@ export default function TemplateEditor() {
 			<div className='w-1/2 pl-4 border-l border-gray-300'>
 				<Card className='shadow-lg'>
 					<CardContent className='p-0'>
-						<Template1 isEditing templateData={templateData} />
+						<Template1 isEditing templateData={resumeData} />
 					</CardContent>
 				</Card>
 			</div>

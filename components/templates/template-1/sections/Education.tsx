@@ -4,7 +4,9 @@ const Education = ({
 	educations: {
 		degree: string;
 		institution: string;
-		date: string;
+		startDate: string;
+		endDate: string;
+		isCurrent: boolean;
 	}[];
 }) => {
 	return (
@@ -22,7 +24,12 @@ const Education = ({
 					<h4 className='text-sm text-[#1e2a4a] font-semibold'>
 						{education.institution}
 					</h4>
-					<div className='text-sm text-gray-600'>{education.date}</div>
+					<div className='text-sm text-gray-600'>
+						<div>
+							{education.startDate} -{" "}
+							{education.isCurrent ? "Present" : education.endDate}
+						</div>
+					</div>
 				</div>
 			))}
 		</div>

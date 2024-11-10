@@ -13,14 +13,18 @@ export interface ExperienceItem {
 	title: string;
 	company: string;
 	location: string;
-	date: string;
+	startDate: string;
+	endDate: string;
+	isCurrent: boolean;
 	achievements: string[];
 }
 
 export interface EducationItem {
 	institution: string;
 	degree: string;
-	date: string;
+	startDate: string;
+	endDate: string;
+	isCurrent: boolean;
 }
 
 export type SectionKey =
