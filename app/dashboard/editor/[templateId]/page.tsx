@@ -1,19 +1,45 @@
 "use client";
 
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import Template1 from "@/components/templates/template-1/template-1";
 import { DUMMY_TEMPLATES_DATA } from "@/data/dummy-templates-data";
-import React, { useState } from "react";
-import { SectionKey, TemplateData } from "@/types/global";
+import {
+	Achievement,
+	EducationItem,
+	ExperienceItem,
+	SectionKey,
+	TemplateData,
+} from "@/types/global";
 import InputField from "@/components/InputField";
 import TextAreaField from "@/components/TextAreaField";
 import SkillsStep from "@/components/forms/steps/SkillsStep";
 import AchievementsStep from "@/components/forms/steps/AchievementsStep";
 import EducationStep from "@/components/forms/steps/EducationStep";
 import ExperienceStep from "@/components/forms/steps/ExperienceStep";
+import { useParams, useRouter } from "next/navigation";
+import { templates } from "@/data/templatesConfig";
+import { ArrowLeft } from "lucide-react";
+import AiButton from "@/components/AiButton";
 
-// Step component to handle rendering of each section
+// Modal component for subscription
+const SubscriptionModal = ({ onClose }: { onClose: () => void }) => (
+	<div className='fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-20'>
+		<div className='bg-white p-6 rounded-md shadow-lg max-w-sm w-full'>
+			<h3 className='text-xl font-semibold mb-4'>Subscribe to Download</h3>
+			<p className='mb-4'>
+				To download your resume, please subscribe to our service.
+			</p>
+			<div className='flex justify-end space-x-4'>
+				<Button variant='secondary' onClick={onClose}>
+					Close
+				</Button>
+				<Button variant='default'>Subscribe Now</Button>
+			</div>
+		</div>
+	</div>
+);
+
 const StepContent = ({
 	step,
 	resumeData,
@@ -24,7 +50,13 @@ const StepContent = ({
 	handleInputChange: (
 		section: SectionKey,
 		field: string | null,
-		value: any
+		value:
+			| string
+			| { [key: string]: string }
+			| ExperienceItem[]
+			| string[]
+			| Achievement[]
+			| EducationItem[]
 	) => void;
 }) => {
 	switch (step) {
@@ -71,9 +103,12 @@ const StepContent = ({
 		case 2:
 			return (
 				<div>
-					<h3 className='text-lg font-semibold mb-2'>Summary</h3>
+					<div className='flex justify-between items-center mb-4'>
+						<h3 className='text-lg font-semibold mb-2'>Summary</h3>
+						<AiButton />
+					</div>
+
 					<TextAreaField
-						label='Professional Summary'
 						value={resumeData.sections.summary}
 						onChange={(value) => handleInputChange("summary", "", value)}
 					/>
@@ -144,11 +179,26 @@ export default function TemplateEditor() {
 	const [resumeData, setResumeData] = useState<TemplateData>(
 		DUMMY_TEMPLATES_DATA[1]
 	);
+	const { templateId } = useParams();
+	const router = useRouter();
+
+	const template = templates.find((t) => t.id === Number(templateId));
+	const [showModal, setShowModal] = useState(false);
+
+	if (!template) {
+		return <p>Template not found</p>;
+	}
 
 	const handleInputChange = (
 		section: SectionKey,
 		field: string | null,
-		value: any
+		value:
+			| string
+			| { [key: string]: string }
+			| ExperienceItem[]
+			| string[]
+			| Achievement[]
+			| EducationItem[]
 	) => {
 		setResumeData((prevData) => ({
 			...prevData,
@@ -166,64 +216,82 @@ export default function TemplateEditor() {
 		}));
 	};
 
-	// Handle step navigation
 	const handleStepChange = (newStep: React.SetStateAction<number>) => {
 		setStep(newStep);
 	};
 
+	// Function to handle download button click
+	const handleDownloadClick = () => {
+		setShowModal(true); // Show the subscription popup when the download button is clicked
+	};
+
 	return (
-		<div className='flex h-screen p-8 pt-24 container mx-auto'>
-			{/* Step-by-Step Form */}
-			<div className='w-1/2 pr-4'>
-				{/* Navigation Buttons */}
-				<div className='flex space-x-2 mb-4 overflow-x-auto whitespace-nowrap'>
-					{[
-						"Personal Info",
-						"Summary",
-						"Experience",
-						"Skills",
-						"Achievements",
-						"Education",
-						"Additional Experience",
-					].map((label, idx) => (
-						<Button
-							key={label}
-							variant={step === idx + 1 ? "default" : "secondary"}
-							onClick={() => handleStepChange(idx + 1)}>
-							{label}
+		<div className='flex flex-col h-screen p-8 pt-24 container mx-auto'>
+			{/* Header Section */}
+			<header className='flex justify-start items-center mb-4'>
+				<Button variant='default' onClick={() => router.push("/dashboard/")}>
+					<ArrowLeft size={24} />
+					To Dashboard
+				</Button>
+			</header>
+			<div className='flex flex-col lg:flex-row-reverse gap-5'>
+				{/* Modal */}
+				{showModal && <SubscriptionModal onClose={() => setShowModal(false)} />}
+
+				{/* Live Preview with fixed aspect ratio and responsive scaling */}
+				<div className='w-full lg:w-1/2'>
+					<div className='flex justify-end items-center mb-4'>
+						<Button variant='default' onClick={handleDownloadClick}>
+							Download
 						</Button>
-					))}
+					</div>
+
+					<Card className='shadow-lg'>
+						<CardContent className='p-4 '>
+							<template.component templateData={resumeData} isEditing={true} />
+						</CardContent>
+					</Card>
 				</div>
 
-				<Card className='shadow-lg my-6'>
-					<CardContent className='p-6'>
-						{/* Step Content */}
-						<StepContent
-							step={step}
-							resumeData={resumeData}
-							handleInputChange={handleInputChange}
-						/>
-
-						{/* Navigation Buttons */}
-						<div className='flex justify-between mt-6'>
-							<Button onClick={() => setStep(step - 1)} disabled={step === 1}>
-								Previous
+				{/* Step-by-Step Form */}
+				<div className='w-full lg:w-1/2'>
+					<div className='flex space-x-2 mb-4 overflow-x-auto whitespace-nowrap'>
+						{[
+							"Personal Info",
+							"Summary",
+							"Experience",
+							"Skills",
+							"Achievements",
+							"Education",
+							"Additional Experience",
+						].map((label, idx) => (
+							<Button
+								key={label}
+								variant={step === idx + 1 ? "default" : "secondary"}
+								onClick={() => handleStepChange(idx + 1)}>
+								{label}
 							</Button>
-							<Button onClick={() => setStep(step + 1)} disabled={step === 7}>
-								Next
-							</Button>
-						</div>
-					</CardContent>
-				</Card>
-			</div>
+						))}
+					</div>
 
-			{/* Live Preview */}
-			<div className='w-1/2 pl-4 border-l border-gray-300'>
-				<Card className='shadow-lg'>
-					<CardContent className='p-0'>
-						<Template1 isEditing templateData={resumeData} />
-					</CardContent>
-				</Card>
+					<Card className='shadow-lg my-6'>
+						<CardContent className='p-6'>
+							<StepContent
+								step={step}
+								resumeData={resumeData}
+								handleInputChange={handleInputChange}
+							/>
+							<div className='flex justify-between mt-6'>
+								<Button onClick={() => setStep(step - 1)} disabled={step === 1}>
+									Previous
+								</Button>
+								<Button onClick={() => setStep(step + 1)} disabled={step === 7}>
+									Next
+								</Button>
+							</div>
+						</CardContent>
+					</Card>
+				</div>
 			</div>
 		</div>
 	);

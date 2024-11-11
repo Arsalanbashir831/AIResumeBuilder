@@ -33,7 +33,13 @@ export type SectionKey =
 	| "experience"
 	| "educations"
 	| "skills"
-	| "achievements";
+	| "achievements"
+	| "additionalExperience";
+
+export interface Achievement {
+	title: string;
+	description: string;
+}
 
 export interface TemplateData {
 	sections: {
@@ -43,10 +49,14 @@ export interface TemplateData {
 		educations: EducationItem[];
 		skills: string[];
 		achievements: Achievement[];
+		additionalExperience: {
+			title: string;
+			company: string;
+			location: string;
+			startDate: string;
+			endDate: string;
+			isCurrent: boolean;
+			achievements: string[];
+		}[];
 	};
-}
-
-export interface Achievement {
-	title: string;
-	description: string;
 }

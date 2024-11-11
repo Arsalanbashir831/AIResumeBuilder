@@ -1,7 +1,7 @@
 import { Textarea } from "@/components/ui/textarea";
 
 interface TextAreaFieldProps {
-	label: string;
+	label?: string;
 	value: string;
 	onChange: (value: string) => void;
 	placeholder?: string;

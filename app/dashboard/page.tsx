@@ -11,7 +11,7 @@ import {
 import Image from "next/image";
 import { PlusCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
-import Navbar from "@/components/Navbar";
+import Link from "next/link";
 
 export default function DashboardBody() {
 	const router = useRouter();
@@ -64,7 +64,9 @@ export default function DashboardBody() {
 							Create your custom resume for job applications
 						</p>
 					</div>
-					<Button variant='default' onClick={() => router.push("/new-resume")}>
+					<Button
+						variant='default'
+						onClick={() => router.push("/dashboard/templates")}>
 						<PlusCircle size={24} />
 						New Resume
 					</Button>
@@ -78,10 +80,14 @@ export default function DashboardBody() {
 					<div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
 						{/* Blank Resume Card */}
 						<Card className='flex items-center justify-center'>
-							<CardContent className='flex flex-col items-center justify-center'>
-								<PlusCircle size={24} className='mb-4' />
-								<p className='text-sm md:text-base'>Create Blank Resume</p>
-							</CardContent>
+							<Link
+								href='/dashboard/templates'
+								className='flex justify-center w-full h-full'>
+								<CardContent className='flex flex-col items-center justify-center'>
+									<PlusCircle size={24} className='mb-4' />
+									<p className='text-sm md:text-base'>Create Blank Resume</p>
+								</CardContent>
+							</Link>
 						</Card>
 
 						{/* Map over templates array */}

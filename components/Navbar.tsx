@@ -63,9 +63,15 @@ const Navbar = ({ isDashboard = false }) => {
 							</Avatar>
 						</DropdownMenuTrigger>
 						<DropdownMenuContent>
-							<DropdownMenuItem>Profile</DropdownMenuItem>
-							<DropdownMenuItem>Settings</DropdownMenuItem>
-							<DropdownMenuItem onClick={() => router.push("/signin")}>
+							<DropdownMenuItem className='cursor-pointer'>
+								Profile
+							</DropdownMenuItem>
+							<DropdownMenuItem className='cursor-pointer'>
+								Settings
+							</DropdownMenuItem>
+							<DropdownMenuItem
+								className='cursor-pointer'
+								onClick={() => router.push("/signin")}>
 								Logout
 							</DropdownMenuItem>
 						</DropdownMenuContent>

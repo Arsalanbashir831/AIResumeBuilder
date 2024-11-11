@@ -1,20 +1,12 @@
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { TrashIcon, PlusIcon } from "lucide-react";
 import EducationField from "@/components/EducationField";
-
-interface Education {
-	institution: string;
-	degree: string;
-	startDate: string;
-	endDate: string;
-	isCurrent: boolean;
-}
+import { EducationItem } from "@/types/global";
 
 interface EducationStepProps {
-	educations: Education[];
-	onChange: (educations: Education[]) => void;
+	educations: EducationItem[];
+	onChange: (educations: EducationItem[]) => void;
 }
 
 export default function EducationStep({
@@ -23,7 +15,7 @@ export default function EducationStep({
 }: EducationStepProps) {
 	// Add a new empty education entry to the list
 	const handleAddEducation = () => {
-		const newEducation: Education = {
+		const newEducation: EducationItem = {
 			institution: "",
 			degree: "",
 			startDate: "",
@@ -41,7 +33,7 @@ export default function EducationStep({
 	// Handle changes to the education fields
 	const handleEducationFieldChange = (
 		index: number,
-		field: keyof Education,
+		field: keyof EducationItem,
 		value: string | boolean
 	) => {
 		console.log("field", field);

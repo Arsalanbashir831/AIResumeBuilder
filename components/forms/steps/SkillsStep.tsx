@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import InputField from "@/components/InputField";
 import { X } from "lucide-react"; // Import the X icon from Lucide
+import AiButton from "@/components/AiButton";
 
 export default function SkillsStep({
 	skills,
@@ -26,7 +27,10 @@ export default function SkillsStep({
 
 	return (
 		<div>
-			<h3 className='text-lg font-semibold mb-2'>Skills</h3>
+			<div className='flex justify-between items-center mb-4'>
+				<h3 className='text-lg font-semibold mb-2'>Skills</h3>
+				<AiButton label='Generate Skills' />
+			</div>
 			<div className='flex items-center flex-wrap gap-2 mt-4'>
 				<InputField
 					label='Add Skill'

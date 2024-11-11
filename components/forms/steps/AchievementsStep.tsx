@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { TrashIcon, PlusCircleIcon } from "lucide-react";
 import InputField from "@/components/InputField";
 import TextAreaField from "@/components/TextAreaField";
+import AiButton from "@/components/AiButton";
 
 interface Achievement {
 	title: string;
@@ -38,9 +39,12 @@ export default function AchievementsStep({
 
 	return (
 		<div className='p-6 space-y-6'>
-			<h3 className='text-2xl font-semibold mb-4 text-gray-700'>
-				Achievements
-			</h3>
+			<div className='flex justify-between items-center mb-4'>
+				<h3 className='text-2xl font-semibold mb-4 text-gray-700'>
+					Achievements
+				</h3>
+				<AiButton />
+			</div>
 
 			{/* Add New Achievement Form */}
 			<Card className='shadow-md'>

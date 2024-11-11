@@ -2,20 +2,11 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { TrashIcon, PlusIcon } from "lucide-react";
 import ExperienceField from "@/components/ExperienceField";
-
-interface Experience {
-	title: string;
-	company: string;
-	location: string;
-	startDate: string;
-	endDate: string;
-	isCurrent: boolean;
-	achievements: string[];
-}
+import { ExperienceItem } from "@/types/global";
 
 interface ExperienceStepProps {
-	experiences: Experience[];
-	onChange: (experiences: Experience[]) => void;
+	experiences: ExperienceItem[];
+	onChange: (experiences: ExperienceItem[]) => void;
 }
 
 export default function ExperienceStep({
@@ -24,7 +15,7 @@ export default function ExperienceStep({
 }: ExperienceStepProps) {
 	// Add a new empty experience entry to the list
 	const handleAddExperience = () => {
-		const newExperience: Experience = {
+		const newExperience: ExperienceItem = {
 			title: "",
 			company: "",
 			location: "",
@@ -44,7 +35,7 @@ export default function ExperienceStep({
 	// Handle changes to the experience fields
 	const handleExperienceFieldChange = (
 		index: number,
-		field: keyof Experience,
+		field: keyof ExperienceItem,
 		value: string | boolean | string[]
 	) => {
 		const updatedExperiences = experiences.map((experience, i) =>

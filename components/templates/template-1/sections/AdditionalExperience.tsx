@@ -12,7 +12,7 @@ const AdditionalExperience = ({
 	}[];
 }) => {
 	return (
-		<div className='mb-8'>
+		<div className='mb-8 h-fit'>
 			<h2 className='text-lg font-bold border-b-4 border-[#1e2a4a] mb-4 text-[#1e2a4a]'>
 				ADDITIONAL EXPERIENCE
 			</h2>
