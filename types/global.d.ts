@@ -28,20 +28,12 @@ export interface EducationItem {
 }
 
 export type SectionKey =
-
-    | "personalInfo"
-
-    | "summary"
-
-    | "experience"
-
-    | "skills"
-
-    | "achievements"
-
-    | "educations"
-
-    | "additionalExperience";
+	| "personalInfo"
+	| "summary"
+	| "experience"
+	| "educations"
+	| "skills"
+	| "achievements";
 
 export interface TemplateData {
 	sections: {
@@ -51,7 +43,6 @@ export interface TemplateData {
 		educations: EducationItem[];
 		skills: string[];
 		achievements: Achievement[];
-		additionalExperience: ExperienceItem[]; // Add this line
 	};
 }
 
