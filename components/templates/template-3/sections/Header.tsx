@@ -2,6 +2,7 @@ import React from "react";
 import ProfileImage from "./ProfileImage";
 
 interface HeaderProps {
+	profileImage: string;
 	name: string;
 	email: string;
 	phone: string;
@@ -10,6 +11,7 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({
+	profileImage,
 	name,
 	email,
 	phone,
@@ -19,14 +21,7 @@ const Header: React.FC<HeaderProps> = ({
 	return (
 		<header className='grid grid-cols-12 gap-6'>
 			<aside className='col-span-3 bg-gray-900 text-white px-6 pt-6'>
-				<ProfileImage
-					imageUrl='/images/avatar.jpg'
-					alt={name
-						.split(" ")
-						.slice(0, 2)
-						.map((part) => part.charAt(0))
-						.join("")}
-				/>
+				<ProfileImage imageUrl={profileImage} alt={name} />
 			</aside>
 			<div className='col-span-9 py-6 px-2'>
 				<h1 className='text-3xl font-bold mb-4'>{name}</h1>

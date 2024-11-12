@@ -1,0 +1,117 @@
+import React from "react";
+import InputField from "@/components/InputField";
+import { TemplateData, SectionKey } from "@/types/global";
+
+interface PersonalInfoStepProps {
+	resumeData: TemplateData;
+	handleInputChange: (
+		section: SectionKey,
+		field: string | null,
+		value: any
+	) => void;
+	fieldsIncluded?: {
+		name?: boolean;
+		title?: boolean;
+		email?: boolean;
+		phone?: boolean;
+		link?: boolean;
+		profileImage?: boolean;
+	};
+}
+
+const PersonalInfoStep: React.FC<PersonalInfoStepProps> = ({
+	resumeData,
+	handleInputChange,
+	fieldsIncluded = {
+		name: true,
+		title: true,
+		email: true,
+		phone: true,
+		link: true,
+		profileImage: true,
+	},
+}) => {
+	const handleImageUpload = (file: File) => {
+		const reader = new FileReader();
+		reader.onload = () => {
+			if (reader.result) {
+				handleInputChange(
+					"personalInfo",
+					"profileImage",
+					reader.result as string
+				);
+			}
+		};
+		reader.readAsDataURL(file);
+	};
+
+	return (
+		<div>
+			<h3 className='text-lg font-semibold mb-2'>Personal Information</h3>
+			{fieldsIncluded.profileImage && (
+				<InputField
+					type='file'
+					label='Profile Image'
+					value=''
+					onChange={(file: any) => handleImageUpload(file)}
+				/>
+			)}
+			{fieldsIncluded.name && (
+				<InputField
+					label='Name'
+					value={resumeData.sections.personalInfo.name}
+					onChange={(value) => handleInputChange("personalInfo", "name", value)}
+				/>
+			)}
+			{fieldsIncluded.title && (
+				<InputField
+					label='Position'
+					value={resumeData.sections.personalInfo.title}
+					onChange={(value) =>
+						handleInputChange("personalInfo", "title", value)
+					}
+				/>
+			)}
+			{fieldsIncluded.email && (
+				<InputField
+					type='email'
+					label='Email'
+					value={resumeData.sections.personalInfo.contact.email}
+					onChange={(value) =>
+						handleInputChange("personalInfo", "contact", {
+							...resumeData.sections.personalInfo.contact,
+							email: value,
+						})
+					}
+				/>
+			)}
+			{fieldsIncluded.phone && (
+				<InputField
+					label='Phone'
+					value={resumeData.sections.personalInfo.contact.phone}
+					onChange={(value) =>
+						handleInputChange("personalInfo", "contact", {
+							...resumeData.sections.personalInfo.contact,
+							phone: value,
+						})
+					}
+				/>
+			)}
+			{fieldsIncluded.link && (
+				<InputField
+					type='text'
+					label='Link'
+					value={resumeData.sections.personalInfo.contact.link}
+					onChange={(value) =>
+						handleInputChange("personalInfo", "contact", {
+							...resumeData.sections.personalInfo.contact,
+							link: value,
+						})
+					}
+				/>
+			)}
+		</div>
+	);
+};
+
+export default PersonalInfoStep;

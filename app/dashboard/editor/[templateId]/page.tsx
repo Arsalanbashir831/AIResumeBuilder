@@ -21,6 +21,7 @@ import { useParams, useRouter } from "next/navigation";
 import { templates } from "@/data/templatesConfig";
 import { ArrowLeft } from "lucide-react";
 import AiButton from "@/components/AiButton";
+import PersonalInfoStep from "@/components/forms/steps/PersonalInfoStep";
 
 // Modal component for subscription
 const SubscriptionModal = ({ onClose }: { onClose: () => void }) => (
@@ -41,11 +42,12 @@ const SubscriptionModal = ({ onClose }: { onClose: () => void }) => (
 );
 
 const StepContent = ({
-	step,
+	sectionKey,
 	resumeData,
 	handleInputChange,
+	fieldsIncluded,
 }: {
-	step: number;
+	sectionKey: string;
 	resumeData: TemplateData;
 	handleInputChange: (
 		section: SectionKey,
@@ -58,49 +60,18 @@ const StepContent = ({
 			| Achievement[]
 			| EducationItem[]
 	) => void;
+	fieldsIncluded?: { [key: string]: boolean };
 }) => {
-	switch (step) {
-		case 1:
+	switch (sectionKey) {
+		case "personalInfo":
 			return (
-				<div>
-					<h3 className='text-lg font-semibold mb-2'>Personal Information</h3>
-					<InputField
-						label='Name'
-						value={resumeData.sections.personalInfo.name}
-						onChange={(value) =>
-							handleInputChange("personalInfo", "name", value)
-						}
-					/>
-					<InputField
-						label='Position'
-						value={resumeData.sections.personalInfo.title}
-						onChange={(value) =>
-							handleInputChange("personalInfo", "title", value)
-						}
-					/>
-					<InputField
-						label='Email'
-						value={resumeData.sections.personalInfo.contact.email}
-						onChange={(value) =>
-							handleInputChange("personalInfo", "contact", {
-								...resumeData.sections.personalInfo.contact,
-								email: value,
-							})
-						}
-					/>
-					<InputField
-						label='Phone'
-						value={resumeData.sections.personalInfo.contact.phone}
-						onChange={(value) =>
-							handleInputChange("personalInfo", "contact", {
-								...resumeData.sections.personalInfo.contact,
-								phone: value,
-							})
-						}
-					/>
-				</div>
+				<PersonalInfoStep
+					resumeData={resumeData}
+					handleInputChange={handleInputChange}
+					fieldsIncluded={fieldsIncluded}
+				/>
 			);
-		case 2:
+		case "summary":
 			return (
 				<div>
 					<div className='flex justify-between items-center mb-4'>
@@ -114,7 +85,7 @@ const StepContent = ({
 					/>
 				</div>
 			);
-		case 3:
+		case "experience":
 			return (
 				<div>
 					<ExperienceStep
@@ -125,7 +96,7 @@ const StepContent = ({
 					/>
 				</div>
 			);
-		case 4:
+		case "skills":
 			return (
 				<div>
 					<SkillsStep
@@ -136,7 +107,7 @@ const StepContent = ({
 					/>
 				</div>
 			);
-		case 5:
+		case "achievements":
 			return (
 				<div>
 					<AchievementsStep
@@ -147,7 +118,7 @@ const StepContent = ({
 					/>
 				</div>
 			);
-		case 6:
+		case "educations":
 			return (
 				<div>
 					<EducationStep
@@ -158,7 +129,7 @@ const StepContent = ({
 					/>
 				</div>
 			);
-		case 7:
+		case "additionalExperience":
 			return (
 				<div>
 					<ExperienceStep
@@ -182,7 +153,8 @@ export default function TemplateEditor() {
 	const { templateId } = useParams();
 	const router = useRouter();
 
-	const template = templates.find((t) => t.id === Number(templateId));
+	const template = templates.find((t) => t.id === templateId);
+	const sectionConfig = template ? template.sections : [];
 	const [showModal, setShowModal] = useState(false);
 
 	if (!template) {
@@ -216,7 +188,7 @@ export default function TemplateEditor() {
 		}));
 	};
 
-	const handleStepChange = (newStep: React.SetStateAction<number>) => {
+	const handleStepChange = (newStep: number) => {
 		setStep(newStep);
 	};
 
@@ -256,20 +228,12 @@ export default function TemplateEditor() {
 				{/* Step-by-Step Form */}
 				<div className='w-full lg:w-1/2'>
 					<div className='flex space-x-2 mb-4 overflow-x-auto whitespace-nowrap'>
-						{[
-							"Personal Info",
-							"Summary",
-							"Experience",
-							"Skills",
-							"Achievements",
-							"Education",
-							"Additional Experience",
-						].map((label, idx) => (
+						{sectionConfig.map((section, idx) => (
 							<Button
-								key={label}
+								key={section.key}
 								variant={step === idx + 1 ? "default" : "secondary"}
 								onClick={() => handleStepChange(idx + 1)}>
-								{label}
+								{section.label}
 							</Button>
 						))}
 					</div>
@@ -277,9 +241,10 @@ export default function TemplateEditor() {
 					<Card className='shadow-lg my-6'>
 						<CardContent className='p-6'>
 							<StepContent
-								step={step}
+								sectionKey={sectionConfig[step - 1].key}
 								resumeData={resumeData}
 								handleInputChange={handleInputChange}
+								fieldsIncluded={sectionConfig[step - 1].fieldsIncluded}
 							/>
 							<div className='flex justify-between mt-6'>
 								<Button onClick={() => setStep(step - 1)} disabled={step === 1}>

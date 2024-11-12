@@ -10,12 +10,13 @@ interface TemplateProps {
 	templateData?: {
 		sections: {
 			personalInfo: {
+				profileImage: string;
 				name: string;
 				title: string;
 				contact: {
 					email: string;
 					phone: string;
-					website: string;
+					link: string;
 				};
 			};
 			summary: string;
@@ -62,10 +63,11 @@ const Template3: React.FC<TemplateProps> = ({
 				style={{ transform: `scale(${scale})`, transformOrigin: "top left" }}
 				className='w-[8.5in] bg-white shadow-lg origin-top-left mx-auto'>
 				<Header
+					profileImage={data.sections.personalInfo.profileImage}
 					name={data.sections.personalInfo.name}
 					email={data.sections.personalInfo.contact.email}
 					phone={data.sections.personalInfo.contact.phone}
-					link={data.sections.personalInfo.contact.website}
+					link={data.sections.personalInfo.contact.link}
 				/>
 				<Summary summary={data.sections.summary} />
 				<Experience experiences={data.sections.experience} />

@@ -1,11 +1,12 @@
 export interface PersonalInfo {
+	profileImage: string;
 	name: string;
 	title: string;
 	contact: {
 		phone: string;
 		email: string;
 		location: string;
-		website: string;
+		link: string;
 	};
 }
 

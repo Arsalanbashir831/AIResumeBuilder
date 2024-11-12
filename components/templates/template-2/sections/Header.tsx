@@ -1,6 +1,8 @@
 import React from "react";
+import ProfileImage from "./ProfileImage";
 
 interface HeaderProps {
+	profileImage: string;
 	name: string;
 	email: string;
 	phone: string;
@@ -9,6 +11,7 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({
+	profileImage,
 	name,
 	email,
 	phone,
@@ -17,7 +20,7 @@ const Header: React.FC<HeaderProps> = ({
 }) => {
 	return (
 		<div className='text-center mb-6'>
-			<div className='w-20 h-20 mx-auto mb-4 rounded-full overflow-hidden bg-gray-200' />
+			<ProfileImage imageUrl={profileImage} alt={name} />
 			<h1 className='text-2xl font-bold mb-1'>{name}</h1>
 			<p className='text-gray-600 mb-2'>{tagline}</p>
 			<div className='flex justify-center items-center gap-4 text-sm text-gray-600'>

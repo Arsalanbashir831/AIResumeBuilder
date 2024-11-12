@@ -22,7 +22,7 @@ const Template1 = ({
 				contact: {
 					email: string;
 					phone: string;
-					website: string;
+					link: string;
 				};
 			};
 			summary: string;
@@ -90,7 +90,7 @@ const Template1 = ({
 					name={data.sections.personalInfo.name}
 					email={data.sections.personalInfo.contact.email}
 					phone={data.sections.personalInfo.contact.phone}
-					link={data.sections.personalInfo.contact.website}
+					link={data.sections.personalInfo.contact.link}
 					position={data.sections.personalInfo.title}
 				/>
 				<div className='grid grid-cols-1 md:grid-cols-12 gap-8 mt-8 px-10 h-full'>

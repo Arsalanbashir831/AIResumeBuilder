@@ -4,13 +4,14 @@ export const DUMMY_TEMPLATES_DATA = [
 		name: "Professional Template",
 		sections: {
 			personalInfo: {
+				profileImage: "/path/to/profile-image.jpg",
 				name: "John Doe",
 				title: "Software Engineer",
 				contact: {
 					phone: "123-456-7890",
 					email: "john.doe@example.com",
 					location: "San Francisco, CA",
-					website: "linkedin.com/in/johndoe",
+					link: "linkedin.com/in/johndoe",
 				},
 			},
 			summary:
@@ -106,13 +107,14 @@ export const DUMMY_TEMPLATES_DATA = [
 		name: "Creative Template",
 		sections: {
 			personalInfo: {
+				profileImage: "/path/to/profile-image.jpg",
 				name: "Jane Smith",
 				title: "Graphic Designer",
 				contact: {
 					phone: "555-123-4567",
 					email: "jane.smith@example.com",
 					location: "Los Angeles, CA",
-					website: "janesmithportfolio.com",
+					link: "janesmithportfolio.com",
 				},
 			},
 			summary:
@@ -189,13 +191,14 @@ export const DUMMY_TEMPLATES_DATA = [
 		name: "Minimalist Template",
 		sections: {
 			personalInfo: {
+				profileImage: "/path/to/profile-image.jpg",
 				name: "Michael Lee",
 				title: "Data Scientist",
 				contact: {
 					phone: "555-789-1234",
 					email: "michael.lee@example.com",
 					location: "Austin, TX",
-					website: "michaelleeportfolio.com",
+					link: "michaelleeportfolio.com",
 				},
 			},
 			summary:
