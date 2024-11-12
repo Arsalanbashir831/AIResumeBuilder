@@ -17,7 +17,7 @@ export default function TemplatesPage() {
 					.then((dataUrl) => {
 						setSnapshots((prev) => ({ ...prev, [template.id]: dataUrl }));
 					})
-					.catch((err) => console.error("Failed to generate snapshot", err));
+					.catch((err) => console.log("Failed to generate snapshot", err));
 			}
 		});
 	}, []);
@@ -43,6 +43,7 @@ export default function TemplatesPage() {
 					<Link key={template.id} href={`/dashboard/editor/${template.id}`}>
 						<div className='hover:bg-[#FDF8F4] hover:shadow-lg transition-all pt-8 pb-4 px-2 rounded-lg cursor-pointer'>
 							<div className='flex justify-center items-center w-full mx-auto'>
+								{/* Display template component until snapshot is ready */}
 								<div
 									ref={(el) => {
 										templateRefs.current[template.id] = el;
@@ -52,6 +53,7 @@ export default function TemplatesPage() {
 									}}>
 									<template.component />
 								</div>
+								{/* Show snapshot or loading skeleton */}
 								{snapshots[template.id] ? (
 									<Image
 										src={snapshots[template.id]}

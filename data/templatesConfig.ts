@@ -1,14 +1,14 @@
 // data/templatesConfig.ts
 import Template1 from "@/components/templates/template-1/template-1";
-import Template2 from "@/components/templates/template-1/template-1";
-import Template3 from "@/components/templates/template-1/template-1";
+import Template2 from "@/components/templates/template-2/template-2";
+import Template3 from "@/components/templates/template-3/template-3";
 
 export const templates = [
 	{
 		id: 1,
 		name: "Template 1",
 		component: Template1,
-		snapshot: "/path/to/template1-snapshot.jpg", // Add snapshot path
+		snapshot: "/path/to/template1-snapshot.jpg",
 	},
 	{
 		id: 2,

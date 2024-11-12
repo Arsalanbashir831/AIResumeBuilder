@@ -82,10 +82,10 @@ const Template1 = ({
 	}, []);
 
 	return (
-		<div className='flex justify-center items-center p-4'>
-			<div
+		<div className='flex justify-center items-center'>
+			<main
 				style={{ transform: `scale(${scale})`, transformOrigin: "top left" }}
-				className='w-[8.5] bg-white shadow-lg origin-top-left mx-auto'>
+				className='w-[8.5in] bg-white shadow-lg origin-top-left mx-auto'>
 				<Header
 					name={data.sections.personalInfo.name}
 					email={data.sections.personalInfo.contact.email}
@@ -113,7 +113,7 @@ const Template1 = ({
 						/>
 					</div>
 				</div>
-			</div>
+			</main>
 		</div>
 	);
 };
