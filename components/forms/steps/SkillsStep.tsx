@@ -35,7 +35,7 @@ export default function SkillsStep({
 				<InputField
 					label='Add Skill'
 					value={newSkill}
-					onChange={(value) => setNewSkill(value)}
+					onChange={(value) => setNewSkill(value as string)}
 					placeholder='Enter a new skill'
 				/>
 				<Button type='button' className='mt-2' onClick={handleAddSkill}>

@@ -54,7 +54,7 @@ export default function AchievementsStep({
 							label='Achievement Title'
 							value={newAchievement.title}
 							onChange={(value) =>
-								setNewAchievement({ ...newAchievement, title: value })
+								setNewAchievement({ ...newAchievement, title: value as string })
 							}
 							placeholder='e.g., Creative Excellence Award'
 						/>

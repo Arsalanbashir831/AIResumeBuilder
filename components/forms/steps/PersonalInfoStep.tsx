@@ -1,13 +1,25 @@
 import React from "react";
 import InputField from "@/components/InputField";
-import { TemplateData, SectionKey } from "@/types/global";
+import {
+	TemplateData,
+	SectionKey,
+	ExperienceItem,
+	Achievement,
+	EducationItem,
+} from "@/types/global";
 
 interface PersonalInfoStepProps {
 	resumeData: TemplateData;
 	handleInputChange: (
 		section: SectionKey,
 		field: string | null,
-		value: any
+		value:
+			| string
+			| { [key: string]: string }
+			| ExperienceItem[]
+			| string[]
+			| Achievement[]
+			| EducationItem[]
 	) => void;
 	fieldsIncluded?: {
 		name?: boolean;
@@ -53,14 +65,18 @@ const PersonalInfoStep: React.FC<PersonalInfoStepProps> = ({
 					type='file'
 					label='Profile Image'
 					value=''
-					onChange={(file: any) => handleImageUpload(file)}
+					onChange={(value) => {
+						handleImageUpload(value as File);
+					}}
 				/>
 			)}
 			{fieldsIncluded.name && (
 				<InputField
 					label='Name'
 					value={resumeData.sections.personalInfo.name}
-					onChange={(value) => handleInputChange("personalInfo", "name", value)}
+					onChange={(value) =>
+						handleInputChange("personalInfo", "name", value as string)
+					}
 				/>
 			)}
 			{fieldsIncluded.title && (
@@ -68,7 +84,7 @@ const PersonalInfoStep: React.FC<PersonalInfoStepProps> = ({
 					label='Position'
 					value={resumeData.sections.personalInfo.title}
 					onChange={(value) =>
-						handleInputChange("personalInfo", "title", value)
+						handleInputChange("personalInfo", "title", value as string)
 					}
 				/>
 			)}
@@ -80,7 +96,7 @@ const PersonalInfoStep: React.FC<PersonalInfoStepProps> = ({
 					onChange={(value) =>
 						handleInputChange("personalInfo", "contact", {
 							...resumeData.sections.personalInfo.contact,
-							email: value,
+							email: value as string,
 						})
 					}
 				/>
@@ -92,7 +108,7 @@ const PersonalInfoStep: React.FC<PersonalInfoStepProps> = ({
 					onChange={(value) =>
 						handleInputChange("personalInfo", "contact", {
 							...resumeData.sections.personalInfo.contact,
-							phone: value,
+							phone: value as string,
 						})
 					}
 				/>
@@ -105,7 +121,7 @@ const PersonalInfoStep: React.FC<PersonalInfoStepProps> = ({
 					onChange={(value) =>
 						handleInputChange("personalInfo", "contact", {
 							...resumeData.sections.personalInfo.contact,
-							link: value,
+							link: value as string,
 						})
 					}
 				/>

@@ -11,7 +11,6 @@ import {
 	SectionKey,
 	TemplateData,
 } from "@/types/global";
-import InputField from "@/components/InputField";
 import TextAreaField from "@/components/TextAreaField";
 import SkillsStep from "@/components/forms/steps/SkillsStep";
 import AchievementsStep from "@/components/forms/steps/AchievementsStep";

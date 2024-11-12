@@ -7,8 +7,8 @@ import { templates } from "@/data/templatesConfig";
 import Image from "next/image";
 
 export default function TemplatesPage() {
-	const [snapshots, setSnapshots] = useState<Record<number, string>>({});
-	const templateRefs = useRef<Record<number, HTMLElement | null>>({});
+	const [snapshots, setSnapshots] = useState<Record<string, string>>({});
+	const templateRefs = useRef<Record<string, HTMLElement | null>>({});
 
 	useEffect(() => {
 		templates.forEach((template) => {

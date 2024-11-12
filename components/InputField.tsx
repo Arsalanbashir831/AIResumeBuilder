@@ -17,13 +17,11 @@ const InputField: React.FC<InputFieldProps> = ({
 }) => {
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		if (type === "file") {
-			// Handle file upload by passing the file itself
 			const file = e.target.files?.[0];
 			if (file) {
-				onChange(file); // Pass the file to parent component's handler
+				onChange(file);
 			}
 		} else {
-			// For other types, just pass the value
 			onChange(e.target.value);
 		}
 	};
