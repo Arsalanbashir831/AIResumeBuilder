@@ -2,6 +2,7 @@
 import Template1 from "@/components/templates/template-1/template-1";
 import Template2 from "@/components/templates/template-2/template-2";
 import Template3 from "@/components/templates/template-3/template-3";
+import Template4 from "@/components/templates/template-4";
 
 export const templates = [
 	{
@@ -20,13 +21,26 @@ export const templates = [
 					email: true,
 					phone: true,
 					link: true,
+					location: true,
 				},
 			},
 			{ key: "summary", label: "Summary" },
 			{ key: "experience", label: "Experience" },
 			{ key: "skills", label: "Skills" },
 			{ key: "achievements", label: "Achievements" },
-			{ key: "educations", label: "Education" },
+			{
+				key: "educations",
+				label: "Education",
+				fieldsIncluded: {
+					institution: true,
+					degree: true,
+					location: true,
+					gpa: true,
+					startDate: true,
+					endDate: true,
+					isCurrent: true,
+				},
+			},
 			{ key: "additionalExperience", label: "Additional Experience" },
 		],
 	},
@@ -46,13 +60,26 @@ export const templates = [
 					email: true,
 					phone: true,
 					link: true,
+					location: true,
 				},
 			},
 			{ key: "summary", label: "Summary" },
 			{ key: "skills", label: "Skills" },
 			{ key: "achievements", label: "Strengths" },
 			{ key: "experience", label: "Experience" },
-			{ key: "educations", label: "Education" },
+			{
+				key: "educations",
+				label: "Education",
+				fieldsIncluded: {
+					institution: true,
+					degree: true,
+					location: true,
+					gpa: true,
+					startDate: true,
+					endDate: true,
+					isCurrent: true,
+				},
+			},
 		],
 	},
 	{
@@ -71,11 +98,52 @@ export const templates = [
 					email: true,
 					phone: true,
 					link: true,
+					location: true,
 				},
 			},
 			{ key: "summary", label: "Profile" },
 			{ key: "skills", label: "Skills" },
 			{ key: "experience", label: "Experience" },
+		],
+	},
+	{
+		id: "template-4",
+		name: "Template 4",
+		component: Template4,
+		snapshot: "/path/to/template4-snapshot.jpg",
+		sections: [
+			{
+				key: "personalInfo",
+				label: "Personal Information",
+				fieldsIncluded: {
+					profileImage: false,
+					name: true,
+					title: true,
+					email: true,
+					phone: true,
+					link: true,
+					location: true,
+				},
+			},
+			{ key: "summary", label: "Summary" },
+			{
+				key: "educations",
+				label: "Education",
+				fieldsIncluded: {
+					institution: true,
+					degree: true,
+					location: true,
+					gpa: true,
+					startDate: true,
+					endDate: true,
+					isCurrent: true,
+				},
+			},
+			{ key: "experience", label: "Experience" },
+			{ key: "achievements", label: "Most Proud Of" },
+			{ key: "skills", label: "Skills" },
+			{ key: "strengths", label: "Strengths" },
+			{ key: "expertise", label: "Expertise" },
 		],
 	},
 ];

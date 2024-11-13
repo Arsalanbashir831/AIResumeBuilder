@@ -8,6 +8,7 @@ import {
 	Achievement,
 	EducationItem,
 	ExperienceItem,
+	Expertise,
 	SectionKey,
 	TemplateData,
 } from "@/types/global";
@@ -21,6 +22,7 @@ import { templates } from "@/data/templatesConfig";
 import { ArrowLeft } from "lucide-react";
 import AiButton from "@/components/AiButton";
 import PersonalInfoStep from "@/components/forms/steps/PersonalInfoStep";
+import ExpertiseStep from "@/components/forms/steps/ExpertiseStep";
 
 // Modal component for subscription
 const SubscriptionModal = ({ onClose }: { onClose: () => void }) => (
@@ -58,8 +60,9 @@ const StepContent = ({
 			| string[]
 			| Achievement[]
 			| EducationItem[]
+			| Expertise[]
 	) => void;
-	fieldsIncluded?: { [key: string]: boolean };
+	fieldsIncluded?: { [key: string]: boolean | undefined };
 }) => {
 	switch (sectionKey) {
 		case "personalInfo":
@@ -117,6 +120,17 @@ const StepContent = ({
 					/>
 				</div>
 			);
+		case "strengths":
+			return (
+				<div>
+					<AchievementsStep
+						achievements={resumeData.sections.strengths}
+						onChange={(updatedAchievements) =>
+							handleInputChange("strengths", "", updatedAchievements)
+						}
+					/>
+				</div>
+			);
 		case "educations":
 			return (
 				<div>
@@ -135,6 +149,17 @@ const StepContent = ({
 						experiences={resumeData.sections.additionalExperience}
 						onChange={(updatedExperiences) =>
 							handleInputChange("additionalExperience", "", updatedExperiences)
+						}
+					/>
+				</div>
+			);
+		case "expertise":
+			return (
+				<div>
+					<ExpertiseStep
+						expertise={resumeData.sections.expertise}
+						onChange={(updatedExpertise) =>
+							handleInputChange("expertise", "", updatedExpertise)
 						}
 					/>
 				</div>
@@ -170,6 +195,7 @@ export default function TemplateEditor() {
 			| string[]
 			| Achievement[]
 			| EducationItem[]
+			| Expertise[]
 	) => {
 		setResumeData((prevData) => ({
 			...prevData,
@@ -243,7 +269,7 @@ export default function TemplateEditor() {
 								sectionKey={sectionConfig[step - 1].key}
 								resumeData={resumeData}
 								handleInputChange={handleInputChange}
-								fieldsIncluded={sectionConfig[step - 1].fieldsIncluded}
+								fieldsIncluded={sectionConfig[step - 1]?.fieldsIncluded}
 							/>
 							<div className='flex justify-between mt-6'>
 								<Button onClick={() => setStep(step - 1)} disabled={step === 1}>

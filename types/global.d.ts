@@ -23,6 +23,9 @@ export interface ExperienceItem {
 export interface EducationItem {
 	institution: string;
 	degree: string;
+	location?: string;
+	totalGpa?: number;
+	obtainedGpa?: number;
 	startDate: string;
 	endDate: string;
 	isCurrent: boolean;
@@ -35,11 +38,18 @@ export type SectionKey =
 	| "educations"
 	| "skills"
 	| "achievements"
-	| "additionalExperience";
+	| "strengths"
+	| "additionalExperience"
+	| "expertise";
 
 export interface Achievement {
 	title: string;
 	description: string;
+}
+
+export interface Expertise {
+	title: string;
+	percent: number;
 }
 
 export interface TemplateData {
@@ -50,6 +60,7 @@ export interface TemplateData {
 		educations: EducationItem[];
 		skills: string[];
 		achievements: Achievement[];
+		strengths: Achievement[];
 		additionalExperience: {
 			title: string;
 			company: string;
@@ -59,5 +70,6 @@ export interface TemplateData {
 			isCurrent: boolean;
 			achievements: string[];
 		}[];
+		expertise: Expertise[];
 	};
 }

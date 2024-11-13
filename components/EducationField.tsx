@@ -1,22 +1,20 @@
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { formatToDateInputValue, formatToMonthYearDate } from "@/lib/utils";
+import { EducationItem } from "@/types/global";
 
 type EducationFieldKeys =
 	| "institution"
 	| "degree"
+	| "location"
+	| "totalGpa"
+	| "obtainedGpa"
 	| "startDate"
 	| "endDate"
 	| "isCurrent";
 
 interface EducationFieldProps {
-	education: {
-		institution: string;
-		degree: string;
-		startDate: string;
-		endDate: string;
-		isCurrent: boolean;
-	};
+	education: EducationItem;
 	onChange: (
 		field: EducationFieldKeys,
 		value: string | boolean,
@@ -77,6 +75,51 @@ const EducationField: React.FC<EducationFieldProps> = ({
 					id={`degree-${index}`}
 					value={education.degree}
 					onChange={(e) => onChange("degree", e.target.value, index)}
+					className='w-full mt-1 p-3 border rounded-lg focus:outline-none focus:ring-2'
+				/>
+			</div>
+
+			{/* Location */}
+			<div className='space-y-2'>
+				<label
+					htmlFor={`company-${index}`}
+					className='block text-sm font-semibold text-gray-700'>
+					Location
+				</label>
+				<Input
+					id={`location-${index}`}
+					value={education.location}
+					onChange={(e) => onChange("location", e.target.value, index)}
+					className='w-full mt-1 p-3 border rounded-lg focus:outline-none focus:ring-2'
+				/>
+			</div>
+
+			{/* Obtained GPA */}
+			<div className='space-y-2'>
+				<label
+					htmlFor={`obtainedGpa-${index}`}
+					className='block text-sm font-semibold text-gray-700'>
+					Obtained GPA
+				</label>
+				<Input
+					id={`obtainedGpa-${index}`}
+					value={education.obtainedGpa}
+					onChange={(e) => onChange("obtainedGpa", e.target.value, index)}
+					className='w-full mt-1 p-3 border rounded-lg focus:outline-none focus:ring-2'
+				/>
+			</div>
+
+			{/* TotalGPA */}
+			<div className='space-y-2'>
+				<label
+					htmlFor={`totalGpa-${index}`}
+					className='block text-sm font-semibold text-gray-700'>
+					GPA
+				</label>
+				<Input
+					id={`totalGpa-${index}`}
+					value={education.totalGpa}
+					onChange={(e) => onChange("totalGpa", e.target.value, index)}
 					className='w-full mt-1 p-3 border rounded-lg focus:outline-none focus:ring-2'
 				/>
 			</div>

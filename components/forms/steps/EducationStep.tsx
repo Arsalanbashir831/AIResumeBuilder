@@ -18,6 +18,7 @@ export default function EducationStep({
 		const newEducation: EducationItem = {
 			institution: "",
 			degree: "",
+			location: "",
 			startDate: "",
 			endDate: "",
 			isCurrent: false,

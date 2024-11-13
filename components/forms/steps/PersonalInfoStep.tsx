@@ -28,6 +28,7 @@ interface PersonalInfoStepProps {
 		phone?: boolean;
 		link?: boolean;
 		profileImage?: boolean;
+		location?: boolean;
 	};
 }
 
@@ -85,6 +86,15 @@ const PersonalInfoStep: React.FC<PersonalInfoStepProps> = ({
 					value={resumeData.sections.personalInfo.title}
 					onChange={(value) =>
 						handleInputChange("personalInfo", "title", value as string)
+					}
+				/>
+			)}
+			{fieldsIncluded.location && (
+				<InputField
+					label='Location'
+					value={resumeData.sections.personalInfo.contact.location}
+					onChange={(value) =>
+						handleInputChange("personalInfo", "location", value as string)
 					}
 				/>
 			)}

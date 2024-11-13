@@ -76,6 +76,9 @@ export const DUMMY_TEMPLATES_DATA = [
 				{
 					institution: "Stanford University",
 					degree: "Master of Science in Computer Science",
+					location: "Stanford, CA",
+					totalGpa: 4.0,
+					obtainedGpa: 3.9,
 					startDate: "10/2012",
 					endDate: "12/2014",
 					isCurrent: false,
@@ -83,6 +86,9 @@ export const DUMMY_TEMPLATES_DATA = [
 				{
 					institution: "University of California, Berkeley",
 					degree: "Bachelor of Arts in Computer Science",
+					location: "Berkeley, CA",
+					totalGpa: 4.0,
+					obtainedGpa: 3.8,
 					startDate: "10/2008",
 					endDate: "12/2012",
 					isCurrent: false,
@@ -99,6 +105,24 @@ export const DUMMY_TEMPLATES_DATA = [
 					title: "Sales Award",
 					description: "Achieved 150% of the sales target in 2020",
 				},
+			],
+			strengths: [
+				{
+					title: "Innovation Award",
+					description:
+						"Developed a predictive model that improved customer retention by 15%.",
+				},
+				{
+					title: "Top Performer Award",
+					description:
+						"Recognized as the top performer in the data science team for two consecutive years.",
+				},
+			],
+			expertise: [
+				{ title: "JavaScript", percent: 90 },
+				{ title: "React", percent: 85 },
+				{ title: "Node.js", percent: 80 },
+				{ title: "TypeScript", percent: 75 },
 			],
 		},
 	},
@@ -166,6 +190,9 @@ export const DUMMY_TEMPLATES_DATA = [
 				{
 					institution: "University of California, Los Angeles (UCLA)",
 					degree: "Bachelor of Fine Arts in Graphic Design",
+					location: "Los Angeles, CA",
+					totalGpa: 4.0,
+					obtainedGpa: 3.9,
 					startDate: "10/2012",
 					endDate: "12/2014",
 					isCurrent: false,
@@ -183,6 +210,24 @@ export const DUMMY_TEMPLATES_DATA = [
 					description:
 						"Recognized for having one of the best design portfolios in the industry.",
 				},
+			],
+			strengths: [
+				{
+					title: "Innovation Award",
+					description:
+						"Developed a predictive model that improved customer retention by 15%.",
+				},
+				{
+					title: "Top Performer Award",
+					description:
+						"Recognized as the top performer in the data science team for two consecutive years.",
+				},
+			],
+			expertise: [
+				{ title: "Adobe Photoshop", percent: 90 },
+				{ title: "Illustrator", percent: 85 },
+				{ title: "InDesign", percent: 80 },
+				{ title: "UI/UX Design", percent: 75 },
 			],
 		},
 	},
@@ -249,6 +294,9 @@ export const DUMMY_TEMPLATES_DATA = [
 				{
 					institution: "Massachusetts Institute of Technology (MIT)",
 					degree: "Master of Science in Data Science",
+					location: "Cambridge, MA",
+					totalGpa: 4.0,
+					obtainedGpa: 3.8,
 					startDate: "10/2012",
 					endDate: "12/2014",
 					isCurrent: false,
@@ -256,6 +304,9 @@ export const DUMMY_TEMPLATES_DATA = [
 				{
 					institution: "University of California, Berkeley",
 					degree: "Bachelor of Science in Computer Science",
+					location: "Berkeley, CA",
+					totalGpa: 4.0,
+					obtainedGpa: 3.9,
 					startDate: "10/2008",
 					endDate: "12/2012",
 					isCurrent: false,
@@ -273,6 +324,24 @@ export const DUMMY_TEMPLATES_DATA = [
 					description:
 						"Recognized as the top performer in the data science team for two consecutive years.",
 				},
+			],
+			strengths: [
+				{
+					title: "Innovation Award",
+					description:
+						"Developed a predictive model that improved customer retention by 15%.",
+				},
+				{
+					title: "Top Performer Award",
+					description:
+						"Recognized as the top performer in the data science team for two consecutive years.",
+				},
+			],
+			expertise: [
+				{ title: "Python", percent: 90 },
+				{ title: "R", percent: 85 },
+				{ title: "SQL", percent: 80 },
+				{ title: "Machine Learning", percent: 75 },
 			],
 		},
 	},

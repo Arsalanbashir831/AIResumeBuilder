@@ -3,8 +3,8 @@ import { Input } from "@/components/ui/input";
 interface InputFieldProps {
 	type?: string;
 	label: string;
-	value: string;
-	onChange: (value: string | File) => void;
+	value: string | number;
+	onChange: (value: string | File | number) => void;
 	placeholder?: string;
 }
 
