@@ -4,7 +4,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { TrashIcon, PlusCircleIcon } from "lucide-react";
 import InputField from "@/components/InputField";
-import TextAreaField from "@/components/TextAreaField";
 import AiButton from "@/components/AiButton";
 import { Expertise } from "@/types/global";
 import { Progress } from "@/components/ui/progress";

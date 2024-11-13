@@ -69,52 +69,56 @@ const ResumeTemplate: React.FC<TemplateProps> = ({
 	}, []);
 
 	return (
-		<div className='max-w-4xl mx-auto p-8 bg-white'>
-			{/* Header Section */}
-			<Header
-				name={data.sections.personalInfo.name}
-				location={data.sections.personalInfo.contact.location}
-				email={data.sections.personalInfo.contact.email}
-				phone={data.sections.personalInfo.contact.phone}
-				link={data.sections.personalInfo.contact.link}
-				tagline={data.sections.personalInfo.title}
-			/>
+		<div className='flex justify-center items-center'>
+			<main
+				style={{ transform: `scale(${scale})`, transformOrigin: "top left" }}
+				className='w-[8.5in] bg-white origin-top-left mx-auto p-4'>
+				{/* Header Section */}
+				<Header
+					name={data.sections.personalInfo.name}
+					location={data.sections.personalInfo.contact.location}
+					email={data.sections.personalInfo.contact.email}
+					phone={data.sections.personalInfo.contact.phone}
+					link={data.sections.personalInfo.contact.link}
+					tagline={data.sections.personalInfo.title}
+				/>
 
-			{/* Two Column Layout */}
-			<div className='grid grid-cols-1 md:grid-cols-3 gap-8'>
-				{/* Main Content */}
-				<div className='md:col-span-2'>
-					{/* Summary */}
-					<Summary summary={data.sections.summary} />
+				{/* Two Column Layout */}
+				<div className='grid grid-cols-1 md:grid-cols-3 gap-8'>
+					{/* Main Content */}
+					<div className='md:col-span-2'>
+						{/* Summary */}
+						<Summary summary={data.sections.summary} />
 
-					{/* Education */}
-					<Education educations={data.sections.educations} />
+						{/* Education */}
+						<Education educations={data.sections.educations} />
 
-					{/* Experience */}
-					<Experience experiences={data.sections.experience} />
+						{/* Experience */}
+						<Experience experiences={data.sections.experience} />
+					</div>
+
+					{/* Sidebar */}
+					<div>
+						{/* Most Proud Of */}
+						<Strengths
+							heading='MOST PROUD OF'
+							achievements={data.sections.achievements}
+						/>
+
+						{/* Skills */}
+						<Skills skills={data.sections.skills} />
+
+						{/* Strengths */}
+						<Strengths
+							heading='STRENGTHS'
+							achievements={data.sections.strengths}
+						/>
+
+						{/* Industry Expertise */}
+						<IndustryExpertise experties={data.sections.expertise} />
+					</div>
 				</div>
-
-				{/* Sidebar */}
-				<div>
-					{/* Most Proud Of */}
-					<Strengths
-						heading='MOST PROUD OF'
-						achievements={data.sections.achievements}
-					/>
-
-					{/* Skills */}
-					<Skills skills={data.sections.skills} />
-
-					{/* Strengths */}
-					<Strengths
-						heading='STRENGTHS'
-						achievements={data.sections.strengths}
-					/>
-
-					{/* Industry Expertise */}
-					<IndustryExpertise experties={data.sections.expertise} />
-				</div>
-			</div>
+			</main>
 		</div>
 	);
 };
