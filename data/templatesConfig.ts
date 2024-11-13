@@ -3,6 +3,7 @@ import Template1 from "@/components/templates/template-1/template-1";
 import Template2 from "@/components/templates/template-2/template-2";
 import Template3 from "@/components/templates/template-3/template-3";
 import Template4 from "@/components/templates/template-4";
+import Template5 from "@/components/templates/template-5";
 
 export const templates = [
 	{
@@ -35,10 +36,9 @@ export const templates = [
 					institution: true,
 					degree: true,
 					location: true,
-					gpa: true,
+					gpa: false,
 					startDate: true,
 					endDate: true,
-					isCurrent: true,
 				},
 			},
 			{ key: "additionalExperience", label: "Additional Experience" },
@@ -74,10 +74,9 @@ export const templates = [
 					institution: true,
 					degree: true,
 					location: true,
-					gpa: true,
+					gpa: false,
 					startDate: true,
 					endDate: true,
-					isCurrent: true,
 				},
 			},
 		],
@@ -136,7 +135,6 @@ export const templates = [
 					gpa: true,
 					startDate: true,
 					endDate: true,
-					isCurrent: true,
 				},
 			},
 			{ key: "experience", label: "Experience" },
@@ -144,6 +142,44 @@ export const templates = [
 			{ key: "skills", label: "Skills" },
 			{ key: "strengths", label: "Strengths" },
 			{ key: "expertise", label: "Expertise" },
+		],
+	},
+	{
+		id: "template-5",
+		name: "Template 5",
+		component: Template5,
+		snapshot: "/path/to/template5-snapshot.jpg",
+		sections: [
+			{
+				key: "personalInfo",
+				label: "Personal Information",
+				fieldsIncluded: {
+					profileImage: true,
+					name: true,
+					title: true,
+					email: true,
+					phone: true,
+					link: true,
+					location: true,
+				},
+			},
+			{ key: "experience", label: "Experience" },
+			{ key: "skills", label: "Tech Stack" },
+			{ key: "achievements", label: "Key Achievements" },
+			{ key: "certificates", label: "Certificates" },
+			{
+				key: "educations",
+				label: "Education",
+				fieldsIncluded: {
+					institution: true,
+					degree: true,
+					location: true,
+					gpa: false,
+					startDate: true,
+					endDate: true,
+				},
+			},
+			{ key: "hobbies", label: "Passions" },
 		],
 	},
 ];

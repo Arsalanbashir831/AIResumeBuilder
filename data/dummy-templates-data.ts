@@ -124,6 +124,17 @@ export const DUMMY_TEMPLATES_DATA = [
 				{ title: "Node.js", percent: 80 },
 				{ title: "TypeScript", percent: 75 },
 			],
+			certificates: [
+				{
+					name: "Full-Stack Web Development Certification",
+					organization: "Udemy",
+				},
+				{
+					name: "AWS Certified Solutions Architect",
+					organization: "Amazon Web Services",
+				},
+			],
+			hobbies: [{ name: "Hiking" }, { name: "Reading" }, { name: "Cooking" }],
 		},
 	},
 	{
@@ -228,6 +239,21 @@ export const DUMMY_TEMPLATES_DATA = [
 				{ title: "Illustrator", percent: 85 },
 				{ title: "InDesign", percent: 80 },
 				{ title: "UI/UX Design", percent: 75 },
+			],
+			certificates: [
+				{
+					name: "UI/UX Design Certification",
+					organization: "Interaction Design Foundation",
+				},
+				{
+					name: "Adobe Certified Expert",
+					organization: "Adobe",
+				},
+			],
+			hobbies: [
+				{ name: "Painting" },
+				{ name: "Photography" },
+				{ name: "Traveling" },
 			],
 		},
 	},
@@ -343,6 +369,17 @@ export const DUMMY_TEMPLATES_DATA = [
 				{ title: "SQL", percent: 80 },
 				{ title: "Machine Learning", percent: 75 },
 			],
+			certificates: [
+				{
+					name: "Machine Learning Certification",
+					organization: "Coursera",
+				},
+				{
+					name: "Data Science Certification",
+					organization: "edX",
+				},
+			],
+			hobbies: [{ name: "Running" }, { name: "Reading" }, { name: "Yoga" }],
 		},
 	},
 ];

@@ -7,11 +7,20 @@ import { EducationItem } from "@/types/global";
 interface EducationStepProps {
 	educations: EducationItem[];
 	onChange: (educations: EducationItem[]) => void;
+	fieldsIncluded?: {
+		institution?: boolean;
+		degree?: boolean;
+		location?: boolean;
+		gpa?: boolean;
+		startDate?: boolean;
+		endDate?: boolean;
+	};
 }
 
 export default function EducationStep({
 	educations,
 	onChange,
+	fieldsIncluded,
 }: EducationStepProps) {
 	// Add a new empty education entry to the list
 	const handleAddEducation = () => {
@@ -78,6 +87,7 @@ export default function EducationStep({
 								}
 								handleCheckboxChange={handleCheckboxChange}
 								index={index}
+								fieldsIncluded={fieldsIncluded}
 							/>
 							<Button
 								type='button'

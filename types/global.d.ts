@@ -40,16 +40,27 @@ export type SectionKey =
 	| "achievements"
 	| "strengths"
 	| "additionalExperience"
-	| "expertise";
+	| "expertise"
+	| "certificates"
+	| "hobbies";
 
 export interface Achievement {
 	title: string;
 	description: string;
 }
 
+export interface Certificate {
+	name: string;
+	organization: string;
+}
+
 export interface Expertise {
 	title: string;
 	percent: number;
+}
+
+export interface Hobby {
+	name: string;
 }
 
 export interface TemplateData {
@@ -61,6 +72,7 @@ export interface TemplateData {
 		skills: string[];
 		achievements: Achievement[];
 		strengths: Achievement[];
+		certificates: Certificate[];
 		additionalExperience: {
 			title: string;
 			company: string;
@@ -71,5 +83,6 @@ export interface TemplateData {
 			achievements: string[];
 		}[];
 		expertise: Expertise[];
+		hobbies: Hobby[];
 	};
 }

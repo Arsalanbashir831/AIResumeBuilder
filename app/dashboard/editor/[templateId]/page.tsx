@@ -6,9 +6,11 @@ import { Card, CardContent } from "@/components/ui/card";
 import { DUMMY_TEMPLATES_DATA } from "@/data/dummy-templates-data";
 import {
 	Achievement,
+	Certificate,
 	EducationItem,
 	ExperienceItem,
 	Expertise,
+	Hobby,
 	SectionKey,
 	TemplateData,
 } from "@/types/global";
@@ -23,6 +25,8 @@ import { ArrowLeft } from "lucide-react";
 import AiButton from "@/components/AiButton";
 import PersonalInfoStep from "@/components/forms/steps/PersonalInfoStep";
 import ExpertiseStep from "@/components/forms/steps/ExpertiseStep";
+import CertificatesStep from "@/components/forms/steps/CertificatesStep";
+import HobbiesStep from "@/components/forms/steps/HobbiesStep";
 
 // Modal component for subscription
 const SubscriptionModal = ({ onClose }: { onClose: () => void }) => (
@@ -61,6 +65,8 @@ const StepContent = ({
 			| Achievement[]
 			| EducationItem[]
 			| Expertise[]
+			| Certificate[]
+			| Hobby[]
 	) => void;
 	fieldsIncluded?: { [key: string]: boolean | undefined };
 }) => {
@@ -131,6 +137,28 @@ const StepContent = ({
 					/>
 				</div>
 			);
+		case "certificates":
+			return (
+				<div>
+					<CertificatesStep
+						certificates={resumeData.sections.certificates}
+						onChange={(updatedCertificate) =>
+							handleInputChange("certificates", "", updatedCertificate)
+						}
+					/>
+				</div>
+			);
+		case "hobbies":
+			return (
+				<div>
+					<HobbiesStep
+						hobbies={resumeData.sections.hobbies}
+						onChange={(updatedHobbies) =>
+							handleInputChange("hobbies", "", updatedHobbies)
+						}
+					/>
+				</div>
+			);
 		case "educations":
 			return (
 				<div>
@@ -139,6 +167,7 @@ const StepContent = ({
 						onChange={(updatedEducations) =>
 							handleInputChange("educations", "", updatedEducations)
 						}
+						fieldsIncluded={fieldsIncluded}
 					/>
 				</div>
 			);
@@ -196,6 +225,8 @@ export default function TemplateEditor() {
 			| Achievement[]
 			| EducationItem[]
 			| Expertise[]
+			| Certificate[]
+			| Hobby[]
 	) => {
 		setResumeData((prevData) => ({
 			...prevData,
