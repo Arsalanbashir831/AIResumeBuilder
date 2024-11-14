@@ -7,11 +7,20 @@ import { ExperienceItem } from "@/types/global";
 interface ExperienceStepProps {
 	experiences: ExperienceItem[];
 	onChange: (experiences: ExperienceItem[]) => void;
+	fieldsIncluded?: {
+		title?: boolean;
+		company?: boolean;
+		location?: boolean;
+		startDate?: boolean;
+		endDate?: boolean;
+		achievements?: boolean;
+	};
 }
 
 export default function ExperienceStep({
 	experiences,
 	onChange,
+	fieldsIncluded,
 }: ExperienceStepProps) {
 	// Add a new empty experience entry to the list
 	const handleAddExperience = () => {
@@ -78,6 +87,7 @@ export default function ExperienceStep({
 								}
 								handleCheckboxChange={handleCheckboxChange}
 								index={index}
+								fieldsIncluded={fieldsIncluded}
 							/>
 							<Button
 								type='button'

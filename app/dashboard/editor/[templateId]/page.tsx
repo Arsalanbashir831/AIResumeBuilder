@@ -101,6 +101,7 @@ const StepContent = ({
 						onChange={(updatedExperiences) =>
 							handleInputChange("experience", "", updatedExperiences)
 						}
+						fieldsIncluded={fieldsIncluded}
 					/>
 				</div>
 			);

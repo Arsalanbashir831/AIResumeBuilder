@@ -8,6 +8,7 @@ interface HeaderProps {
 	phone: string;
 	link: string;
 	tagline: string;
+	location: string;
 }
 
 const Header: React.FC<HeaderProps> = ({
@@ -17,6 +18,7 @@ const Header: React.FC<HeaderProps> = ({
 	phone,
 	link,
 	tagline,
+	location,
 }) => {
 	return (
 		<div className='text-center mb-6'>
@@ -29,6 +31,8 @@ const Header: React.FC<HeaderProps> = ({
 				<span>{email}</span>
 				<span>•</span>
 				<span>{link}</span>
+				<span>•</span>
+				<span>{location}</span>
 			</div>
 		</div>
 	);

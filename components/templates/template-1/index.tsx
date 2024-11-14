@@ -9,7 +9,7 @@ import { DUMMY_TEMPLATES_DATA } from "@/data/dummy-templates-data";
 import { useEffect, useState } from "react";
 import { Achievement } from "@/types/global";
 
-const Template1 = ({
+const ResumeTemplate = ({
 	isEditing = false,
 	templateData,
 }: {
@@ -118,4 +118,4 @@ const Template1 = ({
 	);
 };
 
-export default Template1;
+export default ResumeTemplate;

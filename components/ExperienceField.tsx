@@ -30,6 +30,14 @@ interface ExperienceFieldProps {
 	) => void;
 	handleCheckboxChange: (index: number, checked: boolean) => void;
 	index: number;
+	fieldsIncluded?: {
+		title?: boolean;
+		company?: boolean;
+		location?: boolean;
+		startDate?: boolean;
+		endDate?: boolean;
+		achievements?: boolean;
+	};
 }
 
 const ExperienceField: React.FC<ExperienceFieldProps> = ({
@@ -37,6 +45,14 @@ const ExperienceField: React.FC<ExperienceFieldProps> = ({
 	onChange,
 	handleCheckboxChange,
 	index,
+	fieldsIncluded = {
+		title: true,
+		company: true,
+		location: true,
+		startDate: true,
+		endDate: true,
+		achievements: true,
+	},
 }) => {
 	const formattedStartDate = formatToDateInputValue(experience.startDate);
 	const formattedEndDate = experience.isCurrent
@@ -77,156 +93,157 @@ const ExperienceField: React.FC<ExperienceFieldProps> = ({
 		onChange("achievements", updatedAchievements, index);
 	};
 
-	// Correctly handle checkbox toggle
-	// const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-	// 	const isChecked = e.target.checked;
-	// 	onChange("isCurrent", isChecked, index);
-	// 	if (isChecked) {
-	// 		onChange("endDate", "", index); // If it's checked, reset the end date to "Present"
-	// 	} else {
-	// 		onChange("endDate", formattedEndDate, index); // Otherwise, keep the formatted end date
-	// 	}
-	// };
-
 	return (
 		<div className='my-4 grid grid-cols-1 md:grid-cols-2 gap-6'>
 			{/* Job Title */}
-			<div className='space-y-2'>
-				<label
-					htmlFor={`title-${index}`}
-					className='block text-sm font-semibold text-gray-700'>
-					Job Title
-				</label>
-				<Input
-					id={`title-${index}`}
-					value={experience.title}
-					onChange={(e) => onChange("title", e.target.value, index)}
-					className='w-full mt-1 p-3 border rounded-lg focus:outline-none focus:ring-2'
-				/>
-			</div>
-
-			{/* Company Name */}
-			<div className='space-y-2'>
-				<label
-					htmlFor={`company-${index}`}
-					className='block text-sm font-semibold text-gray-700'>
-					Company
-				</label>
-				<Input
-					id={`company-${index}`}
-					value={experience.company}
-					onChange={(e) => onChange("company", e.target.value, index)}
-					className='w-full mt-1 p-3 border rounded-lg focus:outline-none focus:ring-2'
-				/>
-			</div>
-
-			{/* Location */}
-			<div className='space-y-2'>
-				<label
-					htmlFor={`company-${index}`}
-					className='block text-sm font-semibold text-gray-700'>
-					Location
-				</label>
-				<Input
-					id={`location-${index}`}
-					value={experience.location}
-					onChange={(e) => onChange("location", e.target.value, index)}
-					className='w-full mt-1 p-3 border rounded-lg focus:outline-none focus:ring-2'
-				/>
-			</div>
-
-			{/* Start Date */}
-			<div className='space-y-2'>
-				<label
-					htmlFor={`startDate-${index}`}
-					className='block text-sm font-semibold text-gray-700'>
-					Start Date
-				</label>
-				<Input
-					id={`startDate-${index}`}
-					type='month'
-					value={formattedStartDate}
-					onChange={(e) => handleDateChange("startDate", e.target.value)}
-					className='w-full mt-1 p-3 border rounded-lg focus:outline-none focus:ring-2'
-				/>
-			</div>
-
-			{/* End Date or Current Job Checkbox */}
-			<div className='space-y-2'>
-				<label
-					htmlFor={`endDate-${index}`}
-					className='block text-sm font-semibold text-gray-700'>
-					End Date
-				</label>
-				{experience.isCurrent ? (
+			{fieldsIncluded.title && (
+				<div className='space-y-2'>
+					<label
+						htmlFor={`title-${index}`}
+						className='block text-sm font-semibold text-gray-700'>
+						Job Title
+					</label>
 					<Input
-						id={`endDate-${index}`}
-						value='Present'
-						disabled={true}
-						className='w-full mt-1 p-3 border rounded-lg bg-gray-200 text-gray-600'
-					/>
-				) : (
-					<Input
-						id={`endDate-${index}`}
-						type='month'
-						value={formattedEndDate}
-						onChange={(e) => handleDateChange("endDate", e.target.value)}
+						id={`title-${index}`}
+						value={experience.title}
+						onChange={(e) => onChange("title", e.target.value, index)}
 						className='w-full mt-1 p-3 border rounded-lg focus:outline-none focus:ring-2'
 					/>
-				)}
+				</div>
+			)}
 
-				<div className='flex items-center mt-3'>
-					<Checkbox
-						id={`isCurrent-${index}`}
-						checked={experience.isCurrent}
-						onCheckedChange={(checked) =>
-							handleCheckboxChange(index, checked as boolean)
-						}
+			{/* Company Name */}
+			{fieldsIncluded.company && (
+				<div className='space-y-2'>
+					<label
+						htmlFor={`company-${index}`}
+						className='block text-sm font-semibold text-gray-700'>
+						Company
+					</label>
+					<Input
+						id={`company-${index}`}
+						value={experience.company}
+						onChange={(e) => onChange("company", e.target.value, index)}
+						className='w-full mt-1 p-3 border rounded-lg focus:outline-none focus:ring-2'
 					/>
-					<label
-						htmlFor={`isCurrent-${index}`}
-						className='ml-2 text-sm text-gray-700'>
-						Current Job
-					</label>
 				</div>
-			</div>
+			)}
 
-			{/* Achievements */}
-			<div className='space-y-2 md:col-span-2'>
-				<div className='flex items-center justify-between'>
+			{/* Location */}
+			{fieldsIncluded.location && (
+				<div className='space-y-2'>
 					<label
-						htmlFor={`achievements-${index}`}
-						className='block font-semibold text-gray-700'>
-						Achievements
+						htmlFor={`company-${index}`}
+						className='block text-sm font-semibold text-gray-700'>
+						Location
 					</label>
-
-					<Button
-						type='button'
-						size='sm'
-						onClick={handleAddAchievement}
-						className='mt-3 p-2 text-white rounded-lg focus:outline-none'>
-						<PlusIcon className='w-4 h-4' />
-						New
-					</Button>
+					<Input
+						id={`location-${index}`}
+						value={experience.location}
+						onChange={(e) => onChange("location", e.target.value, index)}
+						className='w-full mt-1 p-3 border rounded-lg focus:outline-none focus:ring-2'
+					/>
 				</div>
+			)}
 
-				{experience.achievements.map((achievement, idx) => (
-					<div key={idx} className='flex items-center space-x-3 mt-2'>
+			{/* Start Date */}
+			{fieldsIncluded.startDate && (
+				<div className='space-y-2'>
+					<label
+						htmlFor={`startDate-${index}`}
+						className='block text-sm font-semibold text-gray-700'>
+						Start Date
+					</label>
+					<Input
+						id={`startDate-${index}`}
+						type='month'
+						value={formattedStartDate}
+						onChange={(e) => handleDateChange("startDate", e.target.value)}
+						className='w-full mt-1 p-3 border rounded-lg focus:outline-none focus:ring-2'
+					/>
+				</div>
+			)}
+
+			{/* End Date or Current Job Checkbox */}
+			{fieldsIncluded.endDate && (
+				<div className='space-y-2'>
+					<label
+						htmlFor={`endDate-${index}`}
+						className='block text-sm font-semibold text-gray-700'>
+						End Date
+					</label>
+					{experience.isCurrent ? (
 						<Input
-							id={`achievement-${index}-${idx}`}
-							value={achievement}
-							onChange={(e) => handleAchievementChange(idx, e.target.value)}
+							id={`endDate-${index}`}
+							value='Present'
+							disabled={true}
+							className='w-full mt-1 p-3 border rounded-lg bg-gray-200 text-gray-600'
+						/>
+					) : (
+						<Input
+							id={`endDate-${index}`}
+							type='month'
+							value={formattedEndDate}
+							onChange={(e) => handleDateChange("endDate", e.target.value)}
 							className='w-full mt-1 p-3 border rounded-lg focus:outline-none focus:ring-2'
 						/>
+					)}
+
+					<div className='flex items-center mt-3'>
+						<Checkbox
+							id={`isCurrent-${index}`}
+							checked={experience.isCurrent}
+							onCheckedChange={(checked) =>
+								handleCheckboxChange(index, checked as boolean)
+							}
+						/>
+						<label
+							htmlFor={`isCurrent-${index}`}
+							className='ml-2 text-sm text-gray-700'>
+							Current Job
+						</label>
+					</div>
+				</div>
+			)}
+
+			{/* Achievements */}
+			{fieldsIncluded.achievements && (
+				<div className='space-y-2 md:col-span-2'>
+					<div className='flex items-center justify-between'>
+						<label
+							htmlFor={`achievements-${index}`}
+							className='block font-semibold text-gray-700'>
+							Achievements
+						</label>
+
 						<Button
 							type='button'
-							onClick={() => handleDeleteAchievement(idx)}
-							className='ml-2 p-2 bg-red-500 text-white rounded-lg hover:bg-red-600 focus:outline-none'>
-							<TrashIcon className='w-4 h-4' />
+							size='sm'
+							onClick={handleAddAchievement}
+							className='mt-3 p-2 text-white rounded-lg focus:outline-none'>
+							<PlusIcon className='w-4 h-4' />
+							New
 						</Button>
 					</div>
-				))}
-			</div>
+
+					{experience.achievements.map((achievement, idx) => (
+						<div key={idx} className='flex items-center space-x-3 mt-2'>
+							<Input
+								id={`achievement-${index}-${idx}`}
+								value={achievement}
+								onChange={(e) => handleAchievementChange(idx, e.target.value)}
+								className='w-full mt-1 p-3 border rounded-lg focus:outline-none focus:ring-2'
+							/>
+							<Button
+								type='button'
+								onClick={() => handleDeleteAchievement(idx)}
+								className='ml-2 p-2 bg-red-500 text-white rounded-lg hover:bg-red-600 focus:outline-none'>
+								<TrashIcon className='w-4 h-4' />
+							</Button>
+						</div>
+					))}
+				</div>
+			)}
 		</div>
 	);
 };

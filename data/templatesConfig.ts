@@ -1,7 +1,7 @@
 // data/templatesConfig.ts
-import Template1 from "@/components/templates/template-1/template-1";
-import Template2 from "@/components/templates/template-2/template-2";
-import Template3 from "@/components/templates/template-3/template-3";
+import Template1 from "@/components/templates/template-1";
+import Template2 from "@/components/templates/template-2";
+import Template3 from "@/components/templates/template-3";
 import Template4 from "@/components/templates/template-4";
 import Template5 from "@/components/templates/template-5";
 
@@ -22,11 +22,22 @@ export const templates = [
 					email: true,
 					phone: true,
 					link: true,
-					location: true,
+					location: false,
 				},
 			},
 			{ key: "summary", label: "Summary" },
-			{ key: "experience", label: "Experience" },
+			{
+				key: "experience",
+				label: "Experience",
+				fieldsIncluded: {
+					title: true,
+					company: true,
+					location: false,
+					startDate: true,
+					endDate: true,
+					achievements: true,
+				},
+			},
 			{ key: "skills", label: "Skills" },
 			{ key: "achievements", label: "Achievements" },
 			{
@@ -35,7 +46,7 @@ export const templates = [
 				fieldsIncluded: {
 					institution: true,
 					degree: true,
-					location: true,
+					location: false,
 					gpa: false,
 					startDate: true,
 					endDate: true,
@@ -66,14 +77,25 @@ export const templates = [
 			{ key: "summary", label: "Summary" },
 			{ key: "skills", label: "Skills" },
 			{ key: "achievements", label: "Strengths" },
-			{ key: "experience", label: "Experience" },
+			{
+				key: "experience",
+				label: "Experience",
+				fieldsIncluded: {
+					title: true,
+					company: true,
+					location: false,
+					startDate: true,
+					endDate: true,
+					achievements: true,
+				},
+			},
 			{
 				key: "educations",
 				label: "Education",
 				fieldsIncluded: {
 					institution: true,
 					degree: true,
-					location: true,
+					location: false,
 					gpa: false,
 					startDate: true,
 					endDate: true,
@@ -97,12 +119,23 @@ export const templates = [
 					email: true,
 					phone: true,
 					link: true,
-					location: true,
+					location: false,
 				},
 			},
 			{ key: "summary", label: "Profile" },
 			{ key: "skills", label: "Skills" },
-			{ key: "experience", label: "Experience" },
+			{
+				key: "experience",
+				label: "Experience",
+				fieldsIncluded: {
+					title: true,
+					company: true,
+					location: false,
+					startDate: true,
+					endDate: true,
+					achievements: true,
+				},
+			},
 		],
 	},
 	{
@@ -137,7 +170,18 @@ export const templates = [
 					endDate: true,
 				},
 			},
-			{ key: "experience", label: "Experience" },
+			{
+				key: "experience",
+				label: "Experience",
+				fieldsIncluded: {
+					title: true,
+					company: true,
+					location: false,
+					startDate: true,
+					endDate: true,
+					achievements: true,
+				},
+			},
 			{ key: "achievements", label: "Most Proud Of" },
 			{ key: "skills", label: "Skills" },
 			{ key: "strengths", label: "Strengths" },
@@ -163,7 +207,18 @@ export const templates = [
 					location: true,
 				},
 			},
-			{ key: "experience", label: "Experience" },
+			{
+				key: "experience",
+				label: "Experience",
+				fieldsIncluded: {
+					title: true,
+					company: true,
+					location: false,
+					startDate: true,
+					endDate: true,
+					achievements: true,
+				},
+			},
 			{ key: "skills", label: "Tech Stack" },
 			{ key: "achievements", label: "Key Achievements" },
 			{ key: "certificates", label: "Certificates" },

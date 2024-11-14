@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
+import Header from "./sections/Header";
+import Summary from "./sections/Summary";
+import Experience from "./sections/Experience";
+import Skills from "./sections/Skills";
 import { Achievement, EducationItem, ExperienceItem } from "@/types/global";
 import { DUMMY_TEMPLATES_DATA } from "@/data/dummy-templates-data";
-import Strengths from "./sections/Strengths";
-import Summary from "./sections/Summary";
-import Skills from "./sections/Skills";
-import Experience from "./sections/Experience";
-import Education from "./sections/Education";
-import Header from "./sections/Header";
 
 interface TemplateProps {
 	templateData?: {
@@ -31,13 +29,13 @@ interface TemplateProps {
 	isEditing?: boolean;
 }
 
-const Template2: React.FC<TemplateProps> = ({
+const ResumeTemplate: React.FC<TemplateProps> = ({
 	templateData,
 	isEditing = false,
 }) => {
 	const data = isEditing
-		? templateData ?? DUMMY_TEMPLATES_DATA[2]
-		: DUMMY_TEMPLATES_DATA[2];
+		? templateData ?? DUMMY_TEMPLATES_DATA[1]
+		: DUMMY_TEMPLATES_DATA[1];
 	const [scale, setScale] = useState(1);
 
 	useEffect(() => {
@@ -61,42 +59,22 @@ const Template2: React.FC<TemplateProps> = ({
 
 	return (
 		<div className='flex justify-center items-center'>
-			<div
+			<main
 				style={{ transform: `scale(${scale})`, transformOrigin: "top left" }}
-				className='w-[8.5in] bg-white shadow-lg origin-top-left mx-auto p-8'>
-				{/* Header Section */}
+				className='w-[8.5in] bg-white origin-top-left mx-auto'>
 				<Header
 					profileImage={data.sections.personalInfo.profileImage}
 					name={data.sections.personalInfo.name}
 					email={data.sections.personalInfo.contact.email}
 					phone={data.sections.personalInfo.contact.phone}
 					link={data.sections.personalInfo.contact.link}
-					tagline={data.sections.personalInfo.title}
 				/>
-
-				{/* Summary Section */}
 				<Summary summary={data.sections.summary} />
-
-				{/* Skills Section */}
-				<Skills skills={data.sections.skills} />
-
-				{/* Strengths Section */}
-				<Strengths
-					achievements={data.sections.achievements.map((achievement) =>
-						typeof achievement === "string"
-							? { title: achievement, description: "" }
-							: achievement
-					)}
-				/>
-
-				{/* Experience Section */}
 				<Experience experiences={data.sections.experience} />
-
-				{/* Education Section */}
-				<Education educations={data.sections.educations} />
-			</div>
+				<Skills skills={data.sections.skills} />
+			</main>
 		</div>
 	);
 };
 
-export default Template2;
+export default ResumeTemplate;
