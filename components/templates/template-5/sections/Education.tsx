@@ -9,7 +9,7 @@ interface EducationProps {
 const Education: React.FC<EducationProps> = ({ educations }) => {
 	return (
 		<section className='mb-8'>
-			<h2 className='text-lg text-orange-900 font-bold border-b-2 border-orange-900 mb-2'>
+			<h2 className='text-lg heading-template font-bold border-b-2 border-template mb-2'>
 				EDUCATION
 			</h2>
 			<div className='mb-4'>
@@ -20,8 +20,8 @@ const Education: React.FC<EducationProps> = ({ educations }) => {
 							index > 1 || index !== educations.length - 1 ? "border-b" : ""
 						}`}>
 						<div>
-							<h3 className='text-orange-900'>{edu.degree}</h3>
-							<p className='text-orange-600 font-bold'>{edu.institution}</p>
+							<h3 className='heading-template'>{edu.degree}</h3>
+							<p className='text-template font-bold'>{edu.institution}</p>
 							<div className='flex gap-x-10 mt-2'>
 								<p className='text-sm text-gray-600 flex items-center gap-1'>
 									<Calendar className='w-4 h-4 flex-shrink-0' />

@@ -21,23 +21,23 @@ const Header: React.FC<HeaderProps> = ({
 	return (
 		<section className='mb-8'>
 			<h1 className='text-3xl font-bold'>{name}</h1>
-			<p className='text-emerald-600 text-lg font-bold mb-2'>{tagline}</p>
+			<p className='text-template text-lg font-bold mb-2'>{tagline}</p>
 			<div className='flex justify-between flex-wrap gap-4 text-sm text-gray-600'>
 				<div className='flex items-center gap-1'>
-					<Phone className='w-4 h-4 text-emerald-600' />
+					<Phone className='w-4 h-4 text-template' />
 					{phone}
 				</div>
 				<div className='flex items-center gap-1'>
-					<AtSign className='w-4 h-4 text-emerald-600' />
+					<AtSign className='w-4 h-4 text-template' />
 					{email}
 				</div>
 				<div className='flex items-center gap-1'>
-					<Link className='w-4 h-4 text-emerald-600' />
+					<Link className='w-4 h-4 text-template' />
 					{link}
 				</div>
 			</div>
 			<div className='flex items-center gap-1 text-sm text-gray-600 mt-1'>
-				<MapPin className='w-4 h-4 text-emerald-600' />
+				<MapPin className='w-4 h-4 text-template' />
 				{location}
 			</div>
 		</section>

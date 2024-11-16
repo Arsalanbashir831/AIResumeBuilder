@@ -7,7 +7,7 @@ interface SkillsProps {
 const Skills: React.FC<SkillsProps> = ({ skills }) => {
 	return (
 		<section>
-			<h2 className='text-lg text-orange-900 font-bold border-b-2 border-orange-900 mb-2'>
+			<h2 className='text-lg heading-template font-bold border-b-2 border-template mb-2'>
 				TECH STACK
 			</h2>
 			<div className='flex flex-wrap gap-2'>

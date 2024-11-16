@@ -18,7 +18,7 @@ const Experience: React.FC<ExperienceProps> = ({ experiences }) => {
 						<div className='mb-3'>
 							<div>
 								<h3 className='font-medium'>{exp.title}</h3>
-								<p className='text-emerald-600 text-sm font-semibold'>
+								<p className='text-template text-sm font-semibold'>
 									{exp.company}
 								</p>
 							</div>

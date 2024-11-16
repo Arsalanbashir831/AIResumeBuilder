@@ -9,7 +9,7 @@ interface StrengthsProps {
 const Strengths: React.FC<StrengthsProps> = ({ heading, achievements }) => {
 	return (
 		<section>
-			<h2 className='text-lg text-orange-900 font-bold border-b-2 border-orange-900 mb-2'>
+			<h2 className='text-lg heading-template font-bold border-b-2 border-template mb-2'>
 				{heading}
 			</h2>
 			<div className='flex flex-col'>
@@ -19,7 +19,9 @@ const Strengths: React.FC<StrengthsProps> = ({ heading, achievements }) => {
 						className={`space-y-1 border-dashed pb-2 mb-1 ${
 							index > 1 || index !== achievements.length - 1 ? "border-b" : ""
 						}`}>
-						<h3 className='font-medium text-orange-900'>{achievement.title}</h3>
+						<h3 className='font-medium heading-template'>
+							{achievement.title}
+						</h3>
 						{achievement.description && (
 							<p className='text-sm text-gray-600'>{achievement.description}</p>
 						)}

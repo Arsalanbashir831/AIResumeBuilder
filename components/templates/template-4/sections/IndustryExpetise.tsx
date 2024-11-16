@@ -22,8 +22,8 @@ const IndustryExpertise: React.FC<IndustryExpertiseProps> = ({ experties }) => {
 						<h3 className='font-semibold'>{experty.title}</h3>
 						<Progress
 							value={experty.percent}
-							className='bg-emerald-300'
-							indicatorColor='bg-emerald-600'
+							className='bg-template-300'
+							indicatorColor='bg-template'
 						/>
 					</div>
 				))}

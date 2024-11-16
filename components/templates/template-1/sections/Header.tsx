@@ -14,7 +14,7 @@ const Header = ({
 	link: string;
 }) => {
 	return (
-		<div className='bg-[#1e2a4a] text-white px-10 pb-6 pt-16'>
+		<div className='bg-template text-white px-10 pb-6 pt-16'>
 			<h1 className='text-3xl font-bold'>{name}</h1>
 			<h2 className='mb-2'>{position}</h2>
 			<div className='flex justify-between gap-6 text-sm'>

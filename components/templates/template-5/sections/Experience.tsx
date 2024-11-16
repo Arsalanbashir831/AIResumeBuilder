@@ -9,7 +9,8 @@ interface ExperienceProps {
 const Experience: React.FC<ExperienceProps> = ({ experiences }) => {
 	return (
 		<section className='mb-2'>
-			<h2 className='text-lg text-orange-900 font-bold border-b-2 border-orange-900 mb-2'>
+			<h2
+				className={`text-lg heading-template font-bold border-b-2 border-template mb-2`}>
 				EXPERIENCE
 			</h2>
 			<div className='space-y-2'>
@@ -20,8 +21,8 @@ const Experience: React.FC<ExperienceProps> = ({ experiences }) => {
 						${index > 1 || index !== experiences.length - 1 ? "border-b" : ""}`}>
 						<div className='mb-3'>
 							<div>
-								<h3 className='font-medium text-orange-900'>{exp.title}</h3>
-								<p className='text-orange-600 text-sm font-semibold'>
+								<h3 className='font-medium heading-template'>{exp.title}</h3>
+								<p className='text-template text-sm font-semibold'>
 									{exp.company}
 								</p>
 							</div>

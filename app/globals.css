@@ -8,6 +8,9 @@ body {
 
 @layer base {
 	:root {
+		--template-hue: 24.6;
+		--template-saturation: 95%;
+		--template-lightness: 53.1%;
 		--background: 0 0% 100%;
 		--foreground: 20 14.3% 4.1%;
 		--card: 0 0% 100%;
@@ -36,6 +39,7 @@ body {
 	}
 
 	.dark {
+		--template: 20.5 90.2% 48.2%;
 		--background: 20 14.3% 4.1%;
 		--foreground: 60 9.1% 97.8%;
 		--card: 20 14.3% 4.1%;
@@ -70,6 +74,48 @@ body {
 	body {
 		@apply bg-background text-foreground;
 	}
+}
+
+.bg-template {
+	background-color: hsl(
+		var(--template-hue),
+		var(--template-saturation),
+		var(--template-lightness)
+	);
+}
+
+.bg-template-300 {
+	/* lighten the bg */
+	background-color: hsl(
+		var(--template-hue),
+		var(--template-saturation),
+		calc(var(--template-lightness) + 30%)
+	);
+}
+
+.text-template {
+	color: hsl(
+		var(--template-hue),
+		var(--template-saturation),
+		var(--template-lightness)
+	);
+}
+
+.heading-template {
+	/* Adjust hue by subtracting 17.6 degrees */
+	color: hsl(
+		calc(var(--template-hue) - 17.6),
+		calc(var(--template-saturation) - 19%),
+		calc(var(--template-lightness) - 27.1%)
+	);
+}
+
+.border-template {
+	border-color: hsl(
+		calc(var(--template-hue) - 17.6),
+		calc(var(--template-saturation) - 19%),
+		calc(var(--template-lightness) - 27.1%)
+	);
 }
 
 /* Target the scrollbar for webkit browsers (Chrome, Safari, Edge) */

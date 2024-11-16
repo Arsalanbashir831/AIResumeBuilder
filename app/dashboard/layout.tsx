@@ -2,6 +2,7 @@ import Navbar from "@/components/Navbar";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "@/app/globals.css";
+import { ColorProvider } from "@/context/ColorContext";
 
 const geistSans = localFont({
 	src: "../fonts/GeistVF.woff",
@@ -30,8 +31,10 @@ export default function RootLayout({
 			<body
 				className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
 				<Navbar isDashboard />
-				{/* Optional wrapper for dashboard styles */}
-				<div className='dashboard-container'>{children}</div>
+				<ColorProvider>
+					{/* Optional wrapper for dashboard styles */}
+					<div className='dashboard-container'>{children}</div>
+				</ColorProvider>
 			</body>
 		</html>
 	);

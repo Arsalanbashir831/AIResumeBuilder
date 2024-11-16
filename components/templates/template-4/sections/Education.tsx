@@ -21,7 +21,7 @@ const Education: React.FC<EducationProps> = ({ educations }) => {
 						}`}>
 						<div>
 							<h3>{edu.degree}</h3>
-							<p className='text-emerald-600 font-bold'>{edu.institution}</p>
+							<p className='text-template font-bold'>{edu.institution}</p>
 							<div className='flex gap-x-10 mt-2'>
 								<p className='text-sm text-gray-600 flex items-center gap-1'>
 									<Calendar className='w-4 h-4 flex-shrink-0' />
@@ -36,7 +36,7 @@ const Education: React.FC<EducationProps> = ({ educations }) => {
 						<div className='text-right flex flex-col justify-center items-center border-l border-gray-400 p-3'>
 							<p className='text-sm text-gray-600 mb-2'>GPA</p>
 							<p className='text-sm text-gray-600 font-semibold'>
-								<span className='text-emerald-600'>{edu.obtainedGpa}</span> /{" "}
+								<span className='text-template'>{edu.obtainedGpa}</span> /{" "}
 								{edu.totalGpa}
 							</p>
 						</div>

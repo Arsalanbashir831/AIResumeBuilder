@@ -8,7 +8,7 @@ interface CrtificatesProps {
 const Certificates: React.FC<CrtificatesProps> = ({ certificates }) => {
 	return (
 		<section>
-			<h2 className='text-lg text-orange-900 font-bold border-b-2 border-orange-900 mb-2'>
+			<h2 className='text-lg heading-template font-bold border-b-2 border-template mb-2'>
 				Certificates
 			</h2>
 			<div className='flex flex-col'>
@@ -18,7 +18,7 @@ const Certificates: React.FC<CrtificatesProps> = ({ certificates }) => {
 						className={`space-y-1 border-dashed pb-2 mb-1 ${
 							index > 1 || index !== certificates.length - 1 ? "border-b" : ""
 						}`}>
-						<h3 className='font-semibold text-sm text-orange-600'>
+						<h3 className='font-semibold text-sm text-template'>
 							{certificate.name}
 						</h3>
 						<p className='text-sm'>{certificate.organization}</p>

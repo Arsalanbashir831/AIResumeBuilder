@@ -27,6 +27,7 @@ import PersonalInfoStep from "@/components/forms/steps/PersonalInfoStep";
 import ExpertiseStep from "@/components/forms/steps/ExpertiseStep";
 import CertificatesStep from "@/components/forms/steps/CertificatesStep";
 import HobbiesStep from "@/components/forms/steps/HobbiesStep";
+import ColorPicker from "@/components/ColorPicker";
 
 // Modal component for subscription
 const SubscriptionModal = ({ onClose }: { onClose: () => void }) => (
@@ -257,11 +258,13 @@ export default function TemplateEditor() {
 	return (
 		<div className='flex flex-col h-screen p-8 pt-24 container mx-auto'>
 			{/* Header Section */}
-			<header className='flex justify-start items-center mb-4'>
+			<header className='flex justify-between items-center mb-4'>
 				<Button variant='default' onClick={() => router.push("/dashboard/")}>
 					<ArrowLeft size={24} />
 					To Dashboard
 				</Button>
+
+				<ColorPicker />
 			</header>
 			<div className='flex flex-col lg:flex-row-reverse gap-5'>
 				{/* Modal */}

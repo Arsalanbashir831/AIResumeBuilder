@@ -22,7 +22,7 @@ const Header: React.FC<HeaderProps> = ({
 	location,
 }) => {
 	return (
-		<section className='bg-orange-500 px-8 pt-12 grid grid-cols-12 gap-8'>
+		<section className='bg-template px-8 pt-12 grid grid-cols-12 gap-8'>
 			<div className='text-white col-span-8'>
 				<h1 className='text-3xl font-bold'>{name}</h1>
 				<p className='font-bold'>{tagline}</p>
