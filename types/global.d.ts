@@ -86,3 +86,11 @@ export interface TemplateData {
 		hobbies: Hobby[];
 	};
 }
+
+export interface FormState {
+	userType: "student" | "experienced";
+	yearsOfExperience?: number;
+	domain: string;
+	jobDescription?: File | string | null;
+	educationLevel?: "High School" | "College" | "University";
+}

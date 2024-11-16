@@ -28,6 +28,7 @@ import ExpertiseStep from "@/components/forms/steps/ExpertiseStep";
 import CertificatesStep from "@/components/forms/steps/CertificatesStep";
 import HobbiesStep from "@/components/forms/steps/HobbiesStep";
 import ColorPicker from "@/components/ColorPicker";
+import IntroductoryStep from "@/components/forms/steps/IntroductryStep";
 
 // Modal component for subscription
 const SubscriptionModal = ({ onClose }: { onClose: () => void }) => (
@@ -71,6 +72,10 @@ const StepContent = ({
 	) => void;
 	fieldsIncluded?: { [key: string]: boolean | undefined };
 }) => {
+	if (sectionKey === "intro") {
+		return <IntroductoryStep />;
+	}
+
 	switch (sectionKey) {
 		case "personalInfo":
 			return (
@@ -209,7 +214,9 @@ export default function TemplateEditor() {
 	const router = useRouter();
 
 	const template = templates.find((t) => t.id === templateId);
-	const sectionConfig = template ? template.sections : [];
+	const sectionConfig = template
+		? [{ key: "intro", label: "Intro" }, ...template.sections]
+		: [{ key: "intro", label: "Intro" }];
 	const [showModal, setShowModal] = useState(false);
 
 	if (!template) {
@@ -252,7 +259,7 @@ export default function TemplateEditor() {
 
 	// Function to handle download button click
 	const handleDownloadClick = () => {
-		setShowModal(true); // Show the subscription popup when the download button is clicked
+		setShowModal(true);
 	};
 
 	return (
