@@ -46,7 +46,6 @@ export default function EducationStep({
 		field: keyof EducationItem,
 		value: string | boolean
 	) => {
-		console.log("field", field);
 		const updatedEducations = educations.map((education, i) =>
 			i === index ? { ...education, [field]: value } : education
 		);

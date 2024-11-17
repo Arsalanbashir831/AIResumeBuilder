@@ -55,17 +55,18 @@ export default function DashboardBody() {
 		<div className='relative'>
 			<div className='container mx-auto px-4 py-16 md:py-24'>
 				{/* Header Section */}
-				<header className='flex justify-between items-center mb-4'>
-					<div className='space-y-2'>
-						<h1 className='text-lg md:text-xl lg:text-2xl font-bold'>
+				<header className='flex flex-col sm:flex-row justify-between sm:items-center my-8 sm:mt-0'>
+					<div className='space-y-2 mb-3 sm:mb-0'>
+						<h1 className='text-3xl sm:text-4xl lg:text-5xl font-bold'>
 							Resume Builder
 						</h1>
-						<p className='text-sm md:text-base text-gray-600'>
+						<p className='text-base sm:text-lg lg:text-xl text-gray-600'>
 							Create your custom resume for job applications
 						</p>
 					</div>
 					<Button
 						variant='default'
+						size='sm'
 						onClick={() => router.push("/dashboard/templates")}>
 						<PlusCircle size={24} />
 						New Resume
@@ -82,7 +83,7 @@ export default function DashboardBody() {
 						<Card className='flex items-center justify-center'>
 							<Link
 								href='/dashboard/templates'
-								className='flex justify-center w-full h-full'>
+								className='flex justify-center w-full h-[400px]'>
 								<CardContent className='flex flex-col items-center justify-center'>
 									<PlusCircle size={24} className='mb-4' />
 									<p className='text-sm md:text-base'>Create Blank Resume</p>

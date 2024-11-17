@@ -9,6 +9,15 @@ const config: Config = {
 	],
 	theme: {
 		extend: {
+			keyframes: {
+				pulseOpacity: {
+					"0%, 100%": { opacity: "1" },
+					"50%": { opacity: "0.7" },
+				},
+			},
+			animation: {
+				pulseOpacity: "pulseOpacity 2s ease-in-out infinite",
+			},
 			colors: {
 				background: "hsl(var(--background))",
 				foreground: "hsl(var(--foreground))",

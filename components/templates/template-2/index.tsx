@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Achievement, EducationItem, ExperienceItem } from "@/types/global";
 import { DUMMY_TEMPLATES_DATA } from "@/data/dummy-templates-data";
 import Strengths from "./sections/Strengths";
@@ -39,32 +39,10 @@ const ResumeTemplate: React.FC<TemplateProps> = ({
 	const data = isEditing
 		? templateData ?? DUMMY_TEMPLATES_DATA[2]
 		: DUMMY_TEMPLATES_DATA[2];
-	const [scale, setScale] = useState(1);
-
-	useEffect(() => {
-		const handleResize = () => {
-			const viewportWidth = window.innerWidth;
-			if (viewportWidth < 640) {
-				setScale(0.35);
-			} else if (viewportWidth < 768) {
-				setScale(0.5);
-			} else if (viewportWidth < 1024) {
-				setScale(0.65);
-			} else {
-				setScale(1);
-			}
-		};
-
-		handleResize();
-		window.addEventListener("resize", handleResize);
-		return () => window.removeEventListener("resize", handleResize);
-	}, []);
 
 	return (
 		<div className='flex justify-center items-center'>
-			<div
-				style={{ transform: `scale(${scale})`, transformOrigin: "top left" }}
-				className='w-[8.5in] bg-white shadow-lg origin-top-left mx-auto p-8'>
+			<div className='w-[8.5in] bg-white shadow-lg origin-top-left mx-auto p-8'>
 				{/* Header Section */}
 				<Header
 					profileImage={data.sections.personalInfo.profileImage}

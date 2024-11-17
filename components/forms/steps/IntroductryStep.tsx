@@ -35,7 +35,6 @@ const IntroductoryStep: React.FC = () => {
 				Object.entries(data).filter(([, value]) => value !== undefined)
 			),
 		}));
-		console.log("Form submitted:", data);
 	};
 
 	return (

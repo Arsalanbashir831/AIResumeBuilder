@@ -94,3 +94,31 @@ export interface FormState {
 	jobDescription?: File | string | null;
 	educationLevel?: "High School" | "College" | "University";
 }
+
+// Define a type for the fields that can be included in a section
+type SectionFields = {
+	profileImage?: boolean;
+	name?: boolean;
+	title?: boolean;
+	email?: boolean;
+	phone?: boolean;
+	link?: boolean;
+	location?: boolean;
+	[key: string]: boolean | undefined; // Allow for other custom fields
+};
+
+// Define a type for the section configuration
+export interface SectionConfig {
+	key: string;
+	label: string;
+	fieldsIncluded?: SectionFields; // Fields are optional in some sections
+}
+
+// Define the Template interface
+export interface Template {
+	id: string;
+	name: string;
+	component: ReactNode; // The component that represents the template
+	snapshot: string; // URL or path to the snapshot image for the template
+	sections: SectionConfig[]; // List of sections for the template
+}

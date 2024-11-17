@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Header from "./sections/Header";
 import Education from "./sections/Education";
 import {
@@ -51,32 +51,10 @@ const ResumeTemplate: React.FC<TemplateProps> = ({
 	const data = isEditing
 		? templateData ?? DUMMY_TEMPLATES_DATA[0]
 		: DUMMY_TEMPLATES_DATA[0];
-	const [scale, setScale] = useState(1);
-
-	useEffect(() => {
-		const handleResize = () => {
-			const viewportWidth = window.innerWidth;
-			if (viewportWidth < 640) {
-				setScale(0.35);
-			} else if (viewportWidth < 768) {
-				setScale(0.5);
-			} else if (viewportWidth < 1024) {
-				setScale(0.65);
-			} else {
-				setScale(1);
-			}
-		};
-
-		handleResize();
-		window.addEventListener("resize", handleResize);
-		return () => window.removeEventListener("resize", handleResize);
-	}, []);
 
 	return (
 		<div className='flex justify-center items-center'>
-			<main
-				style={{ transform: `scale(${scale})`, transformOrigin: "top left" }}
-				className='w-[8.5in] bg-white origin-top-left mx-auto'>
+			<main className='w-[8.5in] bg-white origin-top-left mx-auto'>
 				{/* Header Section */}
 				<Header
 					name={data.sections.personalInfo.name}
@@ -89,9 +67,9 @@ const ResumeTemplate: React.FC<TemplateProps> = ({
 				/>
 
 				{/* Two Column Layout */}
-				<div className='grid grid-cols-1 md:grid-cols-5 gap-8 p-8'>
+				<div className='grid grid-cols-5 gap-8 p-8'>
 					{/* Main Content */}
-					<div className='md:col-span-3'>
+					<div className='col-span-3'>
 						{/* Experience */}
 						<Experience experiences={data.sections.experience} />
 
@@ -100,7 +78,7 @@ const ResumeTemplate: React.FC<TemplateProps> = ({
 					</div>
 
 					{/* Sidebar */}
-					<div className='md:col-span-2'>
+					<div className='col-span-2'>
 						{/* Most Proud Of */}
 						<Strengths
 							heading='KEY ACHIEVEMENTS'

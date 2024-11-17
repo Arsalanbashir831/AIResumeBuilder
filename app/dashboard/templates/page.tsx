@@ -1,59 +1,47 @@
 "use client";
 
-import { useRef, useEffect, useState } from "react";
-import { toPng } from "html-to-image";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { templates } from "@/data/templatesConfig";
 import Image from "next/image";
 
 export default function TemplatesPage() {
 	const [snapshots, setSnapshots] = useState<Record<string, string>>({});
-	const templateRefs = useRef<Record<string, HTMLElement | null>>({});
 
+	// Listen for messages from iframes
 	useEffect(() => {
-		templates.forEach((template) => {
-			if (templateRefs.current[template.id]) {
-				toPng(templateRefs.current[template.id]!)
-					.then((dataUrl) => {
-						setSnapshots((prev) => ({ ...prev, [template.id]: dataUrl }));
-					})
-					.catch((err) => console.log("Failed to generate snapshot", err));
+		const handleSnapshotMessage = (event: MessageEvent) => {
+			const { templateId, dataUrl } = event.data;
+			if (templateId && dataUrl) {
+				setSnapshots((prev) => ({ ...prev, [templateId]: dataUrl }));
 			}
-		});
+		};
+		window.addEventListener("message", handleSnapshotMessage);
+
+		// Clean up the event listener on unmount
+		return () => {
+			window.removeEventListener("message", handleSnapshotMessage);
+		};
 	}, []);
 
 	return (
 		<div className='container mx-auto my-24 px-4'>
-			{/* Heading and Introduction */}
 			<div className='mb-12'>
-				<h1 className='text-4xl font-bold text-gray-800 mb-4'>
+				<h1 className='text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-800 mb-4'>
 					Choose Your Template
 				</h1>
-				<p className='text-lg text-gray-600 max-w-3xl text-justify'>
-					Select from our professional templates to get started. Each template
-					is designed to highlight your skills, experience, and achievements.
-					Simply click on the template you like, and you&#39;ll be able to
-					customize it step-by-step in our editor.
+				<p className='text-base sm:text-lg lg:text-xl text-gray-600 max-w-3xl text-justify'>
+					Select from our professional templates to get started. Simply click on
+					the template you like, and you’ll be able to customize it step-by-step
+					in our editor.
 				</p>
 			</div>
 
-			{/* Template Cards */}
 			<div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4'>
 				{templates.map((template) => (
 					<Link key={template.id} href={`/dashboard/editor/${template.id}`}>
 						<div className='hover:bg-[#FDF8F4] hover:shadow-lg transition-all pt-8 pb-4 px-2 rounded-lg cursor-pointer'>
 							<div className='flex justify-center items-center w-full mx-auto'>
-								{/* Display template component until snapshot is ready */}
-								<div
-									ref={(el) => {
-										templateRefs.current[template.id] = el;
-									}}
-									style={{
-										display: snapshots[template.id] ? "none" : "block",
-									}}>
-									<template.component />
-								</div>
-								{/* Show snapshot or loading skeleton */}
 								{snapshots[template.id] ? (
 									<Image
 										src={snapshots[template.id]}
@@ -63,7 +51,15 @@ export default function TemplatesPage() {
 										className='rounded-lg shadow-md aspect-[2/3] w-full'
 									/>
 								) : (
-									<p className='text-gray-500 text-center'>Loading...</p>
+									<div className='flex flex-col justify-center items-center space-y-4 h-[400px]'>
+										<Image
+											src='/logo.png'
+											width={100}
+											height={100}
+											alt='GetSetCV Logo'
+											className='animate-pulseOpacity'
+										/>
+									</div>
 								)}
 							</div>
 							<p className='text-center text-gray-800 mt-6 font-bold'>
@@ -73,6 +69,17 @@ export default function TemplatesPage() {
 					</Link>
 				))}
 			</div>
+
+			{/* Hidden iframes to render each template snapshot */}
+			{templates.map((template) => (
+				<iframe
+					key={template.id}
+					src={`/dashboard/snapshot-renderer/${template.id}`}
+					style={{ opacity: 0, height: 0, width: 0 }}
+					aria-hidden='true'
+					tabIndex={-1}
+				/>
+			))}
 		</div>
 	);
 }

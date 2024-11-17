@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { DUMMY_TEMPLATES_DATA } from "@/data/dummy-templates-data";
@@ -14,214 +14,53 @@ import {
 	SectionKey,
 	TemplateData,
 } from "@/types/global";
-import TextAreaField from "@/components/TextAreaField";
-import SkillsStep from "@/components/forms/steps/SkillsStep";
-import AchievementsStep from "@/components/forms/steps/AchievementsStep";
-import EducationStep from "@/components/forms/steps/EducationStep";
-import ExperienceStep from "@/components/forms/steps/ExperienceStep";
 import { useParams, useRouter } from "next/navigation";
 import { templates } from "@/data/templatesConfig";
 import { ArrowLeft } from "lucide-react";
-import AiButton from "@/components/AiButton";
-import PersonalInfoStep from "@/components/forms/steps/PersonalInfoStep";
-import ExpertiseStep from "@/components/forms/steps/ExpertiseStep";
-import CertificatesStep from "@/components/forms/steps/CertificatesStep";
-import HobbiesStep from "@/components/forms/steps/HobbiesStep";
 import ColorPicker from "@/components/ColorPicker";
-import IntroductoryStep from "@/components/forms/steps/IntroductryStep";
-
-// Modal component for subscription
-const SubscriptionModal = ({ onClose }: { onClose: () => void }) => (
-	<div className='fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-20'>
-		<div className='bg-white p-6 rounded-md shadow-lg max-w-sm w-full'>
-			<h3 className='text-xl font-semibold mb-4'>Subscribe to Download</h3>
-			<p className='mb-4'>
-				To download your resume, please subscribe to our service.
-			</p>
-			<div className='flex justify-end space-x-4'>
-				<Button variant='secondary' onClick={onClose}>
-					Close
-				</Button>
-				<Button variant='default'>Subscribe Now</Button>
-			</div>
-		</div>
-	</div>
-);
-
-const StepContent = ({
-	sectionKey,
-	resumeData,
-	handleInputChange,
-	fieldsIncluded,
-}: {
-	sectionKey: string;
-	resumeData: TemplateData;
-	handleInputChange: (
-		section: SectionKey,
-		field: string | null,
-		value:
-			| string
-			| { [key: string]: string }
-			| ExperienceItem[]
-			| string[]
-			| Achievement[]
-			| EducationItem[]
-			| Expertise[]
-			| Certificate[]
-			| Hobby[]
-	) => void;
-	fieldsIncluded?: { [key: string]: boolean | undefined };
-}) => {
-	if (sectionKey === "intro") {
-		return <IntroductoryStep />;
-	}
-
-	switch (sectionKey) {
-		case "personalInfo":
-			return (
-				<PersonalInfoStep
-					resumeData={resumeData}
-					handleInputChange={handleInputChange}
-					fieldsIncluded={fieldsIncluded}
-				/>
-			);
-		case "summary":
-			return (
-				<div>
-					<div className='flex justify-between items-center mb-4'>
-						<h3 className='text-lg font-semibold mb-2'>Summary</h3>
-						<AiButton />
-					</div>
-
-					<TextAreaField
-						value={resumeData.sections.summary}
-						onChange={(value) => handleInputChange("summary", "", value)}
-					/>
-				</div>
-			);
-		case "experience":
-			return (
-				<div>
-					<ExperienceStep
-						experiences={resumeData.sections.experience}
-						onChange={(updatedExperiences) =>
-							handleInputChange("experience", "", updatedExperiences)
-						}
-						fieldsIncluded={fieldsIncluded}
-					/>
-				</div>
-			);
-		case "skills":
-			return (
-				<div>
-					<SkillsStep
-						skills={resumeData.sections.skills}
-						onChange={(updatedSkills) =>
-							handleInputChange("skills", "", updatedSkills)
-						}
-					/>
-				</div>
-			);
-		case "achievements":
-			return (
-				<div>
-					<AchievementsStep
-						achievements={resumeData.sections.achievements}
-						onChange={(updatedAchievements) =>
-							handleInputChange("achievements", "", updatedAchievements)
-						}
-					/>
-				</div>
-			);
-		case "strengths":
-			return (
-				<div>
-					<AchievementsStep
-						achievements={resumeData.sections.strengths}
-						onChange={(updatedAchievements) =>
-							handleInputChange("strengths", "", updatedAchievements)
-						}
-					/>
-				</div>
-			);
-		case "certificates":
-			return (
-				<div>
-					<CertificatesStep
-						certificates={resumeData.sections.certificates}
-						onChange={(updatedCertificate) =>
-							handleInputChange("certificates", "", updatedCertificate)
-						}
-					/>
-				</div>
-			);
-		case "hobbies":
-			return (
-				<div>
-					<HobbiesStep
-						hobbies={resumeData.sections.hobbies}
-						onChange={(updatedHobbies) =>
-							handleInputChange("hobbies", "", updatedHobbies)
-						}
-					/>
-				</div>
-			);
-		case "educations":
-			return (
-				<div>
-					<EducationStep
-						educations={resumeData.sections.educations}
-						onChange={(updatedEducations) =>
-							handleInputChange("educations", "", updatedEducations)
-						}
-						fieldsIncluded={fieldsIncluded}
-					/>
-				</div>
-			);
-		case "additionalExperience":
-			return (
-				<div>
-					<ExperienceStep
-						experiences={resumeData.sections.additionalExperience}
-						onChange={(updatedExperiences) =>
-							handleInputChange("additionalExperience", "", updatedExperiences)
-						}
-					/>
-				</div>
-			);
-		case "expertise":
-			return (
-				<div>
-					<ExpertiseStep
-						expertise={resumeData.sections.expertise}
-						onChange={(updatedExpertise) =>
-							handleInputChange("expertise", "", updatedExpertise)
-						}
-					/>
-				</div>
-			);
-		default:
-			return null;
-	}
-};
+import StepContent from "@/components/StepContent";
+import SubscriptionModal from "@/components/SubscriptionModal";
+import Image from "next/image";
 
 export default function TemplateEditor() {
+	const iframeRef = useRef<HTMLIFrameElement | null>(null);
 	const [step, setStep] = useState(1);
 	const [resumeData, setResumeData] = useState<TemplateData>(
 		DUMMY_TEMPLATES_DATA[1]
 	);
 	const { templateId } = useParams();
 	const router = useRouter();
-
 	const template = templates.find((t) => t.id === templateId);
 	const sectionConfig = template
 		? [{ key: "intro", label: "Intro" }, ...template.sections]
 		: [{ key: "intro", label: "Intro" }];
 	const [showModal, setShowModal] = useState(false);
+	const [snapshotUrl, setSnapshotUrl] = useState<string | null>(null);
 
-	if (!template) {
-		return <p>Template not found</p>;
-	}
+	// Memoize the sendTemplateDataToIframe function to avoid unnecessary re-creations
+	const sendTemplateDataToIframe = useCallback(() => {
+		if (iframeRef.current) {
+			iframeRef.current.contentWindow?.postMessage(
+				{ type: "UPDATE_TEMPLATE_DATA", payload: { resumeData, templateId } },
+				"*"
+			);
+		}
+	}, [resumeData, templateId]);
+
+	useEffect(() => {
+		sendTemplateDataToIframe();
+	}, [sendTemplateDataToIframe]);
+
+	// Listen for messages from the hidden iframe with the snapshot image
+	useEffect(() => {
+		const handleSnapshotMessage = (event: MessageEvent) => {
+			if (event.data && event.data.type === "TEMPLATE_SNAPSHOT") {
+				setSnapshotUrl(event.data.payload);
+			}
+		};
+		window.addEventListener("message", handleSnapshotMessage);
+		return () => window.removeEventListener("message", handleSnapshotMessage);
+	}, []);
 
 	const handleInputChange = (
 		section: SectionKey,
@@ -237,6 +76,10 @@ export default function TemplateEditor() {
 			| Certificate[]
 			| Hobby[]
 	) => {
+		// Clear the snapshot URL to reset the preview
+		setSnapshotUrl(null);
+
+		// Update resume data
 		setResumeData((prevData) => ({
 			...prevData,
 			sections: {
@@ -257,10 +100,13 @@ export default function TemplateEditor() {
 		setStep(newStep);
 	};
 
-	// Function to handle download button click
 	const handleDownloadClick = () => {
 		setShowModal(true);
 	};
+
+	if (!template) {
+		return <p>Template not found</p>;
+	}
 
 	return (
 		<div className='flex flex-col h-screen p-8 pt-24 container mx-auto'>
@@ -270,29 +116,54 @@ export default function TemplateEditor() {
 					<ArrowLeft size={24} />
 					To Dashboard
 				</Button>
-
-				<ColorPicker />
 			</header>
 			<div className='flex flex-col lg:flex-row-reverse gap-5'>
-				{/* Modal */}
 				{showModal && <SubscriptionModal onClose={() => setShowModal(false)} />}
 
-				{/* Live Preview with fixed aspect ratio and responsive scaling */}
 				<div className='w-full lg:w-1/2'>
-					<div className='flex justify-end items-center mb-4'>
+					<div className='flex justify-between items-center mb-4'>
+						<ColorPicker />
+
 						<Button variant='default' onClick={handleDownloadClick}>
 							Download
 						</Button>
 					</div>
 
 					<Card className='shadow-lg'>
-						<CardContent className='p-4 '>
-							<template.component templateData={resumeData} isEditing={true} />
+						<CardContent className='p-4'>
+							<div className='flex justify-center items-center w-full mx-auto'>
+								{snapshotUrl ? (
+									<Image
+										src={snapshotUrl}
+										alt='Resume Preview'
+										className='rounded-lg shadow-md aspect-[2/3]'
+										width={900}
+										height={400}
+									/>
+								) : (
+									<div className='flex flex-col justify-center items-center space-y-4 h-[400px]'>
+										<Image
+											src='/logo.png'
+											width={100}
+											height={100}
+											alt='GetSetCV Logo'
+											className='animate-pulseOpacity'
+										/>
+									</div>
+								)}
+							</div>
+
+							{/* Hidden iframe for rendering the template */}
+							<iframe
+								ref={iframeRef}
+								src='/dashboard/hidden-template-renderer'
+								style={{ opacity: 0, height: 0, width: 0 }}
+								onLoad={() => setTimeout(sendTemplateDataToIframe, 100)}
+							/>
 						</CardContent>
 					</Card>
 				</div>
 
-				{/* Step-by-Step Form */}
 				<div className='w-full lg:w-1/2'>
 					<div className='flex space-x-2 mb-4 overflow-x-auto whitespace-nowrap'>
 						{sectionConfig.map((section, idx) => (
@@ -317,7 +188,9 @@ export default function TemplateEditor() {
 								<Button onClick={() => setStep(step - 1)} disabled={step === 1}>
 									Previous
 								</Button>
-								<Button onClick={() => setStep(step + 1)} disabled={step === 7}>
+								<Button
+									onClick={() => setStep(step + 1)}
+									disabled={step === sectionConfig.length}>
 									Next
 								</Button>
 							</div>
