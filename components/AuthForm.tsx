@@ -1,12 +1,9 @@
-// components/AuthForm.tsx
-
 "use client";
 
-import { usePathname, useRouter } from "next/navigation"; // Hook to get the current pathname
+import { usePathname, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Github, Linkedin } from "lucide-react";
 import Image from "next/image";
 
 interface AuthFormProps {
@@ -69,18 +66,6 @@ const AuthForm: React.FC<AuthFormProps> = ({
 						className='w-full flex items-center justify-center border border-gray-300 text-[#0B1437]'>
 						<Image src='/google-icon.svg' alt='Google' width={16} height={16} />
 						<span className='ml-2'>Google</span>
-					</Button>
-					<Button
-						variant='outline'
-						className='w-full flex items-center justify-center border border-gray-300 text-[#0B1437]'>
-						<Linkedin size={16} />
-						<span className='ml-2'>LinkedIn</span>
-					</Button>
-					<Button
-						variant='outline'
-						className='w-full flex items-center justify-center border border-gray-300 text-[#0B1437]'>
-						<Github size={16} />
-						<span className='ml-2'>GitHub</span>
 					</Button>
 				</div>
 
