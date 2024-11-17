@@ -21,13 +21,17 @@ import ColorPicker from "@/components/ColorPicker";
 import StepContent from "@/components/StepContent";
 import SubscriptionModal from "@/components/SubscriptionModal";
 import Image from "next/image";
+import { useColor } from "@/context/ColorContext";
 
 export default function TemplateEditor() {
 	const iframeRef = useRef<HTMLIFrameElement | null>(null);
 	const [step, setStep] = useState(1);
 	const [resumeData, setResumeData] = useState<TemplateData>(
-		DUMMY_TEMPLATES_DATA[1]
+		DUMMY_TEMPLATES_DATA[
+			Math.floor(Math.random() * DUMMY_TEMPLATES_DATA.length)
+		]
 	);
+
 	const { templateId } = useParams();
 	const router = useRouter();
 	const template = templates.find((t) => t.id === templateId);
@@ -36,6 +40,7 @@ export default function TemplateEditor() {
 		: [{ key: "intro", label: "Intro" }];
 	const [showModal, setShowModal] = useState(false);
 	const [snapshotUrl, setSnapshotUrl] = useState<string | null>(null);
+	const { color } = useColor();
 
 	// Memoize the sendTemplateDataToIframe function to avoid unnecessary re-creations
 	const sendTemplateDataToIframe = useCallback(() => {
@@ -49,7 +54,7 @@ export default function TemplateEditor() {
 
 	useEffect(() => {
 		sendTemplateDataToIframe();
-	}, [sendTemplateDataToIframe]);
+	}, [sendTemplateDataToIframe, color]);
 
 	// Listen for messages from the hidden iframe with the snapshot image
 	useEffect(() => {
@@ -122,7 +127,7 @@ export default function TemplateEditor() {
 
 				<div className='w-full lg:w-1/2'>
 					<div className='flex justify-between items-center mb-4'>
-						<ColorPicker />
+						<ColorPicker iframeRef={iframeRef} />
 
 						<Button variant='default' onClick={handleDownloadClick}>
 							Download

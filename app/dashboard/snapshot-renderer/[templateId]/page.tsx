@@ -20,12 +20,27 @@ export default function SnapshotRenderer() {
 		if (templateId && templateRef.current) {
 			const generateSnapshot = async () => {
 				try {
-					const dataUrl = await toPng(templateRef.current!, {
-						backgroundColor: "#ffffff", // Optional: Add a background color
-					});
+					// Wait for all images within templateRef to load
+					const images = Array.from(
+						templateRef.current!.querySelectorAll("img")
+					);
+					await Promise.all(
+						images.map((img) =>
+							img.complete
+								? Promise.resolve()
+								: new Promise((resolve) => (img.onload = resolve))
+						)
+					);
 
-					// Post snapshot back to parent window
-					parent.postMessage({ templateId, dataUrl }, "*");
+					// Add a slight delay to ensure layout is finalized
+					setTimeout(async () => {
+						const dataUrl = await toPng(templateRef.current!, {
+							backgroundColor: "#ffffff", // Optional: Add a background color
+						});
+
+						// Post snapshot back to parent window
+						parent.postMessage({ templateId, dataUrl }, "*");
+					}, 200); // Adjust delay as needed (in milliseconds)
 				} catch (error) {
 					console.error("Failed to generate snapshot:", error);
 				}
@@ -41,7 +56,7 @@ export default function SnapshotRenderer() {
 			{template ? (
 				<template.component templateData={templateData} />
 			) : (
-				// show a loader
+				// Show a loader while the template is loading
 				<div className='flex flex-col justify-center items-center space-y-4 h-[400px]'>
 					<Image
 						src='/logo.png'

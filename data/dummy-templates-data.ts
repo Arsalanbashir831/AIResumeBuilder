@@ -4,7 +4,7 @@ export const DUMMY_TEMPLATES_DATA = [
 		name: "Professional Template",
 		sections: {
 			personalInfo: {
-				profileImage: "/path/to/profile-image.jpg",
+				profileImage: "/avatar-2.jpg",
 				name: "John Doe",
 				title: "Software Engineer",
 				contact: {
@@ -142,7 +142,7 @@ export const DUMMY_TEMPLATES_DATA = [
 		name: "Creative Template",
 		sections: {
 			personalInfo: {
-				profileImage: "/path/to/profile-image.jpg",
+				profileImage: "/avatar-1.jpg",
 				name: "Jane Smith",
 				title: "Graphic Designer",
 				contact: {
@@ -262,7 +262,7 @@ export const DUMMY_TEMPLATES_DATA = [
 		name: "Minimalist Template",
 		sections: {
 			personalInfo: {
-				profileImage: "/path/to/profile-image.jpg",
+				profileImage: "/avatar-3.jpg",
 				name: "Michael Lee",
 				title: "Data Scientist",
 				contact: {

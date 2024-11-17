@@ -16,7 +16,7 @@ const ColorContext = createContext<ColorContextType | undefined>(undefined);
 
 export const ColorProvider: React.FC<ColorProviderProps> = ({ children }) => {
 	// use default template-hue, template-saturation, template-lightness values
-	const [color, setColor] = useState<string>("");
+	const [color, setColor] = useState<string>("#000000");
 
 	return (
 		<ColorContext.Provider value={{ color, setColor }}>

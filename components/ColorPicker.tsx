@@ -6,10 +6,14 @@ import { Label } from "./ui/label";
 import { SketchPicker } from "react-color";
 
 type ColorPickerProps = {
+	iframeRef?: React.RefObject<HTMLIFrameElement>;
 	onColorChange?: (hslColor: string) => void;
 };
 
-const ColorPicker: React.FC<ColorPickerProps> = ({ onColorChange }) => {
+const ColorPicker: React.FC<ColorPickerProps> = ({
+	iframeRef,
+	onColorChange,
+}) => {
 	const { color, setColor } = useColor();
 	const [isPickerVisible, setPickerVisible] = useState(false);
 	const pickerRef = useRef<HTMLDivElement | null>(null); // Reference for the color picker container
@@ -32,6 +36,22 @@ const ColorPicker: React.FC<ColorPickerProps> = ({ onColorChange }) => {
 			"--template-lightness",
 			lightness
 		);
+
+		// Inject CSS variables into iframe document if available
+		if (iframeRef?.current) {
+			const iframeDoc = iframeRef.current.contentWindow?.document;
+			if (iframeDoc) {
+				iframeDoc.documentElement.style.setProperty("--template-hue", hue);
+				iframeDoc.documentElement.style.setProperty(
+					"--template-saturation",
+					saturation
+				);
+				iframeDoc.documentElement.style.setProperty(
+					"--template-lightness",
+					lightness
+				);
+			}
+		}
 
 		// Optional: Callback if provided to handle color change externally
 		if (onColorChange) {

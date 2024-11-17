@@ -58,7 +58,7 @@ const Navbar = ({ isDashboard = false }) => {
 					<DropdownMenu>
 						<DropdownMenuTrigger>
 							<Avatar className='cursor-pointer'>
-								<AvatarImage src='/avatar.jpg' alt='Avatar' />
+								<AvatarImage src='/avatar-1.jpg' alt='Avatar' />
 								<AvatarFallback>JD</AvatarFallback>
 							</Avatar>
 						</DropdownMenuTrigger>
