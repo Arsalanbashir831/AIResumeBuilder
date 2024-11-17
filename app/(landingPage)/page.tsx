@@ -14,11 +14,36 @@ import AnimatedLogos from "@/components/AnimatedLogos";
 
 const LandingPage = () => {
 	const companies = [
-		{ name: "Air France", role: "Full-stack Developer", logo: "airfrance" },
-		{ name: "Accenture", role: "Engineering Team Lead", logo: "accenture" },
-		{ name: "Amazon", role: "Senior Solution Architect", logo: "amazon" },
-		{ name: "Dell", role: "GCP Program Manager", logo: "dell" },
-		{ name: "Microsoft", role: "Cloud Program Manager", logo: "microsoft" },
+		{
+			name: "Air France",
+			role: "Full-stack Developer",
+			logo: "airfrance",
+			resume: "/templates/1.png",
+		},
+		{
+			name: "Accenture",
+			role: "Engineering Team Lead",
+			logo: "accenture",
+			resume: "/templates/2.png",
+		},
+		{
+			name: "Amazon",
+			role: "Senior Solution Architect",
+			logo: "amazon",
+			resume: "/templates/3.png",
+		},
+		{
+			name: "Dell",
+			role: "GCP Program Manager",
+			logo: "dell",
+			resume: "/templates/4.png",
+		},
+		{
+			name: "Microsoft",
+			role: "Cloud Program Manager",
+			logo: "microsoft",
+			resume: "/templates/5.png",
+		},
 	];
 
 	return (
@@ -73,7 +98,7 @@ const LandingPage = () => {
 
 					<div className='flex justify-center mt-12 md:mt-0 z-10'>
 						<Image
-							src='/placeholder-resume.png'
+							src='/templates/1.png'
 							alt='Hero'
 							className='shadow-xl rounded-lg w-full max-w-xs sm:max-w-md md:max-w-full'
 							width={400}
@@ -225,7 +250,7 @@ const LandingPage = () => {
 					{/* Right Side - Template Editor Interface */}
 					<div className='bg-white rounded-lg shadow-xl p-6'>
 						<Image
-							src='/placeholder-dashboard.png'
+							src='/placeholder-dashboard-2.png'
 							alt='Template Editor'
 							width={600}
 							height={400}
@@ -307,9 +332,13 @@ const LandingPage = () => {
 						<div className='grid grid-cols-2 md:grid-cols-3 gap-4'>
 							{companies.map((company) => (
 								<div key={company.name} className='flex flex-col items-center'>
-									<div className='bg-white p-4 rounded-lg shadow-sm w-full aspect-[3/4] mb-2'>
-										{/* This would be where the resume preview image goes */}
-										<div className='w-full h-full bg-gray-100 rounded' />
+									<div className='bg-white rounded-lg shadow-sm w-full aspect-[3/4] mb-2 flex justify-center items-stretch mx-auto overflow-hidden p-2'>
+										<Image
+											src={company.resume}
+											alt='Resume'
+											width={300}
+											height={400}
+										/>
 									</div>
 									<div className='text-xs text-gray-600 text-center'>
 										Hired by
