@@ -1,35 +1,33 @@
-"use client";
-
 import AuthForm from "@/components/AuthForm";
-import RandomQuote from "@/components/RandomQuote";
-import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function SigninPage() {
-	const router = useRouter();
-
-	const handleSignUpClick = () => {
-		router.push("/signup");
-	};
-
 	return (
 		<div className='min-h-screen flex flex-col md:flex-row'>
 			{/* Left Side */}
-			<div className='flex-1 bg-[#0B1437] text-white hidden md:flex flex-col justify-center p-8'>
+			<div
+				className='flex-1 bg-[#0B1437] text-white hidden md:flex flex-col p-8'
+				style={{
+					backgroundImage: 'url("/auth-bg.jpg")',
+					backgroundSize: "cover",
+					backgroundPosition: "center",
+					backgroundBlendMode: "overlay",
+				}}>
 				<div className='flex items-center space-x-2'>
 					<Image src='/logo.png' alt='GetSetCV' width={180} height={100} />
 				</div>
-				<div className='flex items-center justify-center py-4 my-12'>
-					<Image
-						src='/templates/2.png'
-						alt='Sign In'
-						width={300}
-						height={300}
-						className='rounded-lg shadow-lg'
-					/>
+
+				<div className='flex flex-col justify-center flex-1'>
+					<p className='text-4xl font-semibold text-white'>
+						Your Dream Job Starts with a Standout Resume
+					</p>
+					<p className='mt-4 text-sm text-gray-200 text-justify'>
+						GetSetCV empowers you to craft a professional, eye-catching resume
+						in minutes. With intuitive customization and sleek templates, focus
+						on showcasing your skills while we bring your career story to life.
+					</p>
 				</div>
-				<RandomQuote />
 			</div>
 
 			{/* Right Side */}
@@ -42,7 +40,11 @@ export default function SigninPage() {
 						height={100}
 						className='md:hidden'
 					/>
-					<Button onClick={handleSignUpClick}>Sign Up</Button>
+					<Link
+						href='/signup'
+						className='px-4 py-2 bg-orange-500 text-white rounded-md hover:bg-orange-400 text-sm'>
+						Sign Up
+					</Link>
 				</div>
 				<AuthForm
 					heading='Welcome back!'
