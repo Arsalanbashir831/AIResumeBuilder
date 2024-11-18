@@ -8,9 +8,12 @@ body {
 
 @layer base {
 	:root {
-		--template-hue: 24.6;
-		--template-saturation: 95%;
-		--template-lightness: 53.1%;
+		/* --template-hue: 24.6; */
+		--template-hue: 228;
+		/* --template-saturation: 95%; */
+		--template-saturation: 67%;
+		/* --template-lightness: 53.1%; */
+		--template-lightness: 13%;
 		--background: 0 0% 100%;
 		--foreground: 20 14.3% 4.1%;
 		--card: 0 0% 100%;

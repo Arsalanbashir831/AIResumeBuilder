@@ -51,7 +51,7 @@ const Navbar = ({ isDashboard = false }) => {
 			} ${showNavbar ? "translate-y-0" : "-translate-y-full"}`}>
 			<div className='container mx-auto flex items-center justify-between px-4 py-3'>
 				<div className='flex items-center gap-2'>
-					<Image src='/logo.png' alt='GetSetCV' width={180} height={100} />
+					<Image src='/logo.png' alt='GetSetCV' width={220} height={100} />
 				</div>
 
 				{isDashboard ? (

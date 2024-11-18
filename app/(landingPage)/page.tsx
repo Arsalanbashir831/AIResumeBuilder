@@ -11,6 +11,7 @@ import {
 import Image from "next/image";
 import Navbar from "@/components/Navbar";
 import AnimatedLogos from "@/components/AnimatedLogos";
+import Link from "next/link";
 
 const LandingPage = () => {
 	const companies = [
@@ -64,12 +65,12 @@ const LandingPage = () => {
 			<Navbar />
 
 			{/* Hero Section */}
-			<section className='max-w-7xl mx-auto px-4 py-16 md:py-24'>
+			<section className='max-w-7xl mx-auto px-4 py-16 md:py-24 relative z-10'>
 				<div className='grid grid-cols-1 md:grid-cols-2 gap-12 items-center'>
 					<div className='mt-10 md:mt-0'>
-						<span className='text-gray-700 font-medium mb-2 text-sm uppercase tracking-wide'>
+						{/* <span className='text-gray-700 font-medium mb-2 text-sm uppercase tracking-wide'>
 							Best AI Resume Builder
-						</span>
+						</span> */}
 						<h1 className='text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif mt-4 mb-6'>
 							Your success story begins with a resume.
 						</h1>
@@ -79,9 +80,11 @@ const LandingPage = () => {
 							employer with a perfect resume created in minutes.
 						</p>
 						<div className='flex flex-wrap gap-4'>
-							<Button className='px-6 sm:px-8 py-3 sm:py-4'>
+							<Link
+								href='/signin'
+								className='px-6 sm:px-8 py-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600 text-sm'>
 								Create My Resume
-							</Button>
+							</Link>
 							{/* <Button variant='outline' className='px-6 sm:px-8 py-3 sm:py-4'>
 								See Examples
 							</Button> */}
@@ -98,7 +101,7 @@ const LandingPage = () => {
 
 					<div className='flex justify-center mt-12 md:mt-0 z-10'>
 						<Image
-							src='/templates/1.png'
+							src='/templates/5.png'
 							alt='Hero'
 							className='shadow-xl rounded-lg w-full max-w-xs sm:max-w-md md:max-w-full'
 							width={400}
@@ -172,7 +175,7 @@ const LandingPage = () => {
 					</div>
 
 					<div className='order-first md:order-last'>
-						<span className='text-gray-700 font-medium'>AI Resume Builder</span>
+						{/* <span className='text-gray-700 font-medium'>AI Resume Builder</span> */}
 						<h2 className='text-3xl sm:text-4xl md:text-5xl font-serif mt-4 mb-6'>
 							Let artificial intelligence write your resume.
 						</h2>
@@ -197,9 +200,11 @@ const LandingPage = () => {
 							))}
 						</div>
 
-						<Button className='px-6 sm:px-8 py-3 sm:py-4'>
+						<Link
+							href='/signin'
+							className='px-6 sm:px-8 py-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600 text-sm'>
 							Create My Resume
-						</Button>
+						</Link>
 					</div>
 				</div>
 			</section>
@@ -208,20 +213,20 @@ const LandingPage = () => {
 				<div className='grid grid-cols-1 md:grid-cols-2 gap-12 items-center'>
 					{/* Left Side - Content */}
 					<div>
-						<h2 className='text-gray-700 font-medium mb-2 text-sm uppercase tracking-wide'>
+						{/* <h2 className='text-gray-700 font-medium mb-2 text-sm uppercase tracking-wide'>
 							Resume Templates
-						</h2>
+						</h2> */}
 						<h3 className='text-3xl sm:text-4xl md:text-5xl font-serif mt-4 mb-6'>
 							Pick a resume template.
 							<br />
 							Make it more you.
 						</h3>
 						<p className='text-gray-600 mb-8 text-base sm:text-lg'>
-							Get hired fast with a resume and cover letter that visually stand
-							out from the pile. Browse 40+ ATS-friendly resume templates
-							designed by a team of HR experts and typographers. Customize any
-							template in any way you want. Explore more than a million possible
-							design combinations.{" "}
+							Get hired fast with a resume that visually stand out from the
+							pile. Browse 40+ ATS-friendly resume templates designed by a team
+							of HR experts and typographers. Customize any template in any way
+							you want. Explore more than a million possible design
+							combinations.{" "}
 							<a href='#' className='hover:underline'>
 								Learn more about our resume builder.
 							</a>
@@ -242,9 +247,11 @@ const LandingPage = () => {
 							))}
 						</div>
 
-						<Button className='px-6 sm:px-8 py-3 sm:py-4'>
+						<Link
+							href='/signin'
+							className='px-6 sm:px-8 py-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600 text-sm'>
 							Create My Resume
-						</Button>
+						</Link>
 					</div>
 
 					{/* Right Side - Template Editor Interface */}
@@ -301,8 +308,8 @@ const LandingPage = () => {
 								See for yourself how our AI Resume Writer can drastically speed
 								up your resume writing process. Thanks to artificial
 								intelligence, we were able to automate the process of writing a
-								resume (and cover letter) to the point of it being almost
-								entirely effortless and faster than ever.
+								resume to the point of it being almost entirely effortless and
+								faster than ever.
 							</p>
 
 							<div className='grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8'>
@@ -317,9 +324,11 @@ const LandingPage = () => {
 								))}
 							</div>
 
-							<Button className='px-6 sm:px-8 py-3 sm:py-4'>
+							<Link
+								href='/signin'
+								className='px-6 sm:px-8 py-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600 text-sm mt-6 inline-block'>
 								Try AI Resume Writer
-							</Button>
+							</Link>
 						</div>
 					</div>
 				</div>
@@ -361,15 +370,13 @@ const LandingPage = () => {
 						</h2>
 						<p className='text-gray-600 mb-8 text-base sm:text-lg'>
 							Nike, Facebook — learn from resumes that helped our customers land
-							jobs with the world&apos;s top companies. Browse
-							profession-specific guides that will help you write an excellent
-							resume and cover letter no matter what. All this knowledge works
-							wonders when used in combination with our AI Resume Writer. After
-							all, your personal touch is irreplaceable.{" "}
-							<span className=''>Browse resume and cover letter examples.</span>
+							jobs with the world&apos;s top companies. Explore 5 high-quality
+							templates, each crafted from scratch to ensure maximum visibility.
+							We prioritize the best quality, and more templates will be added
+							soon!
 						</p>
 
-						<div className='grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8'>
+						{/* <div className='grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8'>
 							{[
 								"400+ job-specific resume and cover letter guides",
 								"1,500+ cover letter and resume examples",
@@ -379,11 +386,7 @@ const LandingPage = () => {
 									<span>{feature}</span>
 								</div>
 							))}
-						</div>
-
-						<Button className='px-6 sm:px-8 py-3 sm:py-4'>
-							Browse Resume Examples
-						</Button>
+						</div> */}
 					</div>
 				</div>
 			</section>
@@ -417,9 +420,11 @@ const LandingPage = () => {
 						hassle.
 					</p>
 
-					<Button className='px-6 sm:px-8 py-3 sm:py-5 mt-6'>
+					<Link
+						href='/signin'
+						className='px-6 sm:px-8 py-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600 text-sm mt-6 inline-block'>
 						Get Started with One-Time Access
-					</Button>
+					</Link>
 				</div>
 			</section>
 

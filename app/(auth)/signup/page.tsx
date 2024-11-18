@@ -16,9 +16,18 @@ export default function SignupPage() {
 	return (
 		<div className='min-h-screen flex flex-col md:flex-row'>
 			{/* Left Side */}
-			<div className='flex-1 bg-[#0B1437] text-white hidden md:flex flex-col justify-between p-8'>
+			<div className='flex-1 bg-[#0B1437] text-white hidden md:flex flex-col justify-center p-8'>
 				<div className='flex items-center space-x-2'>
 					<Image src='/logo.png' alt='GetSetCV' width={180} height={100} />
+				</div>
+				<div className='flex items-center justify-center py-4 my-12'>
+					<Image
+						src='/templates/2.png'
+						alt='Sign In'
+						width={300}
+						height={300}
+						className='rounded-lg shadow-lg'
+					/>
 				</div>
 				<RandomQuote />
 			</div>
