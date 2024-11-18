@@ -40,7 +40,13 @@ export default function TemplateEditor() {
 		: [{ key: "intro", label: "Intro" }];
 	const [showModal, setShowModal] = useState(false);
 	const [snapshotUrl, setSnapshotUrl] = useState<string | null>(null);
+	const [snapshotPreviousUrl, setSnapshotPreviousUrl] = useState<string | null>(
+		null
+	);
 	const { color } = useColor();
+
+	console.log("snapshotUrl", snapshotUrl);
+	console.log("snapshotPreviousUrl", snapshotPreviousUrl);
 
 	// Memoize the sendTemplateDataToIframe function to avoid unnecessary re-creations
 	const sendTemplateDataToIframe = useCallback(() => {
@@ -55,6 +61,12 @@ export default function TemplateEditor() {
 	useEffect(() => {
 		sendTemplateDataToIframe();
 	}, [sendTemplateDataToIframe, color]);
+
+	useEffect(() => {
+		if (snapshotUrl) {
+			setSnapshotPreviousUrl(snapshotUrl);
+		}
+	}, [snapshotUrl]);
 
 	// Listen for messages from the hidden iframe with the snapshot image
 	useEffect(() => {
@@ -140,6 +152,14 @@ export default function TemplateEditor() {
 								{snapshotUrl ? (
 									<Image
 										src={snapshotUrl}
+										alt='Resume Preview'
+										className='rounded-lg shadow-md aspect-[2/3]'
+										width={900}
+										height={400}
+									/>
+								) : snapshotPreviousUrl ? (
+									<Image
+										src={snapshotPreviousUrl}
 										alt='Resume Preview'
 										className='rounded-lg shadow-md aspect-[2/3]'
 										width={900}
