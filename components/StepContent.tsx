@@ -9,6 +9,7 @@ import PersonalInfoStep from "@/components/forms/steps/PersonalInfoStep";
 import ExpertiseStep from "@/components/forms/steps/ExpertiseStep";
 import CertificatesStep from "@/components/forms/steps/CertificatesStep";
 import HobbiesStep from "@/components/forms/steps/HobbiesStep";
+import ProjectsStep from "@/components/forms/steps/ProjectsStep";
 import {
 	Achievement,
 	Certificate,
@@ -19,6 +20,7 @@ import {
 	SectionKey,
 	TemplateData,
 } from "@/types/global";
+import LanguagesStep from "./forms/steps/LanguagesStep";
 
 const StepContent = ({
 	sectionKey,
@@ -168,6 +170,28 @@ const StepContent = ({
 						expertise={resumeData.sections.expertise}
 						onChange={(updatedExpertise) =>
 							handleInputChange("expertise", "", updatedExpertise)
+						}
+					/>
+				</div>
+			);
+		case "projects":
+			return (
+				<div>
+					<ProjectsStep
+						projects={resumeData.sections.projects}
+						onChange={(updatedProjects) =>
+							handleInputChange("projects", "", updatedProjects)
+						}
+					/>
+				</div>
+			);
+		case "languages":
+			return (
+				<div>
+					<LanguagesStep
+						language={resumeData.sections.languages}
+						onChange={(updatedLanguages) =>
+							handleInputChange("languages", "", updatedLanguages)
 						}
 					/>
 				</div>

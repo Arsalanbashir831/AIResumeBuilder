@@ -1,50 +1,46 @@
 import React from "react";
-import ProfileImage from "./ProfileImage";
+import { AtSign, Link, MapPin, Phone } from "lucide-react";
 
 interface HeaderProps {
-	profileImage: string;
 	name: string;
 	email: string;
 	phone: string;
 	link: string;
-	// tagline: string;
+	tagline: string;
+	location: string;
 }
 
 const Header: React.FC<HeaderProps> = ({
-	profileImage,
 	name,
 	email,
 	phone,
 	link,
-	// tagline,
+	tagline,
+	location,
 }) => {
 	return (
-		<header className='grid grid-cols-12 gap-6'>
-			<aside className='col-span-3 bg-gray-900 text-white px-6 pt-6'>
-				<ProfileImage imageUrl={profileImage} alt={name} />
-			</aside>
-			<div className='col-span-9 py-6 px-2'>
-				<h1 className='text-3xl font-bold mb-4'>{name}</h1>
-				<address className='space-y-2 not-italic'>
-					{/* <div className='flex'>
-						<p className='font-semibold'>Address:</p>
-						<p className='ml-2'>Your Address</p>
-					</div> */}
-					<div className='flex'>
-						<p className='font-semibold'>Phone Number:</p>
-						<p className='ml-2'>{phone}</p>
-					</div>
-					<div className='flex'>
-						<p className='font-semibold'>Email Address:</p>
-						<p className='ml-2'>{email}</p>
-					</div>
-					<div className='flex'>
-						<p className='font-semibold'>Web:</p>
-						<p className='ml-2'>{link}</p>
-					</div>
-				</address>
+		<section className='mb-8 bg-template p-5 text-white'>
+			<h1 className='text-3xl font-bold'>{name}</h1>
+			<p className='mb-2'>{tagline}</p>
+			<div className='flex justify-between flex-wrap gap-4 text-sm border-t border-white pt-2'>
+				<div className='flex items-center gap-1 text-xs mt-1'>
+					<MapPin className='w-4 h-4 text-white' />
+					{location}
+				</div>
+				<div className='flex items-center gap-1'>
+					<Phone className='w-4 h-4 text-white' />
+					{phone}
+				</div>
+				<div className='flex items-center gap-1'>
+					<AtSign className='w-4 h-4 text-white' />
+					{email}
+				</div>
 			</div>
-		</header>
+			<div className='flex items-center gap-1 mt-2 text-xs'>
+				<Link className='w-4 h-4 text-white' />
+				{link}
+			</div>
+		</section>
 	);
 };
 

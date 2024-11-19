@@ -135,6 +135,30 @@ export const DUMMY_TEMPLATES_DATA = [
 				},
 			],
 			hobbies: [{ name: "Hiking" }, { name: "Reading" }, { name: "Cooking" }],
+			languages: [
+				{
+					name: "English",
+					level: "Native Speaker",
+				},
+				{
+					name: "Spanish",
+					level: "Intermediate",
+				},
+			],
+			projects: [
+				{
+					title: "SaaS Platform Development",
+					position: "Senior Software Engineer",
+					description:
+						"Led a team of engineers to develop a new SaaS platform used by 10,000+ users.",
+				},
+				{
+					title: "CRM Tool Development",
+					position: "Software Engineer Intern",
+					description:
+						"Assisted in developing features for a customer relationship management tool.",
+				},
+			],
 		},
 	},
 	{
@@ -254,6 +278,30 @@ export const DUMMY_TEMPLATES_DATA = [
 				{ name: "Painting" },
 				{ name: "Photography" },
 				{ name: "Traveling" },
+			],
+			languages: [
+				{
+					name: "English",
+					level: "Native Speaker",
+				},
+				{
+					name: "French",
+					level: "Intermediate",
+				},
+			],
+			projects: [
+				{
+					title: "Brand Redesign Project",
+					position: "Senior Graphic Designer",
+					description:
+						"Led the redesign of a major client's brand, resulting in a 30% increase in brand recognition.",
+				},
+				{
+					title: "Website Redesign Project",
+					position: "UI/UX Designer",
+					description:
+						"Redesigned the user interface of a web application, improving user engagement by 25%.",
+				},
 			],
 		},
 	},
@@ -380,6 +428,30 @@ export const DUMMY_TEMPLATES_DATA = [
 				},
 			],
 			hobbies: [{ name: "Running" }, { name: "Reading" }, { name: "Yoga" }],
+			languages: [
+				{
+					name: "English",
+					level: "Native Speaker",
+				},
+				{
+					name: "Spanish",
+					level: "Intermediate",
+				},
+			],
+			projects: [
+				{
+					title: "Customer Churn Prediction",
+					position: "Lead Data Scientist",
+					description:
+						"Developed a machine learning model to predict customer churn and identify at-risk customers.",
+				},
+				{
+					title: "Sales Forecasting Dashboard",
+					position: "Data Analyst",
+					description:
+						"Created an interactive dashboard to visualize sales data and forecast future sales trends.",
+				},
+			],
 		},
 	},
 ];

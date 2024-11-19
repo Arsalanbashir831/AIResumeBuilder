@@ -42,7 +42,10 @@ export type SectionKey =
 	| "additionalExperience"
 	| "expertise"
 	| "certificates"
-	| "hobbies";
+	| "hobbies"
+	| "references"
+	| "languages"
+	| "projects";
 
 export interface Achievement {
 	title: string;
@@ -61,6 +64,27 @@ export interface Expertise {
 
 export interface Hobby {
 	name: string;
+}
+
+export interface Project {
+	title: string;
+	position?: string;
+	description: string;
+	startDate?: string;
+	endDate?: string;
+	isCurrent?: boolean;
+}
+
+export interface Reference {
+	name: string;
+	position: string;
+	company: string;
+	contact: string;
+}
+
+export interface Language {
+	name: string;
+	level: string;
 }
 
 export interface TemplateData {
@@ -84,6 +108,9 @@ export interface TemplateData {
 		}[];
 		expertise: Expertise[];
 		hobbies: Hobby[];
+		references?: Reference[];
+		languages: Language[];
+		projects: Project[];
 	};
 }
 
@@ -104,7 +131,7 @@ type SectionFields = {
 	phone?: boolean;
 	link?: boolean;
 	location?: boolean;
-	[key: string]: boolean | undefined; // Allow for other custom fields
+	[key: string]: boolean | undefined;
 };
 
 // Define a type for the section configuration

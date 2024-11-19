@@ -24,3 +24,16 @@ export const formatToMonthYearDate = (dateString: string): string => {
 
 	return `${month}/${year}`;
 };
+
+const parseDate = (dateString: string) => {
+	const [month, year] = dateString.split("/");
+	return new Date(Number(year), Number(month) - 1);
+};
+
+export const formatDate = (date: string) => {
+	const parsedDate = parseDate(date);
+	return parsedDate.toLocaleString("default", {
+		month: "long",
+		year: "numeric",
+	});
+};

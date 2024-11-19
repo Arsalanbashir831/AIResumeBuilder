@@ -122,8 +122,7 @@ export const templates = [
 					location: false,
 				},
 			},
-			{ key: "summary", label: "Profile" },
-			{ key: "skills", label: "Skills" },
+			{ key: "summary", label: "Summary" },
 			{
 				key: "experience",
 				label: "Experience",
@@ -136,6 +135,23 @@ export const templates = [
 					achievements: true,
 				},
 			},
+			{
+				key: "educations",
+				label: "Education",
+				fieldsIncluded: {
+					institution: true,
+					degree: true,
+					location: false,
+					gpa: false,
+					startDate: true,
+					endDate: true,
+				},
+			},
+			{ key: "projects", label: "Projects" },
+			{ key: "skills", label: "Skills" },
+			{ key: "certificates", label: "Certificates" },
+			{ key: "languages", label: "Languages" },
+			// { key: "references", label: "References" },
 		],
 	},
 	{

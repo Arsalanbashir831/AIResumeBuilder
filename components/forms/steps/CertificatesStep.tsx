@@ -37,7 +37,7 @@ export default function CertificatesStep({
 		<div className='p-6 space-y-6'>
 			<div className='flex justify-between items-center mb-4'>
 				<h3 className='text-2xl font-semibold mb-4 text-gray-700'>
-					certificates
+					Certificates
 				</h3>
 				<AiButton />
 			</div>

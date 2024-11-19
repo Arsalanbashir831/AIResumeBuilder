@@ -45,9 +45,6 @@ export default function TemplateEditor() {
 	);
 	const { color } = useColor();
 
-	console.log("snapshotUrl", snapshotUrl);
-	console.log("snapshotPreviousUrl", snapshotPreviousUrl);
-
 	// Memoize the sendTemplateDataToIframe function to avoid unnecessary re-creations
 	const sendTemplateDataToIframe = useCallback(() => {
 		if (iframeRef.current) {
