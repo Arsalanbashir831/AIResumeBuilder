@@ -87,27 +87,25 @@ export default function TemplateEditor() {
 		pdf.save("resume.pdf");
 	};
 	const handleInputChange = (
-		section: string,
+		section: keyof TemplateData['sections'], // Ensure type safety
 		field: string | null,
 		value: any
-	) => {
+	  ) => {
 		setSnapshotUrl(null);
-		// Update resume data
+	  
 		setResumeData((prevData) => ({
-			...prevData,
-			sections: {
-				...prevData.sections,
-				[section]: field
-					? {
-						...(typeof prevData?.sections[section] === "object"
-							? prevData?.sections[section]
-							: {}),
-						[field]: value,
-					}
-					: value,
-			},
+		  ...prevData,
+		  sections: {
+			...prevData.sections,
+			[section]: field
+			  ? {
+				  ...(prevData.sections[section] as Record<string, any>), 
+				  [field]: value,
+				}
+			  : value,
+		  },
 		}));
-	};
+	  };
 
 	const handleStepChange = async (newStep: number) => {
 		const token = localStorage.getItem("accessToken");
