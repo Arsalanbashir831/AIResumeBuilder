@@ -12,34 +12,44 @@ import Image from "next/image";
 import { PlusCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { useAuth } from "@/context/AuthContext";
+import { useEffect, useState } from "react";
+import { getUserResume } from "../api/resume";
+import { Resume } from "@/types/global";
 
 export default function DashboardBody() {
+
 	const router = useRouter();
-const {user}= useAuth()
+	const [resumes, setResume] = useState<Resume[] | null>(null);
 
+	useEffect(() => {
+		const fetchData = async () => {
+			const token = localStorage.getItem('accessToken')
+			const data = await getUserResume(token)
+			console.log(data);
+			setResume(data)
+		}
 
-// Templates array for resumes
-	const templates = [
-		{ title: "My Resume", description: "Updated 2 days ago" },
-		{ title: "Untitled 1", description: "Updated 5 days ago" },
-		{ title: "Untitled 2", description: "Updated 1 week ago" },
-	];
+		fetchData()
+	}, [])
+
 
 	// Template Card Component for reusability
 	const TemplateCard = ({
 		title,
 		description,
 		index,
+		templateId, id
 	}: {
+		templateId: string,
+		id: string,
 		title: string;
 		description: string;
 		index: number;
 	}) => (
-		<Card>
+		<Card className="cursor-pointer" onClick={() => router.push(`/dashboard/editor/${templateId}?id=${id}`)}>
 			<CardContent className='flex items-center justify-center p-4 bg-gray-100 rounded-t-xl'>
 				<Image
-					src='/placeholder-dashboard-2.png'
+					src= {`/templates/${templateId.split('-')[1]}.png`}
 					alt={`Resume Template ${index + 1}`}
 					width={300}
 					height={200}
@@ -57,7 +67,7 @@ const {user}= useAuth()
 	return (
 		<div className='relative '>
 			<div className='container mx-auto px-4 py-16 md:py-24'>
-				{/* Header Section */}
+			
 				<header className='flex flex-col sm:flex-row justify-between sm:items-center my-8 sm:mt-0'>
 					<div className='space-y-2 mb-3 sm:mb-0'>
 						<h1 className='text-3xl sm:text-4xl lg:text-5xl font-bold'>
@@ -94,15 +104,16 @@ const {user}= useAuth()
 							</Link>
 						</Card>
 
-						{/* Map over templates array */}
-						{/* {templates.map((template, index) => (
+						{resumes?.map((template, index) => (
 							<TemplateCard
+								id={template.id}
+								templateId={template.data.templateId}
 								key={index}
-								title={template.title}
-								description={template.description}
+								title={template.data.name}
+								description={template.data.sections.personalInfo.title}
 								index={index}
 							/>
-						))} */}
+						))}
 					</div>
 				</section>
 			</div>

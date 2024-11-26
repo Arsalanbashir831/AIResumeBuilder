@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { DUMMY_TEMPLATES_DATA } from "@/data/dummy-templates-data";
 import { TemplateData } from "@/types/global";
-import { useParams, useRouter } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { templates } from "@/data/templatesConfig";
 import { ArrowLeft } from "lucide-react";
 import ColorPicker from "@/components/ColorPicker";
@@ -12,9 +12,10 @@ import StepContent from "@/components/StepContent";
 import SubscriptionModal from "@/components/SubscriptionModal";
 import Image from "next/image";
 import { useColor } from "@/context/ColorContext";
-import { addUserInfo, createResume } from "@/app/api/resume";
+import { addUserInfo, createResume, getResumeById } from "@/app/api/resume";
 import { useFormContext } from "@/context/FormContext";
 import jsPDF from "jspdf";
+
 
 export default function TemplateEditor() {
 	const iframeRef = useRef<HTMLIFrameElement | null>(null);
@@ -26,6 +27,9 @@ export default function TemplateEditor() {
 		]
 	);
 	const { templateId } = useParams();
+	const searchParams = useSearchParams();
+	const id = searchParams.get("id");
+
 	const router = useRouter();
 	const template = templates.find((t) => t.id === templateId);
 	const sectionConfig = template
@@ -38,7 +42,7 @@ export default function TemplateEditor() {
 	);
 	const { color } = useColor();
 	const { formData } = useFormContext()
-	// Memoize the sendTemplateDataToIframe function to avoid unnecessary re-creations
+
 	const sendTemplateDataToIframe = useCallback(() => {
 		if (iframeRef.current) {
 			iframeRef.current.contentWindow?.postMessage(
@@ -47,6 +51,7 @@ export default function TemplateEditor() {
 			);
 		}
 	}, [resumeData, templateId]);
+// console.log(templateId);
 
 	useEffect(() => {
 		sendTemplateDataToIframe();
@@ -69,43 +74,46 @@ export default function TemplateEditor() {
 		return () => window.removeEventListener("message", handleSnapshotMessage);
 	}, []);
 
-
+	// useEffect(()=>{
+	// 	const fetchResume = async()=>{
+	// 		getResumeById()
+	// 	}
+	// },[])
 	const handleDownloadClick = () => {
 		if (!snapshotUrl) {
 			alert("Snapshot is not available for download");
 			return;
 		}
 
-		// Generate a PDF from the snapshot
 		const pdf = new jsPDF({
 			orientation: "portrait",
 			unit: "px",
-			format: [900, 1200], // Adjust dimensions as needed
+			format: [900, 1200],
 		});
 
 		pdf.addImage(snapshotUrl, "JPEG", 0, 0, 900, 1200);
 		pdf.save("resume.pdf");
 	};
 	const handleInputChange = (
-		section: keyof TemplateData['sections'], // Ensure type safety
+		section: keyof TemplateData['sections'],
 		field: string | null,
 		value: any
-	  ) => {
+	) => {
 		setSnapshotUrl(null);
-	  
+
 		setResumeData((prevData) => ({
-		  ...prevData,
-		  sections: {
-			...prevData.sections,
-			[section]: field
-			  ? {
-				  ...(prevData.sections[section] as Record<string, any>), 
-				  [field]: value,
-				}
-			  : value,
-		  },
+			...prevData,
+			sections: {
+				...prevData.sections,
+				[section]: field
+					? {
+						...(prevData.sections[section] as Record<string, any>),
+						[field]: value,
+					}
+					: value,
+			},
 		}));
-	  };
+	};
 
 	const handleStepChange = async (newStep: number) => {
 		const token = localStorage.getItem("accessToken");
@@ -145,6 +153,7 @@ export default function TemplateEditor() {
 			await createResume(authToken, {
 				data: {
 					...resumeData,
+					templateId:templateId
 					// Uncomment this if you want to include the snapshot
 					// resumePic: snapshotUrl,
 				},
@@ -164,6 +173,19 @@ export default function TemplateEditor() {
 		return <p>Template not found</p>;
 	}
 
+
+	useEffect(() => {
+		const fetchResumeData = async () => {
+			const token = localStorage.getItem('accessToken')
+			const response = await getResumeById(token, id);
+			console.log(response.data.sections);
+			 setResumeData(response?.data)
+		}
+		// if there is id in params than we will fetch the get resume by id api
+		if (id) {
+			fetchResumeData()
+		}
+	}, [])
 	return (
 		<div className="flex flex-col h-screen p-8 pt-24 container mx-auto">
 			<header className="flex justify-between items-center mb-4">
@@ -218,7 +240,6 @@ export default function TemplateEditor() {
 								)}
 							</div>
 
-							{/* Hidden iframe for rendering the template */}
 							<iframe
 								ref={iframeRef}
 								src="/dashboard/hidden-template-renderer"
