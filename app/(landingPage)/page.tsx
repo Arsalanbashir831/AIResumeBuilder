@@ -14,6 +14,7 @@ import AnimatedLogos from "@/components/AnimatedLogos";
 import Link from "next/link";
 
 const LandingPage = () => {
+	
 	const companies = [
 		{
 			name: "Air France",

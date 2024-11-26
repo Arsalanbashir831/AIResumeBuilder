@@ -12,11 +12,14 @@ import Image from "next/image";
 import { PlusCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useAuth } from "@/context/AuthContext";
 
 export default function DashboardBody() {
 	const router = useRouter();
+const {user}= useAuth()
 
-	// Templates array for resumes
+
+// Templates array for resumes
 	const templates = [
 		{ title: "My Resume", description: "Updated 2 days ago" },
 		{ title: "Untitled 1", description: "Updated 5 days ago" },
@@ -36,7 +39,7 @@ export default function DashboardBody() {
 		<Card>
 			<CardContent className='flex items-center justify-center p-4 bg-gray-100 rounded-t-xl'>
 				<Image
-					src='/placeholder-resume.png'
+					src='/placeholder-dashboard-2.png'
 					alt={`Resume Template ${index + 1}`}
 					width={300}
 					height={200}
@@ -52,7 +55,7 @@ export default function DashboardBody() {
 	);
 
 	return (
-		<div className='relative'>
+		<div className='relative '>
 			<div className='container mx-auto px-4 py-16 md:py-24'>
 				{/* Header Section */}
 				<header className='flex flex-col sm:flex-row justify-between sm:items-center my-8 sm:mt-0'>
@@ -92,14 +95,14 @@ export default function DashboardBody() {
 						</Card>
 
 						{/* Map over templates array */}
-						{templates.map((template, index) => (
+						{/* {templates.map((template, index) => (
 							<TemplateCard
 								key={index}
 								title={template.title}
 								description={template.description}
 								index={index}
 							/>
-						))}
+						))} */}
 					</div>
 				</section>
 			</div>

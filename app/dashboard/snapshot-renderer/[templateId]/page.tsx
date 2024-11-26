@@ -42,7 +42,7 @@ export default function SnapshotRenderer() {
 						parent.postMessage({ templateId, dataUrl }, "*");
 					}, 200); // Adjust delay as needed (in milliseconds)
 				} catch (error) {
-					console.error("Failed to generate snapshot:", error);
+					console.log("Failed to generate snapshot:", error);
 				}
 			};
 			generateSnapshot();

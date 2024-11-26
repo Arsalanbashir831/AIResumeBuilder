@@ -118,7 +118,7 @@ export interface FormState {
 	userType: "student" | "experienced";
 	yearsOfExperience?: number;
 	domain: string;
-	jobDescription?: File | string | null;
+	jobDescription?: string;
 	educationLevel?: "High School" | "College" | "University";
 }
 

@@ -1,19 +1,9 @@
-"use client";
-
+'use client'
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { DUMMY_TEMPLATES_DATA } from "@/data/dummy-templates-data";
-import {
-	Achievement,
-	Certificate,
-	EducationItem,
-	ExperienceItem,
-	Expertise,
-	Hobby,
-	SectionKey,
-	TemplateData,
-} from "@/types/global";
+import { TemplateData } from "@/types/global";
 import { useParams, useRouter } from "next/navigation";
 import { templates } from "@/data/templatesConfig";
 import { ArrowLeft } from "lucide-react";
@@ -22,16 +12,19 @@ import StepContent from "@/components/StepContent";
 import SubscriptionModal from "@/components/SubscriptionModal";
 import Image from "next/image";
 import { useColor } from "@/context/ColorContext";
+import { addUserInfo, createResume } from "@/app/api/resume";
+import { useFormContext } from "@/context/FormContext";
+import jsPDF from "jspdf";
 
 export default function TemplateEditor() {
 	const iframeRef = useRef<HTMLIFrameElement | null>(null);
 	const [step, setStep] = useState(1);
+	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [resumeData, setResumeData] = useState<TemplateData>(
 		DUMMY_TEMPLATES_DATA[
-			Math.floor(Math.random() * DUMMY_TEMPLATES_DATA.length)
+		Math.floor(Math.random() * DUMMY_TEMPLATES_DATA.length)
 		]
 	);
-
 	const { templateId } = useParams();
 	const router = useRouter();
 	const template = templates.find((t) => t.id === templateId);
@@ -44,7 +37,7 @@ export default function TemplateEditor() {
 		null
 	);
 	const { color } = useColor();
-
+	const { formData } = useFormContext()
 	// Memoize the sendTemplateDataToIframe function to avoid unnecessary re-creations
 	const sendTemplateDataToIframe = useCallback(() => {
 		if (iframeRef.current) {
@@ -76,23 +69,29 @@ export default function TemplateEditor() {
 		return () => window.removeEventListener("message", handleSnapshotMessage);
 	}, []);
 
-	const handleInputChange = (
-		section: SectionKey,
-		field: string | null,
-		value:
-			| string
-			| { [key: string]: string }
-			| ExperienceItem[]
-			| string[]
-			| Achievement[]
-			| EducationItem[]
-			| Expertise[]
-			| Certificate[]
-			| Hobby[]
-	) => {
-		// Clear the snapshot URL to reset the preview
-		setSnapshotUrl(null);
 
+	const handleDownloadClick = () => {
+		if (!snapshotUrl) {
+			alert("Snapshot is not available for download");
+			return;
+		}
+
+		// Generate a PDF from the snapshot
+		const pdf = new jsPDF({
+			orientation: "portrait",
+			unit: "px",
+			format: [900, 1200], // Adjust dimensions as needed
+		});
+
+		pdf.addImage(snapshotUrl, "JPEG", 0, 0, 900, 1200);
+		pdf.save("resume.pdf");
+	};
+	const handleInputChange = (
+		section: string,
+		field: string | null,
+		value: any
+	) => {
+		setSnapshotUrl(null);
 		// Update resume data
 		setResumeData((prevData) => ({
 			...prevData,
@@ -100,22 +99,67 @@ export default function TemplateEditor() {
 				...prevData.sections,
 				[section]: field
 					? {
-							...(typeof prevData.sections[section] === "object"
-								? prevData.sections[section]
-								: {}),
-							[field]: value,
-					  }
+						...(typeof prevData?.sections[section] === "object"
+							? prevData?.sections[section]
+							: {}),
+						[field]: value,
+					}
 					: value,
 			},
 		}));
 	};
 
-	const handleStepChange = (newStep: number) => {
-		setStep(newStep);
+	const handleStepChange = async (newStep: number) => {
+		const token = localStorage.getItem("accessToken");
+
+		if (!token) {
+			alert("Authentication token is missing. Please log in.");
+			return;
+		}
+		try {
+			if (step === 1 && newStep > 1) {
+
+				console.log("Submitting first section data:", formData);
+				await addUserInfo(token, { user_data: formData });
+			}
+
+			if (newStep === sectionConfig.length + 1) {
+				await handleSubmit(token);
+			} else {
+				setStep(newStep);
+			}
+		} catch (error) {
+			console.error("Error during step change:", error);
+			alert("An error occurred. Please try again.");
+		}
 	};
 
-	const handleDownloadClick = () => {
-		setShowModal(true);
+	const handleSubmit = async (authToken: string) => {
+		try {
+			setIsSubmitting(true);
+
+			if (!authToken) {
+				throw new Error("Authentication token is missing. Please log in.");
+			}
+
+			console.log("Submitting final resume data:", resumeData);
+
+			await createResume(authToken, {
+				data: {
+					...resumeData,
+					// Uncomment this if you want to include the snapshot
+					// resumePic: snapshotUrl,
+				},
+			});
+
+
+			setShowModal(true)
+		} catch (error) {
+			console.error("Error saving resume:", error);
+			alert("Failed to save resume. Please try again.");
+		} finally {
+			setIsSubmitting(false);
+		}
 	};
 
 	if (!template) {
@@ -123,53 +167,54 @@ export default function TemplateEditor() {
 	}
 
 	return (
-		<div className='flex flex-col h-screen p-8 pt-24 container mx-auto'>
-			{/* Header Section */}
-			<header className='flex justify-between items-center mb-4'>
-				<Button variant='default' onClick={() => router.push("/dashboard/")}>
+		<div className="flex flex-col h-screen p-8 pt-24 container mx-auto">
+			<header className="flex justify-between items-center mb-4">
+				<Button variant="default" onClick={() => router.push("/dashboard/")}>
 					<ArrowLeft size={24} />
 					To Dashboard
 				</Button>
 			</header>
-			<div className='flex flex-col lg:flex-row-reverse gap-5'>
-				{showModal && <SubscriptionModal onClose={() => setShowModal(false)} />}
-
-				<div className='w-full lg:w-1/2'>
-					<div className='flex justify-between items-center mb-4'>
+			<div className="flex flex-col lg:flex-row-reverse gap-5">
+				{showModal && <SubscriptionModal onClose={() => {
+					router.push('/dashboard')
+					setShowModal(false)
+				}} />}
+				<div className="w-full lg:w-1/2">
+					<div className="flex justify-between items-center mb-4">
 						<ColorPicker iframeRef={iframeRef} />
 
-						<Button variant='default' onClick={handleDownloadClick}>
+						<Button variant="default" onClick={handleDownloadClick} disabled={!snapshotUrl}>
 							Download
 						</Button>
 					</div>
-
-					<Card className='shadow-lg'>
-						<CardContent className='p-4'>
-							<div className='flex justify-center items-center w-full mx-auto'>
+					<Card className="shadow-lg">
+						<CardContent className="p-4">
+							{/* Resume preview or snapshot */}
+							<div className="flex justify-center items-center w-full mx-auto">
 								{snapshotUrl ? (
 									<Image
 										src={snapshotUrl}
-										alt='Resume Preview'
-										className='rounded-lg shadow-md aspect-[2/3]'
+										alt="Resume Preview"
+										className="rounded-lg shadow-md aspect-[2/3]"
 										width={900}
 										height={400}
 									/>
 								) : snapshotPreviousUrl ? (
 									<Image
 										src={snapshotPreviousUrl}
-										alt='Resume Preview'
-										className='rounded-lg shadow-md aspect-[2/3]'
+										alt="Resume Preview"
+										className="rounded-lg shadow-md aspect-[2/3]"
 										width={900}
 										height={400}
 									/>
 								) : (
-									<div className='flex flex-col justify-center items-center space-y-4 h-[400px]'>
+									<div className="flex flex-col justify-center items-center space-y-4 h-[400px]">
 										<Image
-											src='/logo.png'
+											src="/logo.png"
 											width={100}
 											height={100}
-											alt='GetSetCV Logo'
-											className='animate-pulseOpacity'
+											alt="GetSetCV Logo"
+											className="animate-pulseOpacity"
 										/>
 									</div>
 								)}
@@ -178,7 +223,7 @@ export default function TemplateEditor() {
 							{/* Hidden iframe for rendering the template */}
 							<iframe
 								ref={iframeRef}
-								src='/dashboard/hidden-template-renderer'
+								src="/dashboard/hidden-template-renderer"
 								style={{ opacity: 0, height: 0, width: 0 }}
 								onLoad={() => setTimeout(sendTemplateDataToIframe, 100)}
 							/>
@@ -186,34 +231,36 @@ export default function TemplateEditor() {
 					</Card>
 				</div>
 
-				<div className='w-full lg:w-1/2'>
-					<div className='flex space-x-2 mb-4 overflow-x-auto whitespace-nowrap'>
+				<div className="w-full lg:w-1/2">
+					<div className="flex space-x-2 mb-4 overflow-x-auto whitespace-nowrap">
 						{sectionConfig.map((section, idx) => (
 							<Button
 								key={section.key}
 								variant={step === idx + 1 ? "default" : "secondary"}
-								onClick={() => handleStepChange(idx + 1)}>
+								onClick={() => handleStepChange(idx + 1)}
+							>
 								{section.label}
 							</Button>
 						))}
 					</div>
 
-					<Card className='shadow-lg my-6'>
-						<CardContent className='p-6'>
+					<Card className="shadow-lg my-6">
+						<CardContent className="p-6">
 							<StepContent
 								sectionKey={sectionConfig[step - 1].key}
 								resumeData={resumeData}
 								handleInputChange={handleInputChange}
 								fieldsIncluded={sectionConfig[step - 1]?.fieldsIncluded}
 							/>
-							<div className='flex justify-between mt-6'>
+							<div className="flex justify-between mt-6">
 								<Button onClick={() => setStep(step - 1)} disabled={step === 1}>
 									Previous
 								</Button>
 								<Button
-									onClick={() => setStep(step + 1)}
-									disabled={step === sectionConfig.length}>
-									Next
+									onClick={() => handleStepChange(step + 1)}
+
+								>
+									{step === sectionConfig.length ? "Submit" : "Next"}
 								</Button>
 							</div>
 						</CardContent>

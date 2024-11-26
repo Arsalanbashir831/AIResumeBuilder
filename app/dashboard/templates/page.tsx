@@ -25,10 +25,10 @@ export default function TemplatesPage() {
 	}, []);
 
 	return (
-		<div className='container mx-auto my-24 px-4'>
+		<div className='container mx-auto my-24 px-4 '>
 			<div className='mb-12'>
-				<h1 className='text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-800 mb-4'>
-					Choose Your Template
+				<h1 className='text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-800 mb-4 py-3'>
+				Choose Your Template
 				</h1>
 				<p className='text-base sm:text-lg lg:text-xl text-gray-600 max-w-3xl text-justify'>
 					Select from our professional templates to get started. Simply click on

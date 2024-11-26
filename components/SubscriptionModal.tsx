@@ -5,13 +5,13 @@ const SubscriptionModal = ({ onClose }: { onClose: () => void }) => (
 		<div className='bg-white p-6 rounded-md shadow-lg max-w-sm w-full'>
 			<h3 className='text-xl font-semibold mb-4'>Subscribe to Download</h3>
 			<p className='mb-4'>
-				To download your resume, please subscribe to our service.
+				To download your resume, please Pay to our service.
 			</p>
 			<div className='flex justify-end space-x-4'>
 				<Button variant='secondary' onClick={onClose}>
 					Close
 				</Button>
-				<Button variant='default'>Subscribe Now</Button>
+				<Button variant='default'>Pay Now</Button>
 			</div>
 		</div>
 	</div>

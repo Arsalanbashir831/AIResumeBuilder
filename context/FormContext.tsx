@@ -16,6 +16,9 @@ export const FormProvider: React.FC<{ children: React.ReactNode }> = ({
 	const [formData, setFormData] = useState<FormState>({
 		userType: "student",
 		domain: "",
+		yearsOfExperience: 0,
+		jobDescription: "",
+		educationLevel: "High School" as "High School" | "College" | "University",
 	});
 
 	return (
