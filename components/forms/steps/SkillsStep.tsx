@@ -29,7 +29,7 @@ export default function SkillsStep({
 		<div>
 			<div className='flex justify-between items-center mb-4'>
 				<h3 className='text-lg font-semibold mb-2'>Skills</h3>
-				<AiButton label='Generate Skills' />
+				{/* <AiButton label='Generate Skills' /> */}
 			</div>
 			<div className='flex items-center flex-wrap gap-2 mt-4'>
 				<InputField

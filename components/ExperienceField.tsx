@@ -2,7 +2,8 @@ import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import { formatToDateInputValue, formatToMonthYearDate } from "@/lib/utils";
-import { TrashIcon, PlusIcon } from "lucide-react"; // Import Lucid icons
+import { TrashIcon, PlusIcon, BrainIcon } from "lucide-react"; // Import Lucid icons
+import AiButton from "./AiButton";
 
 type ExperienceFieldKeys =
 	| "title"
@@ -240,6 +241,13 @@ const ExperienceField: React.FC<ExperienceFieldProps> = ({
 								className='ml-2 p-2 bg-red-500 text-white rounded-lg hover:bg-red-600 focus:outline-none'>
 								<TrashIcon className='w-4 h-4' />
 							</Button>
+							{/* <Button
+								type='button'
+								// onClick={() => handleDeleteAchievement(idx)}
+							>
+								<BrainIcon/>
+							</Button> */}
+							{/* <AiButton label="Improve"/> */}
 						</div>
 					))}
 				</div>

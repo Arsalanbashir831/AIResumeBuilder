@@ -32,7 +32,6 @@ export default function SnapshotRenderer() {
 						)
 					);
 
-					// Add a slight delay to ensure layout is finalized
 					setTimeout(async () => {
 						const dataUrl = await toPng(templateRef.current!, {
 							backgroundColor: "#ffffff", // Optional: Add a background color
@@ -56,7 +55,7 @@ export default function SnapshotRenderer() {
 			{template ? (
 				<template.component templateData={templateData} />
 			) : (
-				// Show a loader while the template is loading
+		
 				<div className='flex flex-col justify-center items-center space-y-4 h-[400px]'>
 					<Image
 						src='/logo.png'
