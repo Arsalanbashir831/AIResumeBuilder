@@ -10,6 +10,7 @@ import ExpertiseStep from "@/components/forms/steps/ExpertiseStep";
 import CertificatesStep from "@/components/forms/steps/CertificatesStep";
 import HobbiesStep from "@/components/forms/steps/HobbiesStep";
 import ProjectsStep from "@/components/forms/steps/ProjectsStep";
+import {textFormatting} from '@/app/utils/helper'
 import {
 	Achievement,
 	Certificate,
@@ -79,10 +80,8 @@ const StepContent = ({
 										throw new Error("Authentication token is missing. Please log in.");
 									}
 									const data = await aiGenerationSection(token, {
-										sectionType: "objectives",
-									});
-									// console.log(data.generated_section);
-									
+										section_type: "objectives",
+									});	
 									handleInputChange("summary", null, data.generated_section);
 								} catch (err: any) {
 									setError(

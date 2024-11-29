@@ -1,9 +1,12 @@
+'use client'
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import { formatToDateInputValue, formatToMonthYearDate } from "@/lib/utils";
 import { TrashIcon, PlusIcon, BrainIcon } from "lucide-react"; // Import Lucid icons
 import AiButton from "./AiButton";
+import { AiImproveContent } from "@/app/api/resume";
+import { useState } from "react";
 
 type ExperienceFieldKeys =
 	| "title"
@@ -55,6 +58,7 @@ const ExperienceField: React.FC<ExperienceFieldProps> = ({
 		achievements: true,
 	},
 }) => {
+	const [loading, setLoading] = useState(false);
 	const formattedStartDate = formatToDateInputValue(experience.startDate);
 	const formattedEndDate = experience.isCurrent
 		? "Present"
@@ -228,26 +232,56 @@ const ExperienceField: React.FC<ExperienceFieldProps> = ({
 					</div>
 
 					{experience.achievements.map((achievement, idx) => (
-						<div key={idx} className='flex items-center space-x-3 mt-2'>
+						<div key={idx} className="flex items-center space-x-3 mt-2">
+							{/* Achievement Input */}
 							<Input
-								id={`achievement-${index}-${idx}`}
+								id={`achievement-${idx}`}
 								value={achievement}
 								onChange={(e) => handleAchievementChange(idx, e.target.value)}
-								className='w-full mt-1 p-3 border rounded-lg focus:outline-none focus:ring-2'
+								className="w-full mt-1 p-2 border rounded-lg focus:outline-none focus:ring-2"
 							/>
+
+							<AiButton isDisabled={achievement.length===0}
+								loading={loading}
+								onClick={async () => {
+									setLoading(true); // Show loading spinner
+									const authToken = localStorage.getItem("accessToken");
+
+									if (!authToken) {
+										alert("Authentication token not found. Please login.");
+										setLoading(false); // Ensure loading is stopped
+										return;
+									}
+
+									try {
+										const improvedContent = await AiImproveContent(
+											{ content: achievement }, // Data payload
+											authToken
+										);
+
+										if (improvedContent) {
+											handleAchievementChange(idx, improvedContent);
+										} else {
+											alert("Failed to improve content. Please try again.");
+										}
+									} catch (error) {
+										console.error("Error improving content:", error);
+										alert("An unexpected error occurred. Please try again.");
+									} finally {
+										setLoading(false); // Ensure loading is stopped
+									}
+								}}
+								label="AI Improve"
+							/>
+
+
+							{/* Delete Achievement Button */}
 							<Button
 								type='button'
 								onClick={() => handleDeleteAchievement(idx)}
 								className='ml-2 p-2 bg-red-500 text-white rounded-lg hover:bg-red-600 focus:outline-none'>
 								<TrashIcon className='w-4 h-4' />
 							</Button>
-							{/* <Button
-								type='button'
-								// onClick={() => handleDeleteAchievement(idx)}
-							>
-								<BrainIcon/>
-							</Button> */}
-							{/* <AiButton label="Improve"/> */}
 						</div>
 					))}
 				</div>
