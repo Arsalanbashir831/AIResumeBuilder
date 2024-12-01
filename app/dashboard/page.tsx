@@ -16,24 +16,35 @@ import { useEffect, useState } from "react";
 import { deleteResume, getUserResume } from "../api/resume";
 import { Resume } from "@/types/global";
 import { BASE_URL } from "../Constant";
+import { useSubscriptionContext } from "@/context/CreditsContext";
 
 export default function DashboardBody() {
 	const router = useRouter();
 	const [resumes, setResume] = useState<Resume[] | null>(null);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
-	const [refresh, setRefresh] = useState(false)
-	const token = localStorage.getItem('accessToken')
+	const [refresh, setRefresh] = useState(false);
+
+	const token = localStorage.getItem("accessToken");
+	
 
 	useEffect(() => {
+
+		
+
 		const fetchData = async () => {
+
 			try {
+
 				const token = localStorage.getItem("accessToken");
 				if (!token) {
 					throw new Error("User is not authenticated.");
 				}
+
+				// Fetch and log credits
+				// Fetch resumes
 				const data = await getUserResume(token);
-				console.log(data);
+				console.log("Resumes:", data);
 				setResume(data);
 			} catch (err) {
 				console.error("Error fetching resumes:", err);
@@ -43,6 +54,7 @@ export default function DashboardBody() {
 			}
 		};
 
+		
 		fetchData();
 	}, [refresh]);
 
@@ -78,12 +90,17 @@ export default function DashboardBody() {
 				) : (
 					<p>No image available</p>
 				)}
-			
+
 				<button
 					className="absolute top-2 right-2 p-2 bg-red-500 text-white rounded-full hover:bg-red-600"
 					onClick={async (e) => {
 						e.stopPropagation(); // Prevent triggering onClick on the card
-						await deleteResume(token, id).then(() => { setRefresh(!refresh) }).catch((err) => { throw err })
+						try {
+							await deleteResume(token, id);
+							setRefresh(!refresh);
+						} catch (err) {
+							console.error("Error deleting resume:", err);
+						}
 					}}
 				>
 					<Trash size={16} />
@@ -101,11 +118,12 @@ export default function DashboardBody() {
 			<div className="container mx-auto px-4 py-16 md:py-24">
 				<header className="flex flex-col sm:flex-row justify-between sm:items-center my-8 sm:mt-0">
 					<div className="space-y-2 mb-3 sm:mb-0">
-						<h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold">
-							Resume Builder
-						</h1>
+						<h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold">Resume Builder</h1>
 						<p className="text-base sm:text-lg lg:text-xl text-gray-600">
 							Create your custom resume for job applications
+						</p>
+						<p className="text-base sm:text-lg lg:text-xl text-gray-600">
+
 						</p>
 					</div>
 					<Button
@@ -120,9 +138,7 @@ export default function DashboardBody() {
 
 				{/* Templates Section */}
 				<section>
-					<h2 className="text-lg md:text-xl lg:text-2xl font-bold mb-4">
-						My Resumes
-					</h2>
+					<h2 className="text-lg md:text-xl lg:text-2xl font-bold mb-4">My Resumes</h2>
 					{loading ? (
 						<p>Loading resumes...</p>
 					) : error ? (

@@ -15,7 +15,9 @@ import { useColor } from "@/context/ColorContext";
 import { addUserInfo, createResume, editResume, getResumeById } from "@/app/api/resume";
 import { useFormContext } from "@/context/FormContext";
 import jsPDF from "jspdf";
-import { useImageContext } from "@/context/ResumeImageContext";
+import { useSubscriptionContext } from "@/context/CreditsContext";
+
+
 
 
 export default function TemplateEditor() {
@@ -43,8 +45,8 @@ export default function TemplateEditor() {
 	);
 	const { color } = useColor();
 	const { formData } = useFormContext()
+	const { subscription, refreshSubscription } = useSubscriptionContext()
 
-	const { image, setImage } = useImageContext()
 
 	const sendTemplateDataToIframe = useCallback(() => {
 		if (iframeRef.current) {
@@ -55,6 +57,15 @@ export default function TemplateEditor() {
 		}
 	}, [resumeData, templateId]);
 	// console.log(templateId);
+	const credits = subscription?.credits ?? 0;
+	const tokensUsed = subscription?.tokens_used ?? 0;
+
+	useEffect(() => {
+		const creditsData = async () => {
+			await refreshSubscription()
+		}
+		creditsData()
+	}, [])
 
 	useEffect(() => {
 		sendTemplateDataToIframe();
@@ -145,10 +156,11 @@ export default function TemplateEditor() {
 
 
 	const handleSubmit = async (authToken: string) => {
+
 		try {
 			setIsSubmitting(true); // Indicate submission process started
-       
-		   
+
+
 			console.log("resdata", resumeData);
 			// Validate authentication token
 			if (!authToken) {
@@ -176,14 +188,29 @@ export default function TemplateEditor() {
 				templateId: templateId,
 			});
 			if (id) {
-				await editResume(authToken, formData , id)
+				await editResume(authToken, formData, id)
+				if (tokensUsed < credits) {
+					handleDownloadClick();
+				} else {
+					setShowModal(true);
+				}
 			} else {
 				await createResume(authToken, formData);
+				console.log(tokensUsed < credits);
+				console.log(tokensUsed, credits);
+
+				if (tokensUsed < credits) {
+					handleDownloadClick();
+				} else {
+					setShowModal(true);
+				}
+
+
 			}
 
-			setShowModal(true);
+
 		} catch (error: any) {
-			// Handle errors
+	
 			console.error("Error saving resume:", error);
 			const errorMessage =
 				error.response?.data?.message ||
@@ -201,6 +228,15 @@ export default function TemplateEditor() {
 		return <p>Template not found</p>;
 	}
 
+	const handlePayNow = () => {
+		router.push("/dashboard/plans"); 
+		setShowModal(false); 
+	};
+	const handleClose = () => {
+		router.push("/dashboard"); 
+		setShowModal(false); 
+	};
+
 
 	useEffect(() => {
 		const fetchResumeData = async () => {
@@ -213,6 +249,9 @@ export default function TemplateEditor() {
 		if (id) {
 			fetchResumeData()
 		}
+
+
+
 	}, [])
 	return (
 		<div className="flex flex-col h-screen p-8 pt-24 container mx-auto">
@@ -223,17 +262,23 @@ export default function TemplateEditor() {
 				</Button>
 			</header>
 			<div className="flex flex-col lg:flex-row-reverse gap-5">
-				{showModal && <SubscriptionModal onClose={() => {
-					router.push('/dashboard')
-					setShowModal(false)
-				}} />}
+				{showModal && (
+					<SubscriptionModal
+						onClose={handleClose}
+						onPayNow={handlePayNow}
+					/>
+				)}
+
+
+
+
 				<div className="w-full lg:w-1/2">
 					<div className="flex justify-between items-center mb-4">
 						<ColorPicker iframeRef={iframeRef} />
 
-						<Button variant="default" onClick={handleDownloadClick} disabled={!snapshotUrl}>
+						{/* <Button variant="default" onClick={handleDownloadClick} disabled={!snapshotUrl}>
 							Download
-						</Button>
+						</Button> */}
 					</div>
 					<Card className="shadow-lg">
 						<CardContent className="p-4">
