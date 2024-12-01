@@ -31,10 +31,12 @@
     "lodash.debounce": "^4.0.8",
     "lucide-react": "^0.454.0",
     "next": "15.0.2",
+    "razorpay": "^2.9.5",
     "react": "19.0.0-rc-02c0e824-20241028",
     "react-color": "^2.19.3",
     "react-dom": "19.0.0-rc-02c0e824-20241028",
     "react-hook-form": "^7.53.1",
+    "react-razorpay": "^3.0.1",
     "tailwind-merge": "^2.5.4",
     "tailwindcss-animate": "^1.0.7",
     "zod": "^3.23.8"

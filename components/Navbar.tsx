@@ -54,27 +54,29 @@ const Navbar = ({ isDashboard = false }) => {
 				<div className='flex items-center gap-2'>
 					<Image src='/logo.png' alt='GetSetCV' width={220} height={100} />
 				</div>
-
 				{isDashboard ? (
 					<DropdownMenu>
 						<DropdownMenuTrigger>
+						<div className="flex items-center gap-3">
+							<h1>{user?.name}</h1>
 							<Avatar className='cursor-pointer'>
 								<AvatarImage src='/avatar.jpg' alt='Avatar' />
 								<AvatarFallback>{user?.name}</AvatarFallback>
 							</Avatar>
+						</div>
 						</DropdownMenuTrigger>
 						<DropdownMenuContent>
-							<DropdownMenuItem className='cursor-pointer'>
-							{user?.name}
+						
+							<DropdownMenuItem onClick={()=>router.push('/dashboard')} className='cursor-pointer'>
+							Dashboard
 							</DropdownMenuItem>
-							<DropdownMenuItem className='cursor-pointer'>
-								Settings
+							<DropdownMenuItem onClick={()=>router.push('/dashboard/plans')} className='cursor-pointer'>
+								Pricing
 							</DropdownMenuItem>
 							<DropdownMenuItem
 								className='cursor-pointer'
 								onClick={() => {
 									logout()
-
 								}}>
 								Logout
 							</DropdownMenuItem>

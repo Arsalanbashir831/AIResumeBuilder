@@ -116,10 +116,11 @@ export interface TemplateData {
 
 export interface Resume {
   id: string; // Replace with actual key names from your API response
- 
+  picture:string,
   data: {
 	templateId:string,
 	name: string,
+
     sections: {
       personalInfo: { title: string };
     };
@@ -157,3 +158,12 @@ export interface Template {
   snapshot: string; 
   sections: SectionConfig[]; 
 }
+
+
+export type Plan = {
+  id: number;
+  name: string;
+  price: string;
+  credits: number;
+  is_addon: boolean;
+};

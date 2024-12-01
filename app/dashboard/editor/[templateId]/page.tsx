@@ -12,9 +12,10 @@ import StepContent from "@/components/StepContent";
 import SubscriptionModal from "@/components/SubscriptionModal";
 import Image from "next/image";
 import { useColor } from "@/context/ColorContext";
-import { addUserInfo, createResume, getResumeById } from "@/app/api/resume";
+import { addUserInfo, createResume, editResume, getResumeById } from "@/app/api/resume";
 import { useFormContext } from "@/context/FormContext";
 import jsPDF from "jspdf";
+import { useImageContext } from "@/context/ResumeImageContext";
 
 
 export default function TemplateEditor() {
@@ -43,6 +44,8 @@ export default function TemplateEditor() {
 	const { color } = useColor();
 	const { formData } = useFormContext()
 
+	const { image, setImage } = useImageContext()
+
 	const sendTemplateDataToIframe = useCallback(() => {
 		if (iframeRef.current) {
 			iframeRef.current.contentWindow?.postMessage(
@@ -51,7 +54,7 @@ export default function TemplateEditor() {
 			);
 		}
 	}, [resumeData, templateId]);
-// console.log(templateId);
+	// console.log(templateId);
 
 	useEffect(() => {
 		sendTemplateDataToIframe();
@@ -140,34 +143,59 @@ export default function TemplateEditor() {
 		}
 	};
 
+
 	const handleSubmit = async (authToken: string) => {
 		try {
-			setIsSubmitting(true);
-
+			setIsSubmitting(true); // Indicate submission process started
+       
+		   
+			console.log("resdata", resumeData);
+			// Validate authentication token
 			if (!authToken) {
 				throw new Error("Authentication token is missing. Please log in.");
 			}
+			const formData = new FormData();
 
-			console.log("Submitting final resume data:", resumeData);
-
-			await createResume(authToken, {
-				data: {
+			formData.append(
+				"data",
+				JSON.stringify({
 					...resumeData,
-					templateId:templateId
-					// Uncomment this if you want to include the snapshot
-					// resumePic: snapshotUrl,
-				},
+					templateId: templateId,
+				})
+			);
+			if (snapshotUrl) {
+				const response = await fetch(snapshotUrl);
+				const blob = await response.blob();
+				const fileName = `snapshot_${templateId}.jpeg`;
+				formData.append("picture", blob, fileName);
+			} else {
+				console.warn("No snapshot available to upload.");
+			}
+			console.log("Submitting final resume data:", {
+				...resumeData,
+				templateId: templateId,
 			});
+			if (id) {
+				await editResume(authToken, formData , id)
+			} else {
+				await createResume(authToken, formData);
+			}
 
-
-			setShowModal(true)
-		} catch (error) {
+			setShowModal(true);
+		} catch (error: any) {
+			// Handle errors
 			console.error("Error saving resume:", error);
-			alert("Failed to save resume. Please try again.");
+			const errorMessage =
+				error.response?.data?.message ||
+				error.message ||
+				"Failed to save resume. Please try again.";
+			alert(errorMessage);
 		} finally {
+
 			setIsSubmitting(false);
 		}
 	};
+
 
 	if (!template) {
 		return <p>Template not found</p>;
@@ -179,7 +207,7 @@ export default function TemplateEditor() {
 			const token = localStorage.getItem('accessToken')
 			const response = await getResumeById(token, id);
 			console.log(response.data.sections);
-			 setResumeData(response?.data)
+			setResumeData(response?.data)
 		}
 		// if there is id in params than we will fetch the get resume by id api
 		if (id) {
