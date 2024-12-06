@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useState, ReactNode, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { login as apiLogin, register as apiRegister, getUserData } from "@/app/api/authentication";
+import { login as apiLogin, register as apiRegister, getUserData, refreshAccessToken, tokenVerification } from "@/app/api/authentication";
 
 import Spinner from "@/components/ui/Spinner";
 
@@ -33,18 +33,51 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const isAuthenticated = !!user;
     const pathname = usePathname();
     useEffect(() => {
-        const authToken = localStorage.getItem('accessToken')
-        const fetchUserData = async () => {
-            await getUserData(authToken).then((data) => setUser(data)).catch((e) => {
-                console.log(e);
-                if(pathname !=='/'){
-                    router.push('/signin')
-                }
-                
-            }).finally(() => { setLoading(false) })
-        }
-        fetchUserData()
-    }, []);
+        const verifyAndFetchUser = async () => {
+          const authToken = localStorage.getItem("accessToken");
+          const refreshToken = localStorage.getItem("refreshToken");
+          if (!authToken) {
+            if (pathname !== "/" ) router.push("/signin");
+            setLoading(false);
+            return;
+          }
+    
+          try {
+            // Verify the access token
+            const status = await tokenVerification(authToken);
+    
+            if (status === 200) {
+              // Token is valid, fetch user data
+              const userData = await getUserData(authToken);
+              setUser(userData);
+            } else {
+              throw new Error("Token verification failed");
+            }
+          } catch (error) {
+            console.log("Token verification error:", error);
+            try {
+              const newAuthToken = await refreshAccessToken(refreshToken);
+              localStorage.setItem("accessToken", newAuthToken);
+              const userData = await getUserData(newAuthToken);
+              setUser(userData);
+            } catch (refreshError) {
+              console.log("Token refresh error:", refreshError);
+    
+              // Redirect to sign-in page if refresh fails
+              if (pathname !== "/signin" ) {
+                router.push("/signin");
+              }
+              
+            }
+          } finally {
+            setLoading(false);
+          }
+        };
+
+       
+            verifyAndFetchUser();
+     
+      }, [pathname, router]);
 
     const login = async (email: string, password: string) => {
         try {

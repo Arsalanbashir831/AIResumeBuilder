@@ -90,3 +90,15 @@ export const refreshAccessToken = async (refreshToken) => {
       : new Error("Token refresh failed");
   }
 };
+
+export const tokenVerification = async (token) => {
+  try {
+    const response = await axios.post(`${BASE_URL}/api/token/verify/`, {
+      token: token,
+    });
+    return response.status; // Return 200 on success
+  } catch (error) {
+  
+    return error.response ? error.response.status : 500; 
+  }
+};
