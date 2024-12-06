@@ -17,19 +17,19 @@ export const getUserData = async (authToken) => {
   }
 };
 
-// Login function
 export const login = async (email, password) => {
   try {
+    // Create FormData object
+    const formData = new FormData();
+    formData.append("email", email);
+    formData.append("password", password);
+
     // Perform login request
-    const response = await axios.post(
-      `${BASE_URL}/api/token/`,
-      { email, password },
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const response = await axios.post(`${BASE_URL}/api/token/`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
 
     if (!response.data) {
       throw new Error("Login failed. No response from server.");
@@ -37,7 +37,7 @@ export const login = async (email, password) => {
 
     const { access, refresh } = response.data;
 
-    // Fetch user data after login (do this in the component or separate function)
+    // Fetch user data after login (if needed)
     const userData = await getUserData(access);
 
     // Return both tokens and user data
@@ -48,13 +48,22 @@ export const login = async (email, password) => {
   }
 };
 
-// Register function
+
+
+
 export const register = async (email, password, name) => {
   try {
-    const response = await axios.post(`${BASE_URL}/api/users/register/`, {
-      email,
-      password,
-      name,
+    // Create FormData object
+    const formData = new FormData();
+    formData.append("email", email);
+    formData.append("password", password);
+    formData.append("name", name);
+
+   
+    const response = await axios.post(`${BASE_URL}/api/users/register/`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
     });
 
     return response.data; // Returning response from the registration API
