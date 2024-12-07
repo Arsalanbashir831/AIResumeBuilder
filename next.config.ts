@@ -1,7 +1,16 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["127.0.0.1"], // Add your backend's hostname here
+    domains: ["145.223.118.140"], // Add your backend's hostname here
+  },
+
+  async rewrites() {
+    return [
+      {
+        source: "/api/:path*", 
+        destination: "http://145.223.118.140/api/:path*", 
+      },
+    ];
   },
 };
 
