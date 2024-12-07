@@ -36,8 +36,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         const verifyAndFetchUser = async () => {
           const authToken = localStorage.getItem("accessToken");
           const refreshToken = localStorage.getItem("refreshToken");
-          if (!authToken) {
-            if (pathname !== "/" ) router.push("/signin");
+          if (!authToken) {    
+          
+            if (pathname !== "/signup" && pathname !== '/' ) router.push("/signin");
             setLoading(false);
             return;
           }
@@ -57,7 +58,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             console.log("Token verification error:", error);
             try {
               const newAuthToken = await refreshAccessToken(refreshToken);
-              localStorage.setItem("accessToken", newAuthToken);
+              localStorage.setItem("accessToken", newAuthToken.access);
               const userData = await getUserData(newAuthToken);
               setUser(userData);
             } catch (refreshError) {
