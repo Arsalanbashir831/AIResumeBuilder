@@ -2,6 +2,7 @@
   "name": "ai-resume-builder-frontend",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://145.223.118.140",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
