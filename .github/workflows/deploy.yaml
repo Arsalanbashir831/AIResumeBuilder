@@ -3,7 +3,7 @@ name: Debug SSH Deployment
 on:
   push:
     branches:
-      - main  # Adjust to the branch you want to test on
+      - main  # Adjust to your desired branch for testing
 
 jobs:
   debug-ssh:
@@ -17,24 +17,25 @@ jobs:
     # Step 2: Install and Configure SSH Key
     - name: Configure SSH Key
       run: |
+        echo "Configuring SSH key..."
         mkdir -p ~/.ssh
         echo "${{ secrets.SERVER_SSH_KEY }}" > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
         ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
         echo "SSH key and known_hosts configured."
 
-    # Step 3: Debug the SSH Key and Environment
+    # Step 3: Debug SSH Environment
     - name: Debug SSH Environment
-    run: |
-      echo "Listing ~/.ssh directory:"
-      ls -la ~/.ssh
-      echo "Checking the fingerprint of the SSH private key:"
-      ssh-keygen -lf ~/.ssh/id_rsa
-      echo "Attempting to connect to the server with verbose output:"
-      ssh -vvv -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} exit
+      run: |
+        echo "Listing ~/.ssh directory:"
+        ls -la ~/.ssh
+        echo "Checking the fingerprint of the SSH private key:"
+        ssh-keygen -lf ~/.ssh/id_rsa
+        echo "Attempting to connect to the server with verbose output:"
+        ssh -vvv -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} exit
 
-    # Step 4: Attempt to Deploy
-    - name: Test Deployment
+    # Step 4: Test Deployment Commands
+    - name: Test Deployment Commands
       run: |
         ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
         echo "Connected to the server. Running deployment commands..."
@@ -50,10 +51,10 @@ jobs:
         echo "Deployment completed!"
         EOF
 
-    # Step 5: Debug Logs for Deployment
-    - name: Debug Logs
+    # Step 5: Debug Logs from the Server
+    - name: Fetch Nginx Logs
       run: |
-        echo "Fetching Nginx logs from the server:"
+        echo "Fetching Nginx logs from the server..."
         ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
         echo "Displaying the last 20 lines of Nginx error log:"
         sudo tail -n 20 /var/log/nginx/error.log
