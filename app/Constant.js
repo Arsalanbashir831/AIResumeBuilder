@@ -1,1 +1,1 @@
-export const BASE_URL='http://145.223.118.140'
+export const BASE_URL='https://api.getsetcv.com'
