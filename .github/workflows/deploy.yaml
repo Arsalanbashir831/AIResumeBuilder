@@ -1,68 +1,98 @@
-name: Debug SSH Deployment
+name: Deploy Frontend
 
 on:
   push:
     branches:
-      - main  # Adjust to your desired branch for testing
+      - main  # Trigger workflow on pushes to the main branch
 
 jobs:
-  debug-ssh:
+  deploy-frontend:
     runs-on: ubuntu-latest
 
     steps:
     # Step 1: Checkout the repository
     - name: Checkout Repository
       uses: actions/checkout@v3
+      with:
+        fetch-depth: 0  # Fetch full history to ensure complete deployment
 
-    # Step 2: Install and Configure SSH Key
-    - name: Configure SSH Key
+    # Step 2: Install Node.js
+    - name: Install Node.js
       run: |
-        echo "Configuring SSH key..."
-        mkdir -p ~/.ssh
-        echo "${{ secrets.SERVER_SSH_KEY }}" > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
-        ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
-        echo "SSH key and known_hosts configured."
+        echo "Adding Node.js 18.x repository..."
+        curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+        echo "Installing Node.js..."
+        sudo apt-get install -y nodejs
+        echo "Node.js version:"
+        node -v
+        echo "npm version:"
+        npm -v
+      # Debugging Notes:
+      # - Ensure Node.js 18.x or higher is installed for compatibility.
+      # - Check `node -v` output to verify the version.
 
-    # Step 3: Debug SSH Key and Environment
-    - name: Debug SSH Key and Environment
+    # Step 3: Navigate to the project directory
+    - name: Navigate to Project Directory
       run: |
-        echo "Listing ~/.ssh directory:"
-        ls -la ~/.ssh
-        echo "Extracting public key from private key:"
-        ssh-keygen -y -f ~/.ssh/id_rsa > ~/.ssh/id_rsa.pub
-        echo "Public key derived successfully."
-        echo "Checking the fingerprint of the SSH private key:"
-        ssh-keygen -lf ~/.ssh/id_rsa
-        echo "Checking the fingerprint of the derived public key:"
-        ssh-keygen -lf ~/.ssh/id_rsa.pub
-        echo "Attempting to connect to the server with verbose output:"
-        ssh -vvv -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} exit
+        cd /var/www/AI-Resume-Builder-Frontend
+      # Debugging Notes:
+      # - Confirm that the project directory exists on the server.
+      # - Use `ls -la /var/www` to list directories if it fails.
 
-    # Step 4: Test Deployment Commands
-    - name: Test Deployment Commands
+    # Step 4: Install Dependencies
+    - name: Install Dependencies
       run: |
-        ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
-        echo "Connected to the server. Running deployment commands..."
-        cd /var/www/AI-Resume-Builder-Frontend || exit 1
-        echo "Pulling latest changes from main branch:"
-        git pull origin main
-        echo "Installing dependencies:"
+        cd /var/www/AI-Resume-Builder-Frontend
+        echo "Installing dependencies..."
         npm install --production
-        echo "Building the application:"
-        npm run build
-        echo "Reloading Nginx:"
-        sudo systemctl reload nginx
-        echo "Deployment completed!"
-        EOF
+      # Debugging Notes:
+      # - Check for `npm WARN EBADENGINE` errors indicating incompatible dependencies.
+      # - Ensure the correct `package.json` is present in the directory.
 
-    # Step 5: Debug Logs from the Server
+    # Step 5: Build the Application
+    - name: Build Application
+      run: |
+        cd /var/www/AI-Resume-Builder-Frontend
+        echo "Building the application..."
+        npm run build
+      # Debugging Notes:
+      # - Look for `SyntaxError` or other build errors in the output.
+      # - Ensure `next.config.js` is properly configured if static exports are required.
+
+    # Step 6: Configure and Start PM2
+    - name: Configure and Start PM2
+      run: |
+        echo "Installing PM2 globally..."
+        sudo npm install -g pm2
+        echo "Starting the application with PM2..."
+        pm2 start npm --name "frontend" -- start
+        pm2 save
+        echo "Configuring PM2 to restart on server reboot..."
+        pm2 startup | sudo bash
+        echo "PM2 list of processes:"
+        pm2 list
+      # Debugging Notes:
+      # - PM2 should list the running process with `pm2 list`.
+      # - Use `pm2 logs frontend` to check for runtime errors.
+
+    # Step 7: Restart Nginx
+    - name: Restart Nginx
+      run: |
+        echo "Restarting Nginx..."
+        sudo systemctl reload nginx
+        echo "Nginx status:"
+        sudo systemctl status nginx
+      # Debugging Notes:
+      # - Ensure the Nginx service reloads without errors.
+      # - Check for potential configuration issues with `nginx -t`.
+
+    # Step 8: Debug Logs from Server
     - name: Fetch Nginx Logs
       run: |
-        echo "Fetching Nginx logs from the server..."
-        ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
-        echo "Displaying the last 20 lines of Nginx error log:"
+        echo "Fetching Nginx logs for debugging..."
         sudo tail -n 20 /var/log/nginx/error.log
-        echo "Displaying the last 20 lines of Nginx access log:"
         sudo tail -n 20 /var/log/nginx/access.log
-        EOF
+      # Debugging Notes:
+      # - `502 Bad Gateway` or `connect() failed` errors often indicate the application is not running or improperly proxied.
+      # - Check logs for specific issues.
+
