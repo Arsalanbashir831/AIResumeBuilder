@@ -3,7 +3,7 @@ name: Deploy Frontend
 on:
   push:
     branches:
-      - main  # Trigger workflow on pushes to the main branch
+      - main
 
 jobs:
   deploy-frontend:
@@ -13,8 +13,6 @@ jobs:
     # Step 1: Checkout the repository
     - name: Checkout Repository
       uses: actions/checkout@v3
-      with:
-        fetch-depth: 0  # Fetch full history to ensure complete deployment
 
     # Step 2: Install Node.js
     - name: Install Node.js
@@ -27,72 +25,51 @@ jobs:
         node -v
         echo "npm version:"
         npm -v
-      # Debugging Notes:
-      # - Ensure Node.js 18.x or higher is installed for compatibility.
-      # - Check `node -v` output to verify the version.
 
-    # Step 3: Navigate to the project directory
+    # Step 3: Ensure Project Directory Exists
+    - name: Ensure Project Directory Exists
+      run: |
+        if [ ! -d /var/www/AI-Resume-Builder-Frontend ]; then
+          echo "Project directory not found. Cloning repository..."
+          sudo git clone https://github.com/username/AI-Resume-Builder-Frontend.git /var/www/AI-Resume-Builder-Frontend
+        else
+          echo "Project directory exists."
+        fi
+
+    # Step 4: Navigate to the Project Directory
     - name: Navigate to Project Directory
       run: |
         cd /var/www/AI-Resume-Builder-Frontend
-      # Debugging Notes:
-      # - Confirm that the project directory exists on the server.
-      # - Use `ls -la /var/www` to list directories if it fails.
 
-    # Step 4: Install Dependencies
+    # Step 5: Install Dependencies
     - name: Install Dependencies
       run: |
         cd /var/www/AI-Resume-Builder-Frontend
-        echo "Installing dependencies..."
         npm install --production
-      # Debugging Notes:
-      # - Check for `npm WARN EBADENGINE` errors indicating incompatible dependencies.
-      # - Ensure the correct `package.json` is present in the directory.
 
-    # Step 5: Build the Application
+    # Step 6: Build Application
     - name: Build Application
       run: |
         cd /var/www/AI-Resume-Builder-Frontend
-        echo "Building the application..."
         npm run build
-      # Debugging Notes:
-      # - Look for `SyntaxError` or other build errors in the output.
-      # - Ensure `next.config.js` is properly configured if static exports are required.
 
-    # Step 6: Configure and Start PM2
+    # Step 7: Configure and Start PM2
     - name: Configure and Start PM2
       run: |
-        echo "Installing PM2 globally..."
         sudo npm install -g pm2
-        echo "Starting the application with PM2..."
         pm2 start npm --name "frontend" -- start
         pm2 save
-        echo "Configuring PM2 to restart on server reboot..."
         pm2 startup | sudo bash
-        echo "PM2 list of processes:"
         pm2 list
-      # Debugging Notes:
-      # - PM2 should list the running process with `pm2 list`.
-      # - Use `pm2 logs frontend` to check for runtime errors.
 
-    # Step 7: Restart Nginx
+    # Step 8: Restart Nginx
     - name: Restart Nginx
       run: |
-        echo "Restarting Nginx..."
         sudo systemctl reload nginx
-        echo "Nginx status:"
         sudo systemctl status nginx
-      # Debugging Notes:
-      # - Ensure the Nginx service reloads without errors.
-      # - Check for potential configuration issues with `nginx -t`.
 
-    # Step 8: Debug Logs from Server
+    # Step 9: Fetch Nginx Logs
     - name: Fetch Nginx Logs
       run: |
-        echo "Fetching Nginx logs for debugging..."
         sudo tail -n 20 /var/log/nginx/error.log
         sudo tail -n 20 /var/log/nginx/access.log
-      # Debugging Notes:
-      # - `502 Bad Gateway` or `connect() failed` errors often indicate the application is not running or improperly proxied.
-      # - Check logs for specific issues.
-
