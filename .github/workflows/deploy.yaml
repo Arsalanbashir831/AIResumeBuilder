@@ -1,31 +1,62 @@
-name: Deploy to Server
+name: Debug SSH Deployment
 
 on:
   push:
     branches:
-      - main
+      - main  # Adjust to the branch you want to test on
 
 jobs:
-  deploy:
+  debug-ssh:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Code
+    # Step 1: Checkout the repository
+    - name: Checkout Repository
       uses: actions/checkout@v3
 
-    - name: Install SSH Key
+    # Step 2: Install and Configure SSH Key
+    - name: Configure SSH Key
       run: |
         mkdir -p ~/.ssh
         echo "${{ secrets.SERVER_SSH_KEY }}" > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
         ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
+        echo "SSH key and known_hosts configured."
 
-    - name: Deploy Application
+    # Step 3: Debug the SSH Key and Environment
+    - name: Debug SSH Environment
       run: |
-        ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
-        cd /var/www/AI-Resume-Builder-Frontend
+        echo "Listing ~/.ssh directory:"
+        ls -la ~/.ssh
+        echo "Checking the fingerprint of the SSH private key:"
+        ssh-keygen -l -f ~/.ssh/id_rsa
+        echo "Attempting to connect to the server with verbose output:"
+        ssh -vvv -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} exit
+
+    # Step 4: Attempt to Deploy
+    - name: Test Deployment
+      run: |
+        ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
+        echo "Connected to the server. Running deployment commands..."
+        cd /var/www/AI-Resume-Builder-Frontend || exit 1
+        echo "Pulling latest changes from main branch:"
         git pull origin main
+        echo "Installing dependencies:"
         npm install --production
+        echo "Building the application:"
         npm run build
+        echo "Reloading Nginx:"
         sudo systemctl reload nginx
+        echo "Deployment completed!"
+        EOF
+
+    # Step 5: Debug Logs for Deployment
+    - name: Debug Logs
+      run: |
+        echo "Fetching Nginx logs from the server:"
+        ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
+        echo "Displaying the last 20 lines of Nginx error log:"
+        sudo tail -n 20 /var/log/nginx/error.log
+        echo "Displaying the last 20 lines of Nginx access log:"
+        sudo tail -n 20 /var/log/nginx/access.log
         EOF
