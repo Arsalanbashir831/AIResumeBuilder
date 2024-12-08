@@ -24,13 +24,18 @@ jobs:
         ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
         echo "SSH key and known_hosts configured."
 
-    # Step 3: Debug SSH Environment
-    - name: Debug SSH Environment
+    # Step 3: Debug SSH Key and Environment
+    - name: Debug SSH Key and Environment
       run: |
         echo "Listing ~/.ssh directory:"
         ls -la ~/.ssh
+        echo "Extracting public key from private key:"
+        ssh-keygen -y -f ~/.ssh/id_rsa > ~/.ssh/id_rsa.pub
+        echo "Public key derived successfully."
         echo "Checking the fingerprint of the SSH private key:"
         ssh-keygen -lf ~/.ssh/id_rsa
+        echo "Checking the fingerprint of the derived public key:"
+        ssh-keygen -lf ~/.ssh/id_rsa.pub
         echo "Attempting to connect to the server with verbose output:"
         ssh -vvv -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} exit
 
