@@ -25,13 +25,13 @@ jobs:
 
     # Step 3: Debug the SSH Key and Environment
     - name: Debug SSH Environment
-      run: |
-        echo "Listing ~/.ssh directory:"
-        ls -la ~/.ssh
-        echo "Checking the fingerprint of the SSH private key:"
-        ssh-keygen -l -f ~/.ssh/id_rsa
-        echo "Attempting to connect to the server with verbose output:"
-        ssh -vvv -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} exit
+    run: |
+      echo "Listing ~/.ssh directory:"
+      ls -la ~/.ssh
+      echo "Checking the fingerprint of the SSH private key:"
+      ssh-keygen -lf ~/.ssh/id_rsa
+      echo "Attempting to connect to the server with verbose output:"
+      ssh -vvv -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} exit
 
     # Step 4: Attempt to Deploy
     - name: Test Deployment
