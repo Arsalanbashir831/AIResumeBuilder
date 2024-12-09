@@ -146,7 +146,11 @@ export const aiGenerationSection = async (authToken, data) => {
         },
       }
     );
-    return textFormatting(response.data);
+    console.log(response.data)
+    if (response.status===200) {
+      return textFormatting(response.data.generated_section);
+    }
+   
   } catch (error) {
     console.error("Error creating resume:", error);
     throw error.response

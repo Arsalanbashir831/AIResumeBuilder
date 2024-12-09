@@ -22,6 +22,7 @@ const ResumeTemplate = ({
 					email: string;
 					phone: string;
 					link: string;
+					location:string
 				};
 			};
 			summary: string;
@@ -67,6 +68,7 @@ const ResumeTemplate = ({
 					email={data.sections.personalInfo.contact.email}
 					phone={data.sections.personalInfo.contact.phone}
 					link={data.sections.personalInfo.contact.link}
+					location={data.sections.personalInfo.contact.location}
 					position={data.sections.personalInfo.title}
 				/>
 				<div className='grid grid-cols-12 gap-8 mt-8 px-10 h-full'>

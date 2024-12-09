@@ -5,6 +5,7 @@ import "@/app/globals.css";
 import { ColorProvider } from "@/context/ColorContext";
 import { FormProvider } from "@/context/FormContext";
 import { AuthProvider } from "@/context/AuthContext";
+import { SnapshotProvider } from "@/context/SnapShotContext";
 
 const geistSans = localFont({
 	src: "../fonts/GeistVF.woff",
@@ -33,6 +34,7 @@ export default function RootLayout({
 			<body
 				className={`${geistSans.variable} ${geistMono.variable} antialiased `}>
 			<AuthProvider>
+				<SnapshotProvider>
 				<Navbar isDashboard />
 				<ColorProvider>
 					<FormProvider>
@@ -40,6 +42,7 @@ export default function RootLayout({
 						<div className='dashboard-container '>{children}</div>
 					</FormProvider>
 				</ColorProvider>
+				</SnapshotProvider>
 			</AuthProvider>
 			</body>
 		</html>

@@ -16,12 +16,15 @@ import { addUserInfo, createResume, editResume, getResumeById } from "@/app/api/
 import { useFormContext } from "@/context/FormContext";
 import jsPDF from "jspdf";
 import { useSubscriptionContext } from "@/context/CreditsContext";
+import { BASE_URL } from "@/app/Constant";
+
 
 
 
 
 export default function TemplateEditor() {
 	const iframeRef = useRef<HTMLIFrameElement | null>(null);
+ 
 	const [step, setStep] = useState(1);
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [resumeData, setResumeData] = useState<TemplateData>(
@@ -39,14 +42,14 @@ export default function TemplateEditor() {
 		? [{ key: "intro", label: "Intro" }, ...template.sections]
 		: [{ key: "intro", label: "Intro" }];
 	const [showModal, setShowModal] = useState(false);
-	const [snapshotUrl, setSnapshotUrl] = useState<string | null>(null);
+	const [snapshotUrl, setSnapshotUrl] = useState<string | null>(localStorage.getItem('template_ss')|| null);
 	const [snapshotPreviousUrl, setSnapshotPreviousUrl] = useState<string | null>(
-		null
+		localStorage.getItem('template_ss')|| null
 	);
 	const { color } = useColor();
 	const { formData } = useFormContext()
 	const { subscription, refreshSubscription } = useSubscriptionContext()
-
+	const [isEditResume, setIsEditResume] = useState(false)
 
 	const sendTemplateDataToIframe = useCallback(() => {
 		if (iframeRef.current) {
@@ -56,16 +59,24 @@ export default function TemplateEditor() {
 			);
 		}
 	}, [resumeData, templateId]);
-	// console.log(templateId);
+	//  console.log('snapshot',snapshot);
 	const credits = subscription?.credits ?? 0;
 	const tokensUsed = subscription?.tokens_used ?? 0;
 
+
+
+	
 	useEffect(() => {
-		const creditsData = async () => {
-			await refreshSubscription()
-		}
-		creditsData()
-	}, [])
+
+		const handleSnapshotMessage = (event: MessageEvent) => {
+			if (event.data && event.data.type === "TEMPLATE_SNAPSHOT") {
+				console.log(event.data)
+				setSnapshotUrl(event.data.payload);
+			}
+		};
+		window.addEventListener("message", handleSnapshotMessage);
+		// return () => window.removeEventListener("message", handleSnapshotMessage);
+	}, []);
 
 	useEffect(() => {
 		sendTemplateDataToIframe();
@@ -75,24 +86,19 @@ export default function TemplateEditor() {
 		if (snapshotUrl) {
 			setSnapshotPreviousUrl(snapshotUrl);
 		}
-	}, [snapshotUrl]);
+	}, [snapshotUrl, snapshotPreviousUrl]);
+	useEffect(() => {
+		const creditsData = async () => {
+			await refreshSubscription()
+		}
+		creditsData()
+	}, [])
+
 
 	// Listen for messages from the hidden iframe with the snapshot image
-	useEffect(() => {
-		const handleSnapshotMessage = (event: MessageEvent) => {
-			if (event.data && event.data.type === "TEMPLATE_SNAPSHOT") {
-				setSnapshotUrl(event.data.payload);
-			}
-		};
-		window.addEventListener("message", handleSnapshotMessage);
-		return () => window.removeEventListener("message", handleSnapshotMessage);
-	}, []);
 
-	// useEffect(()=>{
-	// 	const fetchResume = async()=>{
-	// 		getResumeById()
-	// 	}
-	// },[])
+
+
 	const handleDownloadClick = () => {
 		if (!snapshotUrl) {
 			alert("Snapshot is not available for download");
@@ -189,17 +195,17 @@ export default function TemplateEditor() {
 			});
 			if (id) {
 				await editResume(authToken, formData, id)
-				if (tokensUsed < credits) {
+				if (credits > 0) {
 					handleDownloadClick();
 				} else {
 					setShowModal(true);
 				}
 			} else {
 				await createResume(authToken, formData);
-				console.log(tokensUsed < credits);
+
 				console.log(tokensUsed, credits);
 
-				if (tokensUsed < credits) {
+				if (credits > 0) {
 					handleDownloadClick();
 				} else {
 					setShowModal(true);
@@ -210,7 +216,7 @@ export default function TemplateEditor() {
 
 
 		} catch (error: any) {
-	
+
 			console.error("Error saving resume:", error);
 			const errorMessage =
 				error.response?.data?.message ||
@@ -229,12 +235,12 @@ export default function TemplateEditor() {
 	}
 
 	const handlePayNow = () => {
-		router.push("/dashboard/plans"); 
-		setShowModal(false); 
+		router.push("/dashboard/plans");
+		setShowModal(false);
 	};
 	const handleClose = () => {
-		router.push("/dashboard"); 
-		setShowModal(false); 
+		router.push("/dashboard");
+		setShowModal(false);
 	};
 
 
@@ -244,19 +250,25 @@ export default function TemplateEditor() {
 			const response = await getResumeById(token, id);
 			console.log(response.data.sections);
 			setResumeData(response?.data)
+			console.log(response.data);
+			
+			// setSnapshotUrl( `${BASE_URL}/${response.data.picture}`)
 		}
 		// if there is id in params than we will fetch the get resume by id api
 		if (id) {
 			fetchResumeData()
+			
+			setIsEditResume(true)
 		}
 
 
 
 	}, [])
+
 	return (
 		<div className="flex flex-col h-screen p-8 pt-24 container mx-auto">
 			<header className="flex justify-between items-center mb-4">
-				<Button variant="default" onClick={() => router.push("/dashboard/")}>
+				<Button variant="default" onClick={() => {router.push("/dashboard/") ;localStorage.removeItem('template_ss')}}>
 					<ArrowLeft size={24} />
 					To Dashboard
 				</Button>
@@ -269,16 +281,15 @@ export default function TemplateEditor() {
 					/>
 				)}
 
-
-
-
 				<div className="w-full lg:w-1/2">
 					<div className="flex justify-between items-center mb-4">
 						<ColorPicker iframeRef={iframeRef} />
+						{isEditResume && (<>
+							<Button variant="default" onClick={credits > 0 ? handleDownloadClick : handlePayNow} disabled={!snapshotUrl}>
+								{credits > 0 ? "Download" : "Renew Credits"}
+							</Button>
+						</>)}
 
-						{/* <Button variant="default" onClick={handleDownloadClick} disabled={!snapshotUrl}>
-							Download
-						</Button> */}
 					</div>
 					<Card className="shadow-lg">
 						<CardContent className="p-4">
@@ -301,16 +312,22 @@ export default function TemplateEditor() {
 										height={400}
 									/>
 								) : (
-									<div className="flex flex-col justify-center items-center space-y-4 h-[400px]">
-										<Image
-											src="/logo.png"
-											width={100}
-											height={100}
-											alt="GetSetCV Logo"
-											className="animate-pulseOpacity"
-										/>
-									</div>
-								)}
+									// Trigger refresh or display loading state
+									<>
+
+										<div className="flex flex-col justify-center items-center space-y-4 h-[400px]">
+											<Image
+												src="/logo.png"
+												width={100}
+												height={100}
+												alt="GetSetCV Logo"
+												className="animate-pulseOpacity"
+											/>
+										</div>
+									</>
+								)
+
+								}
 							</div>
 
 							<iframe
@@ -320,6 +337,7 @@ export default function TemplateEditor() {
 								onLoad={() => setTimeout(sendTemplateDataToIframe, 100)}
 							/>
 						</CardContent>
+
 					</Card>
 				</div>
 

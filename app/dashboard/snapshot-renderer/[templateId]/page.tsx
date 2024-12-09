@@ -12,7 +12,7 @@ export default function SnapshotRenderer() {
 	const { templateId } = useParams();
 	const templateRef = useRef<HTMLDivElement>(null);
 	const templateData: TemplateData =
-		DUMMY_TEMPLATES_DATA[
+		DUMMY_TEMPLATES_DATA[ 
 			Math.floor(Math.random() * DUMMY_TEMPLATES_DATA.length)
 		];
 
@@ -24,26 +24,26 @@ export default function SnapshotRenderer() {
 					const images = Array.from(
 						templateRef.current!.querySelectorAll("img")
 					);
+
+					// Use Promise.all to ensure images are fully loaded
 					await Promise.all(
 						images.map((img) =>
-							img.complete
-								? Promise.resolve()
-								: new Promise((resolve) => (img.onload = resolve))
+							!img.complete
+								? new Promise((resolve) => (img.onload = resolve))
+								: Promise.resolve()
 						)
 					);
 
-					setTimeout(async () => {
-						const dataUrl = await toPng(templateRef.current!, {
-							backgroundColor: "#ffffff", // Optional: Add a background color
-						});
+					// Capture snapshot right after images are loaded
+					const dataUrl = await toPng(templateRef.current!);
 
-						// Post snapshot back to parent window
-						parent.postMessage({ templateId, dataUrl }, "*");
-					}, 200); // Adjust delay as needed (in milliseconds)
+					// Post snapshot back to parent window
+					parent.postMessage({ templateId, dataUrl }, "*");
 				} catch (error) {
 					console.log("Failed to generate snapshot:", error);
 				}
 			};
+
 			generateSnapshot();
 		}
 	}, [templateId]);
@@ -55,14 +55,13 @@ export default function SnapshotRenderer() {
 			{template ? (
 				<template.component templateData={templateData} />
 			) : (
-		
-				<div className='flex flex-col justify-center items-center space-y-4 h-[400px]'>
+				<div className="flex flex-col justify-center items-center space-y-4 h-[400px]">
 					<Image
-						src='/logo.png'
+						src="/logo.png"
 						width={100}
 						height={100}
-						alt='GetSetCV Logo'
-						className='animate-pulseOpacity'
+						alt="GetSetCV Logo"
+						className="animate-pulseOpacity"
 					/>
 				</div>
 			)}

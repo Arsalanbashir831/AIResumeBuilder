@@ -22,7 +22,7 @@ export const templates = [
 					email: true,
 					phone: true,
 					link: true,
-					location: false,
+					location: true,
 				},
 			},
 			{ key: "summary", label: "Summary" },
@@ -32,7 +32,7 @@ export const templates = [
 				fieldsIncluded: {
 					title: true,
 					company: true,
-					location: false,
+					location: true,
 					startDate: true,
 					endDate: true,
 					achievements: true,
@@ -46,7 +46,7 @@ export const templates = [
 				fieldsIncluded: {
 					institution: true,
 					degree: true,
-					location: false,
+					location: true,
 					gpa: false,
 					startDate: true,
 					endDate: true,
@@ -83,7 +83,7 @@ export const templates = [
 				fieldsIncluded: {
 					title: true,
 					company: true,
-					location: false,
+					location: true,
 					startDate: true,
 					endDate: true,
 					achievements: true,
@@ -95,7 +95,7 @@ export const templates = [
 				fieldsIncluded: {
 					institution: true,
 					degree: true,
-					location: false,
+					location: true,
 					gpa: false,
 					startDate: true,
 					endDate: true,
@@ -115,11 +115,11 @@ export const templates = [
 				fieldsIncluded: {
 					profileImage: true,
 					name: true,
-					title: false,
+					title: true,
 					email: true,
 					phone: true,
 					link: true,
-					location: false,
+					location: true,
 				},
 			},
 			{ key: "summary", label: "Summary" },
@@ -129,7 +129,7 @@ export const templates = [
 				fieldsIncluded: {
 					title: true,
 					company: true,
-					location: false,
+					location: true,
 					startDate: true,
 					endDate: true,
 					achievements: true,
@@ -141,7 +141,7 @@ export const templates = [
 				fieldsIncluded: {
 					institution: true,
 					degree: true,
-					location: false,
+					location: true,
 					gpa: false,
 					startDate: true,
 					endDate: true,
@@ -192,7 +192,7 @@ export const templates = [
 				fieldsIncluded: {
 					title: true,
 					company: true,
-					location: false,
+					location: true,
 					startDate: true,
 					endDate: true,
 					achievements: true,
@@ -229,7 +229,7 @@ export const templates = [
 				fieldsIncluded: {
 					title: true,
 					company: true,
-					location: false,
+					location: true,
 					startDate: true,
 					endDate: true,
 					achievements: true,

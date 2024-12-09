@@ -36,14 +36,15 @@ interface PersonalInfoStepProps {
 const PersonalInfoStep: React.FC<PersonalInfoStepProps> = ({
   resumeData,
   handleInputChange,
-  fieldsIncluded = {
+  fieldsIncluded={
     name: true,
     title: true,
     email: true,
     phone: true,
     link: true,
     profileImage: true,
-  },
+    location: true, // Ensure this is true or not omitted
+  }
 }) => {
  
 
@@ -61,6 +62,7 @@ const PersonalInfoStep: React.FC<PersonalInfoStepProps> = ({
     };
     reader.readAsDataURL(file);
   };
+console.log(fieldsIncluded.location);
 
   return (
     <div>

@@ -5,9 +5,10 @@ import Link from "next/link";
 import { templates } from "@/data/templatesConfig";
 import Image from "next/image";
 
+
 export default function TemplatesPage() {
 	const [snapshots, setSnapshots] = useState<Record<string, string>>({});
-
+	// const { setSnapshot} = useSnapshot()
 	// Listen for messages from iframes
 	useEffect(() => {
 		const handleSnapshotMessage = (event: MessageEvent) => {
@@ -28,7 +29,7 @@ export default function TemplatesPage() {
 		<div className='container mx-auto my-24 px-4 '>
 			<div className='mb-12'>
 				<h1 className='text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-800 mb-4 py-3'>
-				Choose Your Template
+					Choose Your Template
 				</h1>
 				<p className='text-base sm:text-lg lg:text-xl text-gray-600 max-w-3xl text-justify'>
 					Select from our professional templates to get started. Simply click on
@@ -38,9 +39,12 @@ export default function TemplatesPage() {
 			</div>
 
 			<div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4'>
-				{templates.map((template) => (
+				{templates.map((template,index) => (
 					<Link key={template.id} href={`/dashboard/editor/${template.id}`}>
-						<div className='hover:bg-[#FDF8F4] hover:shadow-lg transition-all pt-8 pb-4 px-2 rounded-lg cursor-pointer'>
+						<div onClick={() => {
+							console.log(snapshots[template.id])
+							localStorage.setItem('template_ss', snapshots[template.id])
+						}} className='hover:bg-[#FDF8F4] hover:shadow-lg transition-all pt-8 pb-4 px-2 rounded-lg cursor-pointer'>
 							<div className='flex justify-center items-center w-full mx-auto'>
 								{snapshots[template.id] ? (
 									<Image
@@ -61,6 +65,16 @@ export default function TemplatesPage() {
 										/>
 									</div>
 								)}
+
+								{/* <div className='flex flex-col justify-center items-center space-y-4 h-[400px]'>
+									<Image
+										src={`/templates/${index+1}.png`}
+										width={300}
+										height={400}
+										alt='GetSetCV Logo'
+									
+									/>
+								</div> */}
 							</div>
 							<p className='text-center text-gray-800 mt-6 font-bold'>
 								{template.name}

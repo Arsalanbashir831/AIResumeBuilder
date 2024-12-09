@@ -1,4 +1,4 @@
-import { AtSign, Link, Phone } from "lucide-react";
+import { AtSign, Link, Phone , LocateIcon} from "lucide-react";
 
 const Header = ({
 	name,
@@ -6,12 +6,14 @@ const Header = ({
 	phone,
 	email,
 	link,
+	location
 }: {
 	name: string;
 	position: string;
 	phone: string;
 	email: string;
 	link: string;
+	location:string
 }) => {
 	return (
 		<div className='bg-template text-white px-10 pb-6 pt-16'>
@@ -29,6 +31,10 @@ const Header = ({
 				<span className='flex gap-2 items-center'>
 					<Link size={16} />
 					{link}
+				</span>
+				<span className='flex gap-2 items-center'>
+					<LocateIcon size={16} />
+					{location}
 				</span>
 			</div>
 		</div>

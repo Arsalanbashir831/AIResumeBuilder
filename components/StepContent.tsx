@@ -79,10 +79,10 @@ const StepContent = ({
 									if (!token) {
 										throw new Error("Authentication token is missing. Please log in.");
 									}
-									const data = await aiGenerationSection(token, {
+									const data : any = await aiGenerationSection(token, {
 										section_type: "objectives",
 									});	
-									handleInputChange("summary", null, data.generated_section);
+									handleInputChange("summary", null, data);
 								} catch (err: any) {
 									setError(
 										err?.message || "Failed to generate content. Please try again."

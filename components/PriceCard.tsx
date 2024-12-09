@@ -56,11 +56,8 @@ const PaymentCard: React.FC<PaymentCardProps> = ({ plans }) => {
           );
 
           const verificationResult = await verificationResponse.json();
-          if (verificationResult.success) {
-            alert("Payment verified successfully!");
-          } else {
-            alert("Payment verification failed!");
-          }
+        
+          alert(verificationResult.message)
         },
         prefill: {
           name: "John Doe", 

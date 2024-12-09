@@ -76,7 +76,7 @@ export default function DashboardBody() {
 	}) => (
 		<Card
 			className="cursor-pointer"
-			onClick={() => router.push(`/dashboard/editor/${templateId}?id=${id}`)}
+			onClick={() => {router.push(`/dashboard/editor/${templateId}?id=${id}`); localStorage.setItem('template_ss',`${BASE_URL}${picture}`)}}
 		>
 			<CardContent className="relative flex items-center justify-center p-4 bg-gray-100 rounded-t-xl">
 				{picture ? (
