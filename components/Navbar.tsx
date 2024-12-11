@@ -24,7 +24,9 @@ const Navbar = ({ isDashboard = false }: { isDashboard?: boolean }) => {
 	const router = useRouter();
 	const credits = subscription?.credits ?? 0;
 
-
+useEffect(()=>{
+	refreshSubscription()
+},[])
 
 	useEffect(() => {
 		const handleScroll = () => {
@@ -42,7 +44,7 @@ const Navbar = ({ isDashboard = false }: { isDashboard?: boolean }) => {
 
 			setLastScrollY(currentScrollY);
 		};
-		refreshSubscription()
+	
 		window.addEventListener("scroll", handleScroll);
 		return () => {
 			window.removeEventListener("scroll", handleScroll);

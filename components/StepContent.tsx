@@ -85,7 +85,7 @@ const StepContent = ({
 									handleInputChange("summary", null, data);
 								} catch (err: any) {
 									setError(
-										err?.message || "Failed to generate content. Please try again."
+										err?.detail
 									);
 								} finally {
 									setLoading(false);

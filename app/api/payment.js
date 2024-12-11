@@ -2,9 +2,13 @@ import axios from "axios";
 import { BASE_URL } from "../Constant";
 
 
-export const getPlans = async () => {
+export const getPlans = async (token) => {
     try {
-        const response = await axios.get(`${BASE_URL}/api/payments/plans/`);
+        const response = await axios.get(`${BASE_URL}/api/payments/plans/`,{
+          headers:{
+            Authorization:`Bearer ${token}`
+          }
+        });
    
         if (response.status === 200) {
             return response.data; 

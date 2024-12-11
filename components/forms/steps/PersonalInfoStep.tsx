@@ -101,8 +101,15 @@ console.log(fieldsIncluded.location);
         <InputField
           label="Location"
           value={resumeData.sections.personalInfo.contact.location}
+          // onChange={(value) =>
+          //   handleInputChange("personalInfo", "location", value as string)
+          // }
+
           onChange={(value) =>
-            handleInputChange("personalInfo", "location", value as string)
+            handleInputChange("personalInfo", "contact", {
+              ...resumeData.sections.personalInfo.contact,
+              location: value as string,
+            })
           }
         />
       )}

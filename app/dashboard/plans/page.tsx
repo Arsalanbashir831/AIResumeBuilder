@@ -8,19 +8,21 @@ import { Plan } from "@/types/global";
 const Plans: React.FC = () => {
   const [plans, setPlans] = useState<Plan[] | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
-
-  // Top-up packages
-  const topUpCredits = [
-    { name: "Small Pack", credits: 4, price: 40 },
-    { name: "Medium Pack", credits: 10, price: 100 },
-    { name: "Large Pack", credits: 20, price: 200 },
-  ];
+  const [addons, setAddons] = useState<Plan[] | null>(null);
 
   useEffect(() => {
     const fetchPlans = async () => {
+      const token = localStorage.getItem("accessToken");
       try {
-        const data = await getPlans();
+        const data = await getPlans(token);
+
+        // Separate add-ons from standard plans
+        const addonPlans = data.filter(
+          (plan: Plan) => plan.is_addon === true && [3, 4, 5].includes(plan.id)
+        );
+
         setPlans(data);
+        setAddons(addonPlans.length > 0 ? addonPlans : null);
       } catch (error) {
         console.error("Error fetching plans:", error);
       } finally {
@@ -33,67 +35,69 @@ const Plans: React.FC = () => {
 
   return (
     <div className="container mx-auto px-4 py-16 md:py-24">
-   
-   {/* Add-On Credits Section */}
-   <div className="text-center">
-        <h2 className="text-2xl font-bold mb-6">Add-On Credits</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-          {topUpCredits.map((pack, index) => (
-            <div
-              key={index}
-              className="border p-4 rounded-lg shadow-sm hover:shadow-md transition-all"
-            >
-              <h3 className="text-lg font-bold mb-2">{pack.name}</h3>
-              <p className="text-gray-600 mb-2">
-                {pack.credits} credits for ₹{pack.price}
-              </p>
-              <p className="text-gray-500 text-sm">
-                (₹{(pack.price / pack.credits).toFixed(2)} per credit)
-              </p>
-              {/* <button
-                className="mt-4 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
-                onClick={() => console.log(`Top-up ${pack.name} selected`)}
-              >
-                Buy Now
-              </button> */}
-            </div>
-          ))}
-        </div>
+      {/* Add-On Credits Section */}
+      <div className="text-center">
+        {/* <h2 className="text-2xl font-bold mb-6">Add-On Credits</h2> */}
+        {addons ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        
+          </div>
+        ) : (
+          <p className="text-gray-600">
+            Purchase one of the standard plans to unlock add-on credits.
+          </p>
+        )}
       </div>
-      <hr className="my-10 border-gray-300" />
+
       <h1 className="text-3xl font-bold text-center mb-10">Choose Your Plan</h1>
       {loading ? (
         <p className="text-center text-gray-600">Loading plans...</p>
       ) : plans && plans.length > 0 ? (
         <PaymentCard plans={plans} />
       ) : (
-        <p className="text-center text-gray-600">No plans available at the moment.</p>
+        <p className="text-center text-gray-600">
+          No plans available at the moment.
+        </p>
       )}
-
-      
-   
 
       <hr className="my-10 border-gray-300" />
 
       {/* What is a Credit Section */}
-      <div className="max-w-3xl mx-auto">
-        <h2 className="text-2xl font-bold mb-4 text-center">What is a Credit?</h2>
-        <p className="text-gray-700 text-base leading-relaxed mb-4">
-          A credit is a unit used to customize specific sections of your resume
-          with AI. Each section—such as <strong>Work Experience</strong>,{" "}
-          <strong>Summary</strong>, or <strong>Achievements</strong>—requires a
-          certain number of credits to generate or enhance.
-        </p>
-        <p className="text-gray-700 text-base leading-relaxed mb-4">
-          For example, generating a <strong>Work Experience</strong> section
-          costs 1 credit. Clicking on “Improve with AI” for any section will
-          deduct the necessary credits from your account.
-        </p>
-        <p className="text-gray-700 text-base leading-relaxed">
-          This transparent system ensures you only pay for the features you use,
-          giving you complete control over your customization process.
-        </p>
-      </div>
+      <div className="max-w-3xl mx-auto bg-white shadow-md rounded-lg p-8">
+  <h2 className="text-3xl font-bold mb-6 text-center text-orange-600">What is a Credit?</h2>
+  <p className="text-gray-700 text-lg leading-relaxed mb-6">
+    Credits measure the AI customization features you use for your resume. Each AI action—such as generating a 
+    <strong>Work Experience</strong> section or improving your <strong>Summary</strong>—uses a small number of tokens, 
+    which are deducted from your credits.
+  </p>
+  <div className="bg-gray-100 p-4 rounded-lg mb-6">
+    <p className="text-gray-700 text-lg leading-relaxed">
+      <strong>Example:</strong> Generating a <strong>Work Experience</strong> section costs 1 credit. Clicking on 
+      "Improve with AI" for any section deducts the necessary credits from your account.
+    </p>
+  </div>
+  <h3 className="text-xl font-semibold text-gray-800 mb-4">Here’s What You Need to Know:</h3>
+  <ul className="list-disc list-inside text-gray-700 text-lg leading-relaxed space-y-3">
+    <li>
+      <strong>1 Credit = 1,000 Tokens:</strong> Most AI actions use only a fraction of this amount.
+    </li>
+    <li>
+      <strong>No Immediate Deductions:</strong> If the tokens used are below the threshold, your credit balance won’t 
+      decrease immediately.
+    </li>
+    <li>
+      <strong>Generous Usage:</strong> Our credits are designed to be generous, letting you create or refine multiple 
+      resumes without worrying about running out quickly.
+    </li>
+    <li>
+      <strong>Simple and Fair:</strong> You only pay for what you use, ensuring cost efficiency.
+    </li>
+  </ul>
+  <p className="text-gray-700 text-lg leading-relaxed mt-6">
+    Experiment with AI and customize your resume without worrying about the numbers—we’ve got you covered!
+  </p>
+</div>
+
     </div>
   );
 };

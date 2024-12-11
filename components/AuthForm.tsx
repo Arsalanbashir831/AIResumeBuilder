@@ -7,6 +7,10 @@ import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useAuth } from "@/context/AuthContext";
+import { GoogleLogin, googleLogout } from "@react-oauth/google";
+import { BASE_URL } from "@/app/Constant";
+
+import VerificationModal from "./modals/VerificationModal";
 
 interface AuthFormProps {
   heading: string;
@@ -21,7 +25,7 @@ const AuthForm: React.FC<AuthFormProps> = ({
 }) => {
   const pathname = usePathname();
   const router = useRouter();
-  const { login, register , isAuthenticated } = useAuth(); 
+  const { login, register, isAuthenticated } = useAuth();
 
   // State for form inputs
   const [email, setEmail] = useState("");
@@ -29,18 +33,19 @@ const AuthForm: React.FC<AuthFormProps> = ({
   const [name, setName] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-
+  const [isForgetPasswordOpen, setForgetPasswordOpen] = useState(false);
+  const [modalType, setModalType] = useState<"register" | "forget password">("register");
   const isSignup = pathname.includes("signup");
 
-  useEffect(()=>{
+  useEffect(() => {
     if (isAuthenticated) {
-      router.push('/dashboard')
+      router.push("/dashboard");
     }
-  })
+  });
 
   const handleSubmit = async () => {
-    setError(""); // Reset error state
-    setLoading(true); // Start loading
+    setError("");
+    setLoading(true); 
     try {
       if (isSignup) {
         if (!name.trim()) {
@@ -50,18 +55,51 @@ const AuthForm: React.FC<AuthFormProps> = ({
           throw new Error("Invalid email format.");
         }
         await register(email, password, name);
-        router.push("/signin"); 
+        setModalType('register')
+        setForgetPasswordOpen(true)
       } else {
-        await login(email, password); 
-        router.push("/dashboard"); 
+        await login(email, password)
       }
     } catch (err: any) {
-      setError(err.message || "An error occurred. Please try again.");
+      console.log('err',err);
+      
+      setError(err.message);
     } finally {
-      setLoading(false); // Stop loading
+      setLoading(false); 
     }
   };
 
+  const handleGoogleLoginSuccess = async (response: any) => {
+    try {
+      setLoading(true);
+  
+      const res = await fetch(`${BASE_URL}/api/users/google-auth/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id_token: response.credential }),
+      });
+  
+      const data = await res.json();
+  
+      if (res.ok) {
+        console.log("Login Successful:", data);
+        localStorage.setItem('accessToken',data.access);
+        localStorage.setItem('refreshToken',data.refresh);
+         router.push("/dashboard");
+      } else {
+        console.error("Backend Error:", data.error);
+        throw new Error(data.error || "Google Login failed");
+      }
+    } catch (err: any) {
+      console.error("Error:", err.message || "Google Login failed");
+      setError(err.message || "Google Login failed");
+    } finally {
+      setLoading(false);
+    }
+  };
+  
   return (
     <div className="flex-1 flex flex-col items-center justify-center p-4 sm:p-12">
       <Card className="w-full max-w-sm border-none shadow-none">
@@ -91,8 +129,27 @@ const AuthForm: React.FC<AuthFormProps> = ({
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="*********"
-          className="w-full mb-4"
+          className={`w-full ${isSignup?'mb-4':'mb-0'}`}
         />
+        {!isSignup &&(<>
+          <div className="w-full text-right">
+          <Button className="" variant={'link'} onClick={() => {
+            setModalType('forget password')
+            console.log(modalType);
+            
+            setForgetPasswordOpen(true)}}>
+        Forgot Password?
+      </Button>
+      </div>
+        </>)}
+       
+      {isForgetPasswordOpen && (
+        <VerificationModal type={modalType} 
+        registerEmail={email}
+        initialStep={1}
+        onClose={() => setForgetPasswordOpen(false)}
+        />
+      )}
 
         {/* Error message */}
         {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
@@ -105,7 +162,7 @@ const AuthForm: React.FC<AuthFormProps> = ({
         >
           {loading ? "Please wait..." : buttonText}
         </Button>
-
+      
         <div className="flex items-center justify-between mb-4">
           <span className="border-b border-gray-300 w-1/2" />
           <span className="px-2 text-gray-500 text-sm w-full text-center">
@@ -115,13 +172,10 @@ const AuthForm: React.FC<AuthFormProps> = ({
         </div>
 
         <div className="flex flex-col items-center justify-between space-y-2 mb-4">
-          <Button
-            variant="outline"
-            className="w-full flex items-center justify-center border border-gray-300 text-[#0B1437]"
-          >
-            <Image src="/google-icon.svg" alt="Google" width={16} height={16} />
-            <span className="ml-2">Google</span>
-          </Button>
+          <GoogleLogin
+            onSuccess={handleGoogleLoginSuccess}
+            onError={() => setError("Google Login failed")}
+          />
         </div>
 
         <p className="text-xs text-gray-500 mt-6 text-center">

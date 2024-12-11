@@ -152,10 +152,10 @@ export const aiGenerationSection = async (authToken, data) => {
     }
    
   } catch (error) {
-    console.error("Error creating resume:", error);
+    console.error("Kindly Purchase Plan", error);
     throw error.response
       ? error.response.data
-      : new Error("Failed to fetch resume");
+      : new Error("Kindly Purchase Plan to use AI Generation");
   }
 };
 
@@ -172,13 +172,27 @@ export const AiImproveContent = async (data, authToken) => {
       }
     );
 
-    return response.data.regenerated_content || "Need Content to improve";
+    // Handle success response
+    if (response.status === 200 || response.status === 201) {
+      return response.data.regenerated_content;
+    } else {
+      // Throw an error for non-success status codes
+      throw new Error("Unexpected response from server");
+    }
   } catch (error) {
-    console.error(
-      "Error in AiImproveContent:",
-      error.response || error.message || error
-    );
-   
-    return "Need Content to improve";
+    // Handle specific Axios error
+    if (axios.isAxiosError(error)) {
+      if (error.response) {
+        console.error("Server Error:", error.response.data.message || error.response.statusText);
+        return error.response.data.detail || "Error processing your request.";
+      } else if (error.request) {
+        console.error("Network Error: No response received from server");
+        return "Network error. Please try again later.";
+      }
+    }
+
+    console.error("An unexpected error occurred:", error.message || error);
+    return "An unexpected error occurred. Please try again later.";
   }
 };
+

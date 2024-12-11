@@ -18,7 +18,8 @@ interface PaymentCardProps {
 }
 
 const PaymentCard: React.FC<PaymentCardProps> = ({ plans }) => {
-    const { Razorpay } = useRazorpay();
+  const { Razorpay } = useRazorpay();
+
   const handlePayments = async (planId: number) => {
     try {
       const token = localStorage.getItem("accessToken");
@@ -27,7 +28,7 @@ const PaymentCard: React.FC<PaymentCardProps> = ({ plans }) => {
         return;
       }
 
-      const paymentResponse = await createPayments(token, { plan_id : planId });
+      const paymentResponse = await createPayments(token, { plan_id: planId });
       const { razorpay_key, order_id, amount, currency, plan } = paymentResponse;
 
       const options = {
@@ -36,11 +37,11 @@ const PaymentCard: React.FC<PaymentCardProps> = ({ plans }) => {
         currency,
         name: "GETSETCV",
         description: `Purchase ${plan.name}`,
-        order_id, 
+        order_id,
         handler: async (paymentResult: any) => {
           console.log("Payment successful:", paymentResult);
           const verificationResponse = await fetch(
-            ` ${BASE_URL}/api/payments/payment-callback/`,
+            `${BASE_URL}/api/payments/payment-callback/`,
             {
               method: "POST",
               headers: {
@@ -56,13 +57,12 @@ const PaymentCard: React.FC<PaymentCardProps> = ({ plans }) => {
           );
 
           const verificationResult = await verificationResponse.json();
-        
-          alert(verificationResult.message)
+          alert(verificationResult.message);
         },
         prefill: {
-          name: "John Doe", 
+          name: "John Doe",
           email: "user1@example.com",
-          contact: "9999999999", 
+          contact: "9999999999",
         },
         theme: {
           color: "#ff5f03",
@@ -78,17 +78,20 @@ const PaymentCard: React.FC<PaymentCardProps> = ({ plans }) => {
   };
 
   return (
-    <div className="container mx-auto px-4 py-16 md:py-24">
+    <div className="container mx-auto px-4 py-16">
       <div className="flex flex-wrap justify-center gap-6">
         {plans.map((plan) => (
-          <Card key={plan.id} className="w-full max-w-sm border shadow-md">
-            <CardHeader>
-              <CardTitle className="text-lg font-semibold text-center">
+          <Card
+            key={plan.id}
+            className="w-full max-w-sm border shadow-lg hover:shadow-xl transition-all duration-200 flex flex-col justify-between"
+          >
+            <CardHeader className="bg-gray-100 py-6">
+              <CardTitle className="text-lg font-semibold text-center text-gray-800">
                 {plan.name}
               </CardTitle>
             </CardHeader>
-            <CardContent className="text-center space-y-4">
-              <p className="text-3xl font-bold">{plan.price}₹</p>
+            <CardContent className="text-center space-y-4 flex-grow">
+              <p className="text-3xl font-bold text-orange-600">{plan.price}₹</p>
               <ul className="space-y-2 text-sm text-gray-600">
                 <li>One-time payment</li>
                 <li>1 credit = 1k tokens</li>
@@ -97,11 +100,11 @@ const PaymentCard: React.FC<PaymentCardProps> = ({ plans }) => {
                 {plan.is_addon && <li>Addon available</li>}
               </ul>
             </CardContent>
-            <CardFooter className="text-center">
+            <CardFooter className="py-4">
               <Button
                 onClick={() => handlePayments(plan.id)}
                 size="lg"
-                className="w-full"
+                className="w-full bg-orange-500 hover:bg-orange-600 text-white py-2 rounded-lg transition-all"
               >
                 Choose {plan.name}
               </Button>

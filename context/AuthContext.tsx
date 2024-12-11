@@ -74,19 +74,20 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   }, [pathname, router]);
 
-  const login = async (email: string, password: string) => {
-    try {
-      const data = await apiLogin(email, password);
-      console.log('data', data);
-      setUser(data.user);
-      localStorage.setItem("accessToken", data.accessToken);
-      localStorage.setItem("refreshToken", data.refreshToken);
-      router.push("/dashboard");
+  const login = async (email: string, password: string ) => {
+  
+      await apiLogin(email, password).then((data)=>{
+        console.log('data', data);
+        setUser(data.user);
+        localStorage.setItem("accessToken", data.accessToken);
+        localStorage.setItem("refreshToken", data.refreshToken);
+        router.push("/dashboard");
+      }).catch((e)=>{        
+        throw new Error(e)   
+      })
+   
 
-    } catch (error: any) {
-      console.log("Login error:", error);
-      throw error.detail || "Login failed";
-    }
+   
   };
 
   const logout = () => {
@@ -99,7 +100,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const register = async (email: string, password: string, name: string) => {
     try {
       await apiRegister(email, password, name);
-      router.push("/signin");
+      // router.push("/signin");
     } catch (error: any) {
       console.log("Registration error:", error);
       throw error?.detail || "Registration failed";

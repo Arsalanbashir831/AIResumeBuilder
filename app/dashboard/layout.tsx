@@ -6,6 +6,7 @@ import { ColorProvider } from "@/context/ColorContext";
 import { FormProvider } from "@/context/FormContext";
 import { AuthProvider } from "@/context/AuthContext";
 import { SnapshotProvider } from "@/context/SnapShotContext";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 const geistSans = localFont({
 	src: "../fonts/GeistVF.woff",
@@ -33,6 +34,7 @@ export default function RootLayout({
 		<html lang='en'>
 			<body
 				className={`${geistSans.variable} ${geistMono.variable} antialiased `}>
+					<GoogleOAuthProvider clientId="73746778952-qhoc0oudn0fuqmta348dr2kabbha3nd7.apps.googleusercontent.com">
 			<AuthProvider>
 				<SnapshotProvider>
 				<Navbar isDashboard />
@@ -44,6 +46,7 @@ export default function RootLayout({
 				</ColorProvider>
 				</SnapshotProvider>
 			</AuthProvider>
+			</GoogleOAuthProvider>
 			</body>
 		</html>
 	);
