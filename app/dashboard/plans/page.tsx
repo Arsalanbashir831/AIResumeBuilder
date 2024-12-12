@@ -63,40 +63,56 @@ const Plans: React.FC = () => {
       <hr className="my-10 border-gray-300" />
 
       {/* What is a Credit Section */}
-      <div className="max-w-3xl mx-auto bg-white shadow-md rounded-lg p-8">
-  <h2 className="text-3xl font-bold mb-6 text-center text-orange-600">What is a Credit?</h2>
-  <p className="text-gray-700 text-lg leading-relaxed mb-6">
-    Credits measure the AI customization features you use for your resume. Each AI action—such as generating a 
-    <strong>Work Experience</strong> section or improving your <strong>Summary</strong>—uses a small number of tokens, 
+      <div className="max-w-full mx-auto  shadow-lg rounded-xl p-8">
+  <h2 className="text-4xl font-bold mb-6 text-center text-orange-700 drop-shadow-md">
+    What is a Credit?
+  </h2>
+  <p className="text-gray-800 text-lg leading-relaxed mb-6">
+    Credits measure the AI customization features you use to create and refine your resumes. Each AI action—like generating a 
+    <strong> Work Experience</strong> section or enhancing your <strong>Summary</strong>—uses a small number of tokens, 
     which are deducted from your credits.
   </p>
-  <div className="bg-gray-100 p-4 rounded-lg mb-6">
-    <p className="text-gray-700 text-lg leading-relaxed">
-      <strong>Example:</strong> Generating a <strong>Work Experience</strong> section costs 1 credit. Clicking on 
-      "Improve with AI" for any section deducts the necessary credits from your account.
-    </p>
-  </div>
-  <h3 className="text-xl font-semibold text-gray-800 mb-4">Here’s What You Need to Know:</h3>
-  <ul className="list-disc list-inside text-gray-700 text-lg leading-relaxed space-y-3">
-    <li>
+
+  <h3 className="text-2xl font-semibold text-gray-900 mb-4">How It Works:</h3>
+  <ul className="list-disc list-inside text-gray-800 text-lg leading-relaxed space-y-4">
+    <li className="flex items-start">
+      <span className="text-orange-500 mr-2">&#x1F4B3;</span>
       <strong>1 Credit = 1,000 Tokens:</strong> Most AI actions use only a fraction of this amount.
     </li>
-    <li>
+    <li className="flex items-start">
+      <span className="text-orange-500 mr-2">&#x2705;</span>
       <strong>No Immediate Deductions:</strong> If the tokens used are below the threshold, your credit balance won’t 
-      decrease immediately.
+      decrease right away.
     </li>
-    <li>
-      <strong>Generous Usage:</strong> Our credits are designed to be generous, letting you create or refine multiple 
-      resumes without worrying about running out quickly.
+    <li className="flex items-start">
+      <span className="text-orange-500 mr-2">&#x1F4AF;</span>
+      <strong>Generous Usage:</strong> Our credits are designed to last, letting you create or refine multiple 
+      resumes without quickly running out.
     </li>
-    <li>
+    <li className="flex items-start">
+      <span className="text-orange-500 mr-2">&#x1F4B8;</span>
       <strong>Simple and Fair:</strong> You only pay for what you use, ensuring cost efficiency.
     </li>
   </ul>
+  <div className="bg-orange-100 p-6 rounded-lg mb-6 mt-4 shadow-inner">
+    <p className="text-gray-900 text-lg leading-relaxed">
+      <strong>Example:</strong> Generating a <strong>Work Experience</strong> section costs 1 credit. Clicking on 
+      "Improve with AI" for any section deducts the required credits instantly.
+    </p>
+  </div>
+  <div className="bg-gray-50 p-6 rounded-lg shadow-sm">
+    <p className="text-gray-700 text-lg leading-relaxed">
+      <strong>Even More Flexibility!</strong> After purchasing a plan, you’ll have access to exclusive add-ons directly 
+      within your account. These optional add-ons allow you to purchase additional credits or features, ensuring you 
+      always have the resources you need to build your best resume.
+    </p>
+  </div>
   <p className="text-gray-700 text-lg leading-relaxed mt-6">
-    Experiment with AI and customize your resume without worrying about the numbers—we’ve got you covered!
+    Experiment with AI-powered resume creation freely—we’ve got you covered!
   </p>
+ 
 </div>
+
 
     </div>
   );

@@ -58,8 +58,8 @@ useEffect(()=>{
 		>
 			<div className="container mx-auto flex items-center justify-between px-4 py-3">
 				{/* Logo */}
-				<div className="flex items-center gap-2">
-					<Image src="/logo.png" alt="GetSetCV" width={220} height={100} />
+				<div  className="flex items-center gap-2 cursor-pointer">
+					<Image onClick={()=>{ router.push(`${ isAuthenticated?'/dashboard':'/'}`)}} src="/logo.png" alt="GetSetCV" width={220} height={100} />
 				</div>
 
 				{/* Navigation Content */}
