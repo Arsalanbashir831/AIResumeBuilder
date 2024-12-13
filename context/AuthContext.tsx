@@ -38,7 +38,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       const refreshToken = localStorage.getItem("refreshToken");
       if (!authToken) {
 
-        if (pathname !== "/signup" && pathname !== '/') router.push("/signin");
+        if (pathname !== "/signup" && pathname !== '/' && pathname!='/privacy-policy' && pathname!='/refund-policy' && pathname !='/terms-and-conditions') router.push("/signin");
         setLoading(false);
         return;
       }
