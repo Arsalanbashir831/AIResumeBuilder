@@ -29,7 +29,9 @@ export const SubscriptionProvider: React.FC<SubscriptionProviderProps> = ({ chil
     try {
       const token = localStorage.getItem("accessToken");
       if (!token) {
-        throw new Error("User is not authenticated.");
+        // throw new Error("User is not authenticated.");
+        console.log('User not authenticated');
+        
       }
 
       const response = await axios.get<SubscriptionData>(`${BASE_URL}/api/payments/credits/`, {

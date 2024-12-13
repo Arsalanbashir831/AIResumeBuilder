@@ -428,53 +428,73 @@ const LandingPage = () => {
 					</Link>
 				</div>
 			</section>
-
-			<footer className='bg-[#FDF8F4] border-t border-[#FDF8F4] py-3'>
-				<div className='container mx-auto px-4 flex flex-col sm:flex-row justify-between items-center'>
-					<p className='text-[#f97316] text-sm'>
-						&copy; {new Date().getFullYear()} GetSetCV. All rights reserved.
-					</p>
-					{/* Social Media Icons */}
-					<div className='flex gap-4 mt-4 sm:mt-0'>
-						<Button variant='ghost' size='icon' asChild>
-							<a
-								href='https://facebook.com'
-								aria-label='Facebook'
-								target='_blank'
-								rel='noopener noreferrer'>
-								<Facebook className='h-5 w-5 text-gray-600 hover:text-gray-800' />
-							</a>
-						</Button>
-						<Button variant='ghost' size='icon' asChild>
-							<a
-								href='https://twitter.com'
-								aria-label='Twitter'
-								target='_blank'
-								rel='noopener noreferrer'>
-								<Twitter className='h-5 w-5 text-gray-600 hover:text-gray-800' />
-							</a>
-						</Button>
-						<Button variant='ghost' size='icon' asChild>
-							<a
-								href='https://instagram.com'
-								aria-label='Instagram'
-								target='_blank'
-								rel='noopener noreferrer'>
-								<Instagram className='h-5 w-5 text-gray-600 hover:text-gray-800' />
-							</a>
-						</Button>
-						<Button variant='ghost' size='icon' asChild>
-							<a
-								href='https://github.com'
-								aria-label='GitHub'
-								target='_blank'
-								rel='noopener noreferrer'>
-								<Github className='h-5 w-5 text-gray-600 hover:text-gray-800' />
-							</a>
-						</Button>
-					</div>
-				</div>
-			</footer>
+			<footer className='bg-[#FDF8F4] border-t border-[#FDF8F4] py-6'>
+      <div className='container mx-auto px-4 flex flex-col sm:flex-row justify-between items-center'>
+        <p className='text-[#f97316] text-sm'>
+          &copy; {new Date().getFullYear()} Your Company Name. All rights reserved.
+        </p>
+        <div className='flex flex-col sm:flex-row items-center mt-4 sm:mt-0 gap-4'>
+          {/* Navigation Links */}
+          <div className='flex gap-6'>
+            <Link href={'/terms-and-conditions'}
+          
+              className='text-sm text-gray-600 hover:text-gray-800 hover:underline'>
+              Terms and Conditions
+            </Link>
+			
+            <Link
+              href='/privacy-policy'
+              className='text-sm text-gray-600 hover:text-gray-800 hover:underline'>
+              Privacy Policy
+            </Link>
+            <Link
+              href='/refund-policy'
+              className='text-sm text-gray-600 hover:text-gray-800 hover:underline'>
+              Refund Policy
+            </Link>
+          </div>
+          {/* Social Media Icons */}
+          <div className='flex gap-4'>
+            <Button variant='ghost' size='icon' asChild>
+              <a
+                href='https://facebook.com'
+                aria-label='Facebook'
+                target='_blank'
+                rel='noopener noreferrer'>
+                <Facebook className='h-5 w-5 text-gray-600 hover:text-gray-800' />
+              </a>
+            </Button>
+            <Button variant='ghost' size='icon' asChild>
+              <a
+                href='https://twitter.com'
+                aria-label='Twitter'
+                target='_blank'
+                rel='noopener noreferrer'>
+                <Twitter className='h-5 w-5 text-gray-600 hover:text-gray-800' />
+              </a>
+            </Button>
+            <Button variant='ghost' size='icon' asChild>
+              <a
+                href='https://instagram.com'
+                aria-label='Instagram'
+                target='_blank'
+                rel='noopener noreferrer'>
+                <Instagram className='h-5 w-5 text-gray-600 hover:text-gray-800' />
+              </a>
+            </Button>
+            <Button variant='ghost' size='icon' asChild>
+              <a
+                href='https://github.com'
+                aria-label='GitHub'
+                target='_blank'
+                rel='noopener noreferrer'>
+                <Github className='h-5 w-5 text-gray-600 hover:text-gray-800' />
+              </a>
+            </Button>
+          </div>
+        </div>
+      </div>
+    </footer>
 		</div>
 	);
 };

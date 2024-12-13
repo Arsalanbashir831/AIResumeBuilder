@@ -1,8 +1,11 @@
+'use client'
 import AuthForm from "@/components/AuthForm";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function SignupPage() {
+const router = useRouter()
 	return (
 		<div className='min-h-screen flex flex-col md:flex-row'>
 			{/* Left Side */}
@@ -15,7 +18,7 @@ export default function SignupPage() {
 					backgroundBlendMode: "overlay",
 				}}>
 				<div className='flex items-center space-x-2'>
-					<Image src='/logo.png' alt='GetSetCV' width={180} height={100} />
+				<Image onClick={()=>router.push('/')} src='/logo.png' alt='GetSetCV' width={180} height={100} />
 				</div>
 
 				<div className='flex flex-col justify-center flex-1'>
