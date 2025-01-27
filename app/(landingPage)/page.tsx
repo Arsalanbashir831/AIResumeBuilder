@@ -1,50 +1,113 @@
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import {
-	Check,
-	Facebook,
-	Github,
-	Instagram,
-	Star,
-	Twitter,
-} from "lucide-react";
-import Image from "next/image";
 import Navbar from "@/components/Navbar";
-import AnimatedLogos from "@/components/AnimatedLogos";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Facebook, Instagram, Linkedin, Star, Twitter } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 
 const LandingPage = () => {
-	
-	const companies = [
+	const benefits = [
 		{
-			name: "Air France",
-			role: "Full-stack Developer",
-			logo: "airfrance",
-			resume: "/templates/1.png",
+			icon: "1.svg",
+			title: "Easy to use",
+			description:
+				"The process of writing a resume is substantially sped up and simplified by using our resume builder.",
 		},
 		{
-			name: "Accenture",
-			role: "Engineering Team Lead",
-			logo: "accenture",
-			resume: "/templates/2.png",
+			icon: "2.svg",
+			title: "Secure",
+			description:
+				"We respect your privacy and we dont store your data in any way nor your details are compromised, thanks to our in house Ai.",
 		},
 		{
-			name: "Amazon",
-			role: "Senior Solution Architect",
-			logo: "amazon",
-			resume: "/templates/3.png",
+			icon: "3.svg",
+			title: "Cool Templates",
+			description:
+				"Our template designs help your resume standout in a pool of others.",
 		},
 		{
-			name: "Dell",
-			role: "GCP Program Manager",
-			logo: "dell",
-			resume: "/templates/4.png",
+			icon: "4.svg",
+			title: "Intelligent Design",
+			description:
+				"With us, you won't have to bother about the minute details of resume development, such as font choice, layout, etc.",
 		},
 		{
-			name: "Microsoft",
-			role: "Cloud Program Manager",
-			logo: "microsoft",
-			resume: "/templates/5.png",
+			icon: "5.svg",
+			title: "HR-Approved & ATS-Friendly",
+			description:
+				"The core design of our resume templates are HR-Approved & accepted by leading organizations.",
+		},
+		{
+			icon: "6.svg",
+			title: "No Hidden Charges",
+			description:
+				"Build it for free, pay only when comfortable. No hidden charges, just a one time payment start at 250",
+		},
+	];
+
+	const steps = [
+		{
+			number: 1,
+			title: "Pick a Template",
+			description: "Fill in the blanks and see results in real-time.",
+		},
+		{
+			number: 2,
+			title: "Generate Your Content using AI",
+			description: "Use AI to improve your content which will be ATS friendly ",
+		},
+		{
+			number: 3,
+			title: "Hit 'Download!'",
+			description: "Download your resume, apply, get more interviews.",
+		},
+	];
+
+	const features = [
+		{
+			title: "Multi-theme & type face",
+			description: "for personalization.",
+		},
+		{
+			title: "Placeholder resume content",
+			description: "to guide your filling.",
+		},
+		{
+			title: "Multiple layouts & templates",
+			description: "to choose from.",
+		},
+	];
+
+	const plans = [
+		{
+			title: "Basic Plan",
+			price: "₹250/20 Credits",
+			description:
+				"More than sufficient to create minimum 50 resumes hassle-free",
+		},
+		{
+			title: "Standard Plan",
+			price: "₹350/25 Credits",
+			description:
+				"More than sufficient to create minimum 100 resumes hassle-free",
+		},
+	];
+
+	const aiCreditsFeatures = [
+		{
+			title: "Free Trial, No Strings Attached",
+			description:
+				"Sign up and get 2 free credits—enough to create and download up to 5 resumes! No questions asked.",
+		},
+		{
+			title: "Affordable Top-Ups",
+			description:
+				"While we have ensured the plans provided are sufficient. If you do run out of credits, get a top-up for as low as ₹30.",
+		},
+		{
+			title: "Simple & Transparent",
+			description:
+				"Pay only for what you need—no hidden fees, no confusion. With GetSetCV, you can build and download your dream resume without any worries. Start for free and upgrade only when you're ready!",
 		},
 	];
 
@@ -68,41 +131,28 @@ const LandingPage = () => {
 			{/* Hero Section */}
 			<section className='max-w-7xl mx-auto px-4 py-16 md:py-24 relative z-10'>
 				<div className='grid grid-cols-1 md:grid-cols-2 gap-12 items-center'>
-					<div className='mt-10 md:mt-0'>
-						{/* <span className='text-gray-700 font-medium mb-2 text-sm uppercase tracking-wide'>
-							Best AI Resume Builder
-						</span> */}
-						<h1 className='text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif mt-4 mb-6'>
-							Your success story begins with a resume.
+					<div className='mt-10 md:mt-0 max-w-xl'>
+						<h1 className='text-3xl sm:text-4xl md:text-5xl font-serif mt-4 mb-6'>
+							India's Own AI-Powered{" "}
+							<span className='text-orange-500'>Resume Builder</span>
 						</h1>
 						<p className='text-gray-600 text-base sm:text-lg mb-8'>
-							Create a beautiful resume quickly with the help of artificial
-							intelligence and our customizable templates. Impress your future
-							employer with a perfect resume created in minutes.
+							Build your perfect resume effortlessly with the power of
+							Artificial Intelligence and beautifully customizable templates.
+							Get that first interview with a professionally crafted resume
+							tailored just for you.
 						</p>
-						<div className='flex flex-wrap gap-4'>
-							<Link
-								href='/signin'
-								className='px-6 sm:px-8 py-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600 text-sm'>
-								Create My Resume
-							</Link>
-							{/* <Button variant='outline' className='px-6 sm:px-8 py-3 sm:py-4'>
-								See Examples
-							</Button> */}
-						</div>
 
-						<div className='mt-12'>
-							<p className='text-gray-600 mb-6'>
-								Trusted by thousands of job seekers worldwide and still growing.
-							</p>
-
-							<AnimatedLogos />
-						</div>
+						<Link
+							href='/signin'
+							className='px-6 sm:px-12 py-3 bg-orange-500 text-whitehover:bg-orange-600 rounded-full text-white'>
+							Create Your First Resume For Free
+						</Link>
 					</div>
 
 					<div className='flex justify-center mt-12 md:mt-0 z-10'>
 						<Image
-							src='/templates/5.png'
+							src='/placeholder-dashboard.svg'
 							alt='Hero'
 							className='shadow-xl rounded-lg w-full max-w-xs sm:max-w-md md:max-w-full'
 							width={400}
@@ -112,32 +162,15 @@ const LandingPage = () => {
 				</div>
 			</section>
 
-			{/* Trustpilot and Google Rating */}
+			{/* Trusted Partners Section */}
 			<section className='max-w-7xl mx-auto px-4 py-8 md:py-16'>
-				<div className='flex flex-wrap justify-center gap-6 sm:gap-12 mb-12'>
-					{/* Trustpilot Rating */}
-					<div className='flex flex-col items-center'>
-						<Image
-							src='/trustpilot-logo.svg'
-							alt='Trustpilot'
-							width={120}
-							height={16}
-							className='mb-2'
-						/>
-						<div className='flex gap-1'>
-							{[1, 2, 3, 4].map((_, i) => (
-								<Star
-									key={i}
-									className='w-5 h-5 fill-green-500 text-green-500'
-								/>
-							))}
-							<Star className='w-5 h-5 fill-gray-200 text-gray-200' />
-						</div>
-						<div className='text-sm text-gray-600 mt-1'>
-							TrustScore 4.6 2,182 reviews
-						</div>
-					</div>
+				<p className='mb-6 text-center font-semibold text-3xl'>
+					Trusted by thousands of
+					<span className='text-orange-500'> job seekers </span>
+					and still growing.
+				</p>
 
+				<div className='flex flex-wrap justify-center gap-6 sm:gap-12 mb-12'>
 					{/* Google Rating */}
 					<div className='flex flex-col items-center'>
 						<Image
@@ -164,7 +197,27 @@ const LandingPage = () => {
 			{/* Main Content */}
 			<section className='max-w-7xl mx-auto px-4 py-16 md:py-24'>
 				<div className='grid md:grid-cols-2 gap-12 items-center'>
-					<div className='bg-gray-50 p-6 rounded-lg shadow-md order-last md:order-first'>
+					<div className='flex flex-col items-start justify-between h-full gap-12 order-last md:order-first'>
+						{/* <span className='text-gray-700 font-medium'>AI Resume Builder</span> */}
+						<h2 className='text-3xl sm:text-4xl md:text-5xl font-serif mb-10'>
+							You can always pick any template you like
+						</h2>
+						<p className='text-gray-600 text-base sm:text-lg'>
+							Nike, Facebook — learn from resumes that helped our customers land
+							jobs with the world's top companies. Explore 5 high-quality
+							templates, each crafted from scratch to ensure maximum visibility.
+							We prioritize the best quality, and more templates will be added
+							soon!
+						</p>
+
+						<Link
+							href='/signin'
+							className='px-6 sm:px-8 py-3 bg-orange-500 text-white hover:bg-orange-600 text-sm rounded-full'>
+							Get Template of yours
+						</Link>
+					</div>
+
+					<div className='bg-gray-50 p-6 rounded-lg shadow-md order-first md:order-last'>
 						<Image
 							src='/ai-writer.gif'
 							alt='AI Writer'
@@ -174,224 +227,307 @@ const LandingPage = () => {
 							unoptimized={true}
 						/>
 					</div>
-
-					<div className='order-first md:order-last'>
-						{/* <span className='text-gray-700 font-medium'>AI Resume Builder</span> */}
-						<h2 className='text-3xl sm:text-4xl md:text-5xl font-serif mt-4 mb-6'>
-							Let artificial intelligence write your resume.
-						</h2>
-						<p className='text-gray-600 mb-8 text-base sm:text-lg'>
-							Are you struggling to find the right words for your resume? Our AI
-							resume builder can find them in no time! Generate the first draft
-							of your resume in seconds.
-						</p>
-
-						{/* Features */}
-						<div className='grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8'>
-							{[
-								"Powered by GPT-4",
-								"Generated in seconds",
-								"Produces human-like text",
-								"Safe and secure",
-							].map((feature, i) => (
-								<div key={i} className='flex items-center gap-2'>
-									<Check className='w-5 h-5 text-orange-500' />
-									<span>{feature}</span>
-								</div>
-							))}
-						</div>
-
-						<Link
-							href='/signin'
-							className='px-6 sm:px-8 py-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600 text-sm'>
-							Create My Resume
-						</Link>
-					</div>
 				</div>
 			</section>
 
 			<section className='max-w-7xl mx-auto px-4 py-16 md:py-24'>
 				<div className='grid grid-cols-1 md:grid-cols-2 gap-12 items-center'>
-					{/* Left Side - Content */}
-					<div>
-						{/* <h2 className='text-gray-700 font-medium mb-2 text-sm uppercase tracking-wide'>
-							Resume Templates
-						</h2> */}
-						<h3 className='text-3xl sm:text-4xl md:text-5xl font-serif mt-4 mb-6'>
-							Pick a resume template.
-							<br />
-							Make it more you.
-						</h3>
-						<p className='text-gray-600 mb-8 text-base sm:text-lg'>
-							Get hired fast with a resume that visually stand out from the
-							pile. Browse 40+ ATS-friendly resume templates designed by a team
-							of HR experts and typographers. Customize any template in any way
-							you want. Explore more than a million possible design
-							combinations.{" "}
-							<a href='#' className='hover:underline'>
-								Learn more about our resume builder.
-							</a>
-						</p>
-
-						{/* Features */}
-						<div className='grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8'>
-							{[
-								"Designed by typographers",
-								"Free basic template",
-								"ATS-friendly",
-								"Gets you compliments",
-							].map((feature, i) => (
-								<div key={i} className='flex items-center gap-2'>
-									<Check className='w-5 h-5 text-orange-500' />
-									<span>{feature}</span>
-								</div>
-							))}
-						</div>
-
-						<Link
-							href='/signin'
-							className='px-6 sm:px-8 py-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600 text-sm'>
-							Create My Resume
-						</Link>
-					</div>
-
 					{/* Right Side - Template Editor Interface */}
-					<div className='bg-white rounded-lg shadow-xl p-6'>
+					<div className='relative z-10'>
 						<Image
-							src='/placeholder-dashboard-2.png'
-							alt='Template Editor'
+							src='/backgrounds/dots-grid.svg'
+							alt='Dots Grid'
+							width={100}
+							height={100}
+							className='absolute top-0 left-2 transform -translate-y-5 -z-10'
+						/>
+						<Image
+							src='/our-story.png'
+							alt='Our Story'
 							width={600}
 							height={400}
 							className='w-full max-w-lg mx-auto'
 						/>
+						<Image
+							src='/backgrounds/dots-grid-2.svg'
+							alt='Dots Grid'
+							width={100}
+							height={100}
+							className='absolute bottom-0 right-2 transform translate-y-5 -z-10'
+						/>
+					</div>
+
+					{/* Left Side - Content */}
+					<div>
+						<h2 className='text-3xl sm:text-4xl md:text-5xl font-serif mt-4 mb-6'>
+							Our Story
+						</h2>
+						<p className='text-gray-600 mb-8 text-base sm:text-lg'>
+							Get Set CV was born from the struggles we’ve all faced—talented
+							individuals with big dreams missing out on opportunities, not
+							because they lacked potential, but because of the lack of genuine,
+							affordable platforms. Like many, we’ve spent hours searching for
+							free templates, copying content into them, and trying to make it
+							work because expensive subscriptions just didn’t make sense for
+							something we’d use so rarely.That’s why we created Get Set CV—a
+							place where you can build ATS-friendly resumes effortlessly, all
+							in one place, completely free. Pay only when you’re comfortable.We
+							might not be able to help you crack the interview, but we can help
+							you tell your story in a way that makes sure you’re seen!
+						</p>
+
+						<Link
+							href='/signin'
+							className='px-6 sm:px-8 py-3 bg-orange-500 text-white hover:bg-orange-600 text-sm rounded-full'>
+							Build your free Resume
+						</Link>
 					</div>
 				</div>
 			</section>
 
-			<section className='bg-[#0B1437] text-white relative overflow-hidden'>
-				{/* Wave SVG at the bottom */}
-				<div className='absolute bottom-0 left-0 w-full'>
-					<svg
-						viewBox='0 0 1440 99'
-						className='w-full h-auto'
-						preserveAspectRatio='none'>
-						<path
-							fill='white'
-							d='M0,0 C320,100 480,100 720,50 C960,0 1120,0 1440,100 L1440,100 L0,100 Z'
-						/>
-					</svg>
+			{/* Benefits Section */}
+			<section className='py-16 bg-white'>
+				<div className='container px-4 md:px-6'>
+					<h2 className='text-3xl font-bold text-center mb-6'>
+						Benefits Of Using Our Product
+					</h2>
+					<h3 className='text-lg text-center text-orange-500 mb-12'>
+						Why Choose Us?
+					</h3>
+					<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
+						{benefits.map((benefit, index) => (
+							<Card
+								key={index}
+								className='border-none shadow-sm hover:shadow-md transition-shadow'>
+								<CardContent className='p-6'>
+									<div className='flex items-start space-x-4'>
+										<div className='mt-1'>
+											<Image
+												src={`/benefits/${benefit.icon}`}
+												alt={benefit.title}
+												width={250}
+												height={250}
+											/>
+										</div>
+										<div>
+											<h3 className='font-semibold mb-2 text-lg'>
+												{benefit.title}
+											</h3>
+											<p className='text-sm text-muted-foreground'>
+												{benefit.description}
+											</p>
+										</div>
+									</div>
+								</CardContent>
+							</Card>
+						))}
+					</div>
 				</div>
+			</section>
 
-				<div className='max-w-7xl mx-auto px-4 py-28'>
-					<div className='grid lg:grid-cols-2 gap-12 items-center'>
-						{/* Left side - Resume Illustration */}
+			{/* Process Steps */}
+			<section className='py-16 '>
+				<div className='container mx-auto px-4 md:px-6'>
+					<h2 className='text-3xl font-bold text-center mb-12'>
+						Build your
+						<span className='text-orange-500'> resume </span>
+						in 3 steps
+					</h2>
+					<div className='flex flex-col max-w-6xl mx-auto'>
+						{steps.map((step, index) => (
+							<Card
+								key={index}
+								className={
+									"relative border-none bg-transparent shadow-none " +
+									(index % 2 !== 0 && "self-end")
+								}>
+								<CardContent className='p-6 flex items-center space-x-6'>
+									<div className=''>
+										<Image
+											src={`/steps/step-${step.number}.svg`}
+											alt={`Step ${step.number} illustration`}
+											width={220}
+											height={220}
+											className='mx-auto'
+										/>
+									</div>
+									<div className='flex items-end space-x-4'>
+										<div className='text-orange-500 font-bold text-5xl'>
+											{step.number}.
+										</div>
+										<div>
+											<h3 className='font-bold text-xl text-orange-500'>
+												{step.title}
+											</h3>
+											<p className='text-sm text-orange-400 -mt-1'>
+												{step.description}
+											</p>
+										</div>
+									</div>
+								</CardContent>
+							</Card>
+						))}
+					</div>
+				</div>
+			</section>
+
+			{/* Editor Preview Section */}
+			<section className='p-12 bg-gradient-to-t from-white to-[#f5651244] container mx-auto'>
+				<div className='container px-4 md:px-6'>
+					{/* Header */}
+					<h2 className='text-2xl md:text-3xl font-bold mb-6'>
+						Snapshot of our simple-to-use editor
+					</h2>
+
+					<div className='grid md:grid-cols-2 gap-8 items-center'>
+						{/* Left: Image */}
 						<div className='relative'>
 							<Image
-								src='/ai-automation.png'
-								alt='Resume Illustration'
-								width={600}
-								height={400}
-								className='rounded-lg'
+								src='/placeholder-dashboard.svg'
+								alt='Resume editor interface'
+								width={500}
+								height={300}
+								className='shadow-lg rounded-lg'
 							/>
 						</div>
 
-						{/* Right side - Content */}
-						<div className='space-y-6 relative z-10'>
-							<div className='font-medium mb-2 text-sm uppercase tracking-wide text-gray-300'>
-								AI Resume Writer
-							</div>
-
-							<h2 className='text-3xl sm:text-4xl md:text-5xl font-serif mt-4 mb-6'>
-								Automate your resume writing with AI Writer.
-							</h2>
-
-							<p className='text-gray-300 mb-8 text-base sm:text-lg'>
-								See for yourself how our AI Resume Writer can drastically speed
-								up your resume writing process. Thanks to artificial
-								intelligence, we were able to automate the process of writing a
-								resume to the point of it being almost entirely effortless and
-								faster than ever.
+						{/* Right: Text & Features */}
+						<div>
+							<p className='text-sm text-muted-foreground mb-6'>
+								All the flexibility & intuition you need to build a resume that
+								stands out.
 							</p>
 
-							<div className='grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8'>
-								{[
-									"Select a template, enter your job title and let AI do the rest",
-									"Get a beautiful AI-generated resume in seconds",
-								].map((feature, i) => (
-									<div key={i} className='flex items-center gap-2'>
-										<Check className='w-5 h-5 text-orange-500' />
-										<span>{feature}</span>
-									</div>
+							<ul className='space-y-4'>
+								{features.map((feature, index) => (
+									<li
+										key={index}
+										className='flex items-start space-x-2 text-orange-500'>
+										<span className='font-bold text-xl'>●</span>
+										<p className='leading-tight'>
+											<span className='font-bold'>{feature.title}</span>
+											<br />
+											{feature.description}
+										</p>
+									</li>
 								))}
+							</ul>
+
+							{/* CTA Button */}
+							<Button
+								variant='default'
+								className='mt-12 bg-orange-500 text-white hover:bg-orange-600 rounded-full px-8'>
+								Create Resume For Free
+							</Button>
+
+							{/* Stats Section */}
+							<p className='text-sm text-muted-foreground mt-8 mb-2'>
+								Our Stats
+							</p>
+							<div className='flex items-center gap-8'>
+								<div>
+									<h3 className='text-3xl font-bold'>200+</h3>
+									<p className='text-xs text-muted-foreground'>Users</p>
+								</div>
+								<div className='border-r border-gray-800 h-14' />
+								<div>
+									<h3 className='text-3xl font-bold'>3 mins</h3>
+									<p className='text-xs text-muted-foreground'>
+										Average resume building time
+									</p>
+								</div>
 							</div>
-
-							<Link
-								href='/signin'
-								className='px-6 sm:px-8 py-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600 text-sm mt-6 inline-block'>
-								Try AI Resume Writer
-							</Link>
 						</div>
 					</div>
 				</div>
 			</section>
 
-			<section className='max-w-7xl mx-auto px-4 py-16'>
-				<div className='grid lg:grid-cols-2 gap-12 items-center'>
-					{/* Left side - Resume Grid */}
-					<Card className='p-6 bg-gray-50'>
-						<div className='grid grid-cols-2 md:grid-cols-3 gap-4'>
-							{companies.map((company) => (
-								<div key={company.name} className='flex flex-col items-center'>
-									<div className='bg-white rounded-lg shadow-sm w-full aspect-[3/4] mb-2 flex justify-center items-stretch mx-auto overflow-hidden p-2'>
-										<Image
-											src={company.resume}
-											alt='Resume'
-											width={300}
-											height={400}
-										/>
-									</div>
-									<div className='text-xs text-gray-600 text-center'>
-										Hired by
-										<div className='font-medium text-gray-900'>
-											{company.name}
-										</div>
-									</div>
-								</div>
-							))}
-						</div>
-					</Card>
+			{/* Plans Section */}
+			<section className='py-16'>
+				<div className='container px-4 md:px-6 mx-auto text-center'>
+					{/* Section Header */}
+					<h2 className='text-3xl font-bold'>
+						What Do You Get When You{" "}
+						<span className='text-orange-500'>Buy a Plan?</span>
+					</h2>
+					<p className='text-muted-foreground mt-4 max-w-lg mx-auto'>
+						When you buy a plan on GetSetCV, you’re getting everything you need
+						to create and download professional resumes—simple, affordable, and
+						hassle-free! Here’s the Deal:
+					</p>
 
-					{/* Right side - Content */}
-					<div className='space-y-6'>
-						<div className='text-gray-700 font-medium mb-2 text-sm uppercase tracking-wide'>
-							Resume Examples
-						</div>
-						<h2 className='text-3xl sm:text-4xl md:text-5xl font-serif mt-4 mb-6'>
-							Get inspired by real resume examples.
-						</h2>
-						<p className='text-gray-600 mb-8 text-base sm:text-lg'>
-							Nike, Facebook — learn from resumes that helped our customers land
-							jobs with the world&apos;s top companies. Explore 5 high-quality
-							templates, each crafted from scratch to ensure maximum visibility.
-							We prioritize the best quality, and more templates will be added
-							soon!
-						</p>
-
-						{/* <div className='grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8'>
-							{[
-								"400+ job-specific resume and cover letter guides",
-								"1,500+ cover letter and resume examples",
-							].map((feature, i) => (
-								<div key={i} className='flex items-center gap-2'>
-									<Check className='w-5 h-5 text-orange-500' />
-									<span>{feature}</span>
-								</div>
-							))}
-						</div> */}
+					{/* Plans Grid */}
+					<div className='grid grid-cols-1 md:grid-cols-2 gap-8 mt-10 max-w-3xl mx-auto'>
+						{plans.map((plan, index) => (
+							<Card
+								key={index}
+								className='border border-orange-500 rounded-lg shadow-sm bg-transparent'>
+								<CardHeader>
+									<CardTitle className='flex justify-between items-center'>
+										<span className='text-xl font-bold'>{plan.title}</span>
+										<span className='font-medium'>{plan.price}</span>
+									</CardTitle>
+								</CardHeader>
+								<CardContent>
+									<p className='text-sm text-muted-foreground'>
+										{plan.description}
+									</p>
+								</CardContent>
+							</Card>
+						))}
 					</div>
 				</div>
 			</section>
 
+			{/* AI Credits Section */}
+			<section className='py-16'>
+				<div className='container px-4 md:px-6 mx-auto'>
+					{/* Section Header */}
+					<h2 className='text-3xl font-bold'>
+						What are <span className='text-[#f97316]'>AI Credits?</span>
+					</h2>
+					<p className='text-muted-foreground mt-4'>
+						Credits are like coins. You use them for AI Magic (like improving
+						sections or generating new ones) and to download your resume.
+					</p>
+					<ul className='space-y-0 text-sm text-muted-foreground'>
+						<li>1 Credit = 1,000 Tokens</li>
+						<li>
+							Small tasks, like improving a section using AI, may use 100 tokens
+							and not a whole credit. Think of it like:
+							<br />1 rupee = 100 paise (not in reality, of course).
+						</li>
+						<li>Every AI action = 100 paise.</li>
+						<li>
+							Imagine the flexibility you get with 20k paise (20 credits).
+							Downloading resumes does not cost any credits; you can download as
+							many resumes as you want (consider it a tax-free feature).
+						</li>
+					</ul>
+
+					{/* Benefits Cards */}
+					<div className='grid grid-cols-1 md:grid-cols-3 gap-8 mt-10'>
+						{aiCreditsFeatures.map((card, index) => (
+							<Card
+								key={index}
+								className='border border-[#f97316] rounded-lg shadow-sm'>
+								<CardHeader>
+									<CardTitle className='text-xl font-bold text-[#f97316]'>
+										{card.title}
+									</CardTitle>
+								</CardHeader>
+								<CardContent>
+									<p className='text-sm text-muted-foreground'>
+										{card.description}
+									</p>
+								</CardContent>
+							</Card>
+						))}
+					</div>
+				</div>
+			</section>
+
+			{/* One-Time Payment Section */}
 			<section className='bg-[#0B1437] text-white relative overflow-hidden'>
 				<div className='absolute top-0 left-0 w-full'>
 					<svg
@@ -423,78 +559,126 @@ const LandingPage = () => {
 
 					<Link
 						href='/signin'
-						className='px-6 sm:px-8 py-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600 text-sm mt-6 inline-block'>
+						className='px-6 sm:px-8 py-3 bg-orange-500 text-white hover:bg-orange-600 text-sm rounded-full mt-6 inline-block'>
 						Get Started with One-Time Access
 					</Link>
 				</div>
 			</section>
-			<footer className='bg-[#FDF8F4] border-t border-[#FDF8F4] py-6'>
-      <div className='container mx-auto px-4 flex flex-col sm:flex-row justify-between items-center'>
-        <p className='text-[#f97316] text-sm'>
-          &copy; {new Date().getFullYear()} Your Company Name. All rights reserved.
-        </p>
-        <div className='flex flex-col sm:flex-row items-center mt-4 sm:mt-0 gap-4'>
-          {/* Navigation Links */}
-          <div className='flex gap-6'>
-            <Link href={'/terms-and-conditions'}
-          
-              className='text-sm text-gray-600 hover:text-gray-800 hover:underline'>
-              Terms and Conditions
-            </Link>
-			
-            <Link
-              href='/privacy-policy'
-              className='text-sm text-gray-600 hover:text-gray-800 hover:underline'>
-              Privacy Policy
-            </Link>
-            <Link
-              href='/refund-policy'
-              className='text-sm text-gray-600 hover:text-gray-800 hover:underline'>
-              Refund Policy
-            </Link>
-          </div>
-          {/* Social Media Icons */}
-          <div className='flex gap-4'>
-            <Button variant='ghost' size='icon' asChild>
-              <a
-                href='https://facebook.com'
-                aria-label='Facebook'
-                target='_blank'
-                rel='noopener noreferrer'>
-                <Facebook className='h-5 w-5 text-gray-600 hover:text-gray-800' />
-              </a>
-            </Button>
-            <Button variant='ghost' size='icon' asChild>
-              <a
-                href='https://twitter.com'
-                aria-label='Twitter'
-                target='_blank'
-                rel='noopener noreferrer'>
-                <Twitter className='h-5 w-5 text-gray-600 hover:text-gray-800' />
-              </a>
-            </Button>
-            <Button variant='ghost' size='icon' asChild>
-              <a
-                href='https://instagram.com'
-                aria-label='Instagram'
-                target='_blank'
-                rel='noopener noreferrer'>
-                <Instagram className='h-5 w-5 text-gray-600 hover:text-gray-800' />
-              </a>
-            </Button>
-            <Button variant='ghost' size='icon' asChild>
-              <a
-                href='https://github.com'
-                aria-label='GitHub'
-                target='_blank'
-                rel='noopener noreferrer'>
-                <Github className='h-5 w-5 text-gray-600 hover:text-gray-800' />
-              </a>
-            </Button>
-          </div>
-        </div>
-      </div>
-    </footer>
+
+			<footer className='bg-[#0B1437] py-8 text-white'>
+				<div className='container max-w-screen-lg mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8'>
+					{/* Logo and Description */}
+					<div>
+						<h2 className='text-xl font-bold text-orange-500'>GETSETCV</h2>
+						<p className='text-sm mt-2 text-gray-400'>
+							Create your resume in a minute, get your dream job in a blink.
+						</p>
+						<div className='flex gap-4 mt-4'>
+							<a
+								href='https://facebook.com'
+								target='_blank'
+								rel='noopener noreferrer'
+								aria-label='Facebook'>
+								<Facebook className='h-5 w-5 text-gray-400 hover:text-orange-500' />
+							</a>
+							<a
+								href='https://twitter.com'
+								target='_blank'
+								rel='noopener noreferrer'
+								aria-label='Twitter'>
+								<Twitter className='h-5 w-5 text-gray-400 hover:text-orange-500' />
+							</a>
+							<a
+								href='https://instagram.com'
+								target='_blank'
+								rel='noopener noreferrer'
+								aria-label='Instagram'>
+								<Instagram className='h-5 w-5 text-gray-400 hover:text-orange-500' />
+							</a>
+							<a
+								href='https://linkedin.com'
+								target='_blank'
+								rel='noopener noreferrer'
+								aria-label='LinkedIn'>
+								<Linkedin className='h-5 w-5 text-gray-400 hover:text-orange-500' />
+							</a>
+						</div>
+					</div>
+
+					{/* Terms & Policies */}
+					<div>
+						<h3 className='text-lg font-semibold'>Terms & Policies</h3>
+						<ul className='mt-2 space-y-2 text-sm'>
+							<li>
+								<a
+									href='/terms-of-service'
+									className='hover:underline text-gray-400 hover:text-orange-500'>
+									Terms of Service
+								</a>
+							</li>
+							<li>
+								<a
+									href='/privacy-policy'
+									className='hover:underline text-gray-400 hover:text-orange-500'>
+									Privacy Policy
+								</a>
+							</li>
+						</ul>
+					</div>
+
+					{/* Company */}
+					<div>
+						<h3 className='text-lg font-semibold'>Company</h3>
+						<ul className='mt-2 space-y-2 text-sm'>
+							<li>
+								<a
+									href='/home'
+									className='hover:underline text-gray-400 hover:text-orange-500'>
+									Home
+								</a>
+							</li>
+							<li>
+								<a
+									href='/about-us'
+									className='hover:underline text-gray-400 hover:text-orange-500'>
+									About Us
+								</a>
+							</li>
+							<li>
+								<a
+									href='/contact-us'
+									className='hover:underline text-gray-400 hover:text-orange-500'>
+									Contact Us
+								</a>
+							</li>
+						</ul>
+					</div>
+
+					{/* Contact */}
+					<div>
+						<h3 className='text-lg font-semibold'>Contact</h3>
+						<ul className='mt-2 space-y-2 text-sm'>
+							<li>
+								<a
+									href='tel:+2548089466435'
+									className='text-gray-400 hover:text-orange-500'>
+									(+254) 8089466435
+								</a>
+							</li>
+							<li>
+								<a
+									href='mailto:agencyurl@gmail.com'
+									className='text-gray-400 hover:text-orange-500'>
+									agencyurl@gmail.com
+								</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div className='border-t border-gray-600 mt-8 pt-4 text-center text-sm text-gray-400 container max-w-screen-lg mx-auto'>
+					&copy; GetSetCV {new Date().getFullYear()}. All rights reserved.
+				</div>
+			</footer>
 		</div>
 	);
 };
