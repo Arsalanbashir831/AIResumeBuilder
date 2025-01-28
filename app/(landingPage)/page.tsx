@@ -114,14 +114,10 @@ const LandingPage = () => {
 	];
 
 	return (
-		<div className='min-h-[200vh] max-w-screen-2xl mx-auto relative overflow-hidden bg-[url(/backgrounds/bg.svg)] bg-scroll bg-contain bg-top '>
-			{/* Add backdrop blur to the background image */}
+		<div className=' bg-fixed min-h-[200vh] w-full relative overflow-hidden bg-[url(/backgrounds/bg.svg)] bg-cover  bg-top '>
+		
 			<div className='absolute inset-0 bg-gray-100/80 z-0'></div>
-
-			{/* Navigation Bar */}
 			<Navbar />
-
-			{/* Hero Section */}
 			<section className='max-w-7xl mx-auto px-4 py-16 md:py-24 relative z-10'>
 				<div className='grid grid-cols-1 md:grid-cols-2 gap-12 items-center'>
 					<div className='mt-10 md:mt-0 max-w-xl'>
@@ -242,7 +238,7 @@ const LandingPage = () => {
 			</section>
 
 			{/* Benefits Section */}
-			<section className='py-16 relative z-10'>
+			<section className='py-16 relative z-10 flex justify-center'>
 				<div className='container px-4 md:px-6'>
 					<h2 className='text-3xl font-bold text-center mb-6'>
 						Benefits Of Using Our Product

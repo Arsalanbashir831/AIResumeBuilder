@@ -23,6 +23,26 @@ const logos = [
 		name: "Google",
 		url: "./logos/google.svg",
 	},
+	{
+		name: "Amazon",
+		url: "./logos/amazon.svg",
+	},
+	{
+		name: "Cognizant",
+		url: "./logos/cognizant.svg",
+	},
+	{
+		name: "TCS",
+		url: "./logos/tcs.svg",
+	},
+	{
+		name: "walmart",
+		url: "./logos/walmart.svg",
+	},
+	{
+		name: "TCS",
+		url: "./logos/zomato.svg",
+	},
 ];
 
 export default function LogoSlider() {
@@ -59,7 +79,7 @@ export default function LogoSlider() {
 								<img
 									src={logo.url || "/placeholder.svg"}
 									alt={`${logo.name} logo`}
-									className='h-[45px] w-auto object-contain'
+									className='h-[150px] w-[150px] object-contain'
 								/>
 							</div>
 						))}

@@ -1,8 +1,8 @@
 "use client";
 
-import { createContext, useContext, useState, ReactNode, useEffect } from "react";
-import { usePathname, useRouter } from "next/navigation";
 import { login as apiLogin, register as apiRegister, getUserData, refreshAccessToken, tokenVerification } from "@/app/api/authentication";
+import { usePathname, useRouter } from "next/navigation";
+import { createContext, ReactNode, useContext, useEffect, useState } from "react";
 
 import Spinner from "@/components/ui/Spinner";
 
@@ -59,7 +59,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           setUser(userData);
         } catch (refreshError) {
           console.log("Token refresh error:", refreshError);
-          if (pathname !== "/signin") {
+          if (pathname !== "/signup" && pathname !== '/' && pathname!='/privacy-policy' && pathname!='/refund-policy' && pathname !='/terms-and-conditions') {
             router.push("/signin");
           }
 
