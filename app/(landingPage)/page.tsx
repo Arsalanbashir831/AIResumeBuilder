@@ -1,7 +1,9 @@
+import FocusedCarousel from "@/components/FocusedCarousel";
+import LogoSlider from "@/components/LogoSlider";
 import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Facebook, Instagram, Linkedin, Star, Twitter } from "lucide-react";
+import { Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -112,18 +114,9 @@ const LandingPage = () => {
 	];
 
 	return (
-		<div className='min-h-screen bg-white max-w-screen-2xl mx-auto relative overflow-hidden'>
-			{/* Background SVG Blob */}
-			<svg
-				className='absolute -top-24 -left-32 w-[800px] h-[800px] opacity-10'
-				viewBox='0 0 600 600'
-				fill='none'
-				xmlns='http://www.w3.org/2000/svg'>
-				<path
-					d='M300,600 C465,600 600,465 600,300 C600,135 465,0 300,0 C135,0 0,135 0,300 C0,465 135,600 300,600 Z'
-					fill='#f97316'
-				/>
-			</svg>
+		<div className='min-h-[200vh] max-w-screen-2xl mx-auto relative overflow-hidden bg-[url(/backgrounds/bg.svg)] bg-scroll bg-contain bg-top '>
+			{/* Add backdrop blur to the background image */}
+			<div className='absolute inset-0 bg-gray-100/80 z-0'></div>
 
 			{/* Navigation Bar */}
 			<Navbar />
@@ -145,7 +138,7 @@ const LandingPage = () => {
 
 						<Link
 							href='/signin'
-							className='px-6 sm:px-12 py-3 bg-orange-500 text-whitehover:bg-orange-600 rounded-full text-white'>
+							className='px-6 sm:px-12 py-3 bg-orange-500 hover:bg-orange-600 rounded-full text-white'>
 							Create Your First Resume For Free
 						</Link>
 					</div>
@@ -163,42 +156,12 @@ const LandingPage = () => {
 			</section>
 
 			{/* Trusted Partners Section */}
-			<section className='max-w-7xl mx-auto px-4 py-8 md:py-16'>
-				<p className='mb-6 text-center font-semibold text-3xl'>
-					Trusted by thousands of
-					<span className='text-orange-500'> job seekers </span>
-					and still growing.
-				</p>
-
-				<div className='flex flex-wrap justify-center gap-6 sm:gap-12 mb-12'>
-					{/* Google Rating */}
-					<div className='flex flex-col items-center'>
-						<Image
-							src='/google-logo-colored.svg'
-							alt='Google'
-							width={100}
-							height={16}
-							className='mb-2'
-						/>
-						<div className='flex gap-1'>
-							{[1, 2, 3, 4].map((_, i) => (
-								<Star
-									key={i}
-									className='w-5 h-5 fill-yellow-400 text-yellow-400'
-								/>
-							))}
-							<Star className='w-5 h-5 fill-yellow-400/50 text-yellow-400' />
-						</div>
-						<div className='text-sm text-gray-600 mt-1'>4.7 / 5</div>
-					</div>
-				</div>
-			</section>
+			<LogoSlider />
 
 			{/* Main Content */}
-			<section className='max-w-7xl mx-auto px-4 py-16 md:py-24'>
+			<section className='max-w-7xl mx-auto px-4 py-16 md:py-24 relative z-10'>
 				<div className='grid md:grid-cols-2 gap-12 items-center'>
 					<div className='flex flex-col items-start justify-between h-full gap-12 order-last md:order-first'>
-						{/* <span className='text-gray-700 font-medium'>AI Resume Builder</span> */}
 						<h2 className='text-3xl sm:text-4xl md:text-5xl font-serif mb-10'>
 							You can always pick any template you like
 						</h2>
@@ -217,20 +180,13 @@ const LandingPage = () => {
 						</Link>
 					</div>
 
-					<div className='bg-gray-50 p-6 rounded-lg shadow-md order-first md:order-last'>
-						<Image
-							src='/ai-writer.gif'
-							alt='AI Writer'
-							className='rounded-lg'
-							width={600}
-							height={400}
-							unoptimized={true}
-						/>
+					<div className='order-first md:order-last'>
+						<FocusedCarousel />
 					</div>
 				</div>
 			</section>
 
-			<section className='max-w-7xl mx-auto px-4 py-16 md:py-24'>
+			<section className='max-w-7xl mx-auto px-4 py-16 md:py-24 relative z-10'>
 				<div className='grid grid-cols-1 md:grid-cols-2 gap-12 items-center'>
 					{/* Right Side - Template Editor Interface */}
 					<div className='relative z-10'>
@@ -286,7 +242,7 @@ const LandingPage = () => {
 			</section>
 
 			{/* Benefits Section */}
-			<section className='py-16 bg-white'>
+			<section className='py-16 relative z-10'>
 				<div className='container px-4 md:px-6'>
 					<h2 className='text-3xl font-bold text-center mb-6'>
 						Benefits Of Using Our Product
@@ -326,7 +282,7 @@ const LandingPage = () => {
 			</section>
 
 			{/* Process Steps */}
-			<section className='py-16 '>
+			<section className='py-16 relative z-10'>
 				<div className='container mx-auto px-4 md:px-6'>
 					<h2 className='text-3xl font-bold text-center mb-12'>
 						Build your
@@ -372,7 +328,7 @@ const LandingPage = () => {
 			</section>
 
 			{/* Editor Preview Section */}
-			<section className='p-12 bg-gradient-to-t from-white to-[#f5651244] container mx-auto'>
+			<section className='p-12 bg-gradient-to-t from-white to-[#f5651244] container mx-auto relative z-10'>
 				<div className='container px-4 md:px-6'>
 					{/* Header */}
 					<h2 className='text-2xl md:text-3xl font-bold mb-6'>
@@ -443,7 +399,7 @@ const LandingPage = () => {
 			</section>
 
 			{/* Plans Section */}
-			<section className='py-16'>
+			<section className='py-16 relative z-10'>
 				<div className='container px-4 md:px-6 mx-auto text-center'>
 					{/* Section Header */}
 					<h2 className='text-3xl font-bold'>
@@ -480,7 +436,7 @@ const LandingPage = () => {
 			</section>
 
 			{/* AI Credits Section */}
-			<section className='py-16'>
+			<section className='py-16 relative z-10'>
 				<div className='container px-4 md:px-6 mx-auto'>
 					{/* Section Header */}
 					<h2 className='text-3xl font-bold'>
@@ -528,7 +484,7 @@ const LandingPage = () => {
 			</section>
 
 			{/* One-Time Payment Section */}
-			<section className='bg-[#0B1437] text-white relative overflow-hidden'>
+			<section className='bg-[#0B1437] text-white relative overflow-hidden z-10'>
 				<div className='absolute top-0 left-0 w-full'>
 					<svg
 						viewBox='0 0 1440 100'
@@ -565,7 +521,7 @@ const LandingPage = () => {
 				</div>
 			</section>
 
-			<footer className='bg-[#0B1437] py-8 text-white'>
+			<footer className='bg-[#0B1437] py-8 text-white relative z-10'>
 				<div className='container max-w-screen-lg mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8'>
 					{/* Logo and Description */}
 					<div>
