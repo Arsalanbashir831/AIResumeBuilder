@@ -1,13 +1,55 @@
+'use client'
 import FocusedCarousel from "@/components/FocusedCarousel";
 import LogoSlider from "@/components/LogoSlider";
 import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { motion } from "framer-motion";
 import { Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 const LandingPage = () => {
+	const [showScrollTop, setShowScrollTop] = useState(false);
+
+	const handleScroll = () => {
+	  if (window.scrollY > 200) {
+		setShowScrollTop(true);
+	  } else {
+		setShowScrollTop(false);
+	  }
+	};
+  
+	const scrollToTop = () => {
+	  window.scrollTo({
+		top: 0,
+		behavior: "smooth",
+	  });
+	};
+  
+	useEffect(() => {
+	  window.addEventListener("scroll", handleScroll);
+	  return () => window.removeEventListener("scroll", handleScroll);
+	}, []);
+	const fadeInVariants = {
+		hidden: {
+		  opacity: 0, 
+		  y: 50, // Adjust the initial offset as needed
+		},
+		visible: {
+		  opacity: 1,
+		  y: 0,
+		  transition: {
+			type: "spring", // Adds a natural bounce effect
+			stiffness: 60,  // Controls the stiffness of the spring
+			damping: 10,    // Controls the spring damping
+			duration: 0.8,  // Base duration for the fade effect
+			delay: 0.2,     // Optional: add a delay before the animation starts
+		  },
+		},
+	  };
+	  
 	const benefits = [
 		{
 			icon: "1.svg",
@@ -118,7 +160,17 @@ const LandingPage = () => {
 		
 			<div className='absolute inset-0 bg-gray-100/80 z-0'></div>
 			<Navbar />
-			<section className='max-w-7xl mx-auto px-4 py-16 md:py-24 relative z-10'>
+			<div>
+
+			<motion.div
+          variants={fadeInVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+        >
+
+	
+			<section className='max-w-7xl mx-auto px-4 py-16 md:py-24 relative z-10 '>
 				<div className='grid grid-cols-1 md:grid-cols-2 gap-12 items-center'>
 					<div className='mt-10 md:mt-0 max-w-xl'>
 						<h1 className='text-3xl sm:text-4xl md:text-5xl font-serif mt-4 mb-6'>
@@ -150,11 +202,28 @@ const LandingPage = () => {
 					</div>
 				</div>
 			</section>
+			</motion.div>
 
 			{/* Trusted Partners Section */}
-			<LogoSlider />
+			<motion.div
+          variants={fadeInVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+        >
+<LogoSlider />
+		</motion.div>
+			
 
 			{/* Main Content */}
+			<motion.div
+          variants={fadeInVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+        >
+
+		
 			<section className='max-w-7xl mx-auto px-4 py-16 md:py-24 relative z-10'>
 				<div className='grid md:grid-cols-2 gap-12 items-center'>
 					<div className='flex flex-col items-start justify-between h-full gap-12 order-last md:order-first'>
@@ -181,6 +250,13 @@ const LandingPage = () => {
 					</div>
 				</div>
 			</section>
+			</motion.div>
+			<motion.div
+          variants={fadeInVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+        >
 
 			<section className='max-w-7xl mx-auto px-4 py-16 md:py-24 relative z-10'>
 				<div className='grid grid-cols-1 md:grid-cols-2 gap-12 items-center'>
@@ -192,21 +268,21 @@ const LandingPage = () => {
 							width={100}
 							height={100}
 							className='absolute top-0 left-2 transform -translate-y-5 -z-10'
-						/>
+							/>
 						<Image
 							src='/our-story.png'
 							alt='Our Story'
 							width={600}
 							height={400}
 							className='w-full max-w-lg mx-auto'
-						/>
+							/>
 						<Image
 							src='/backgrounds/dots-grid-2.svg'
 							alt='Dots Grid'
 							width={100}
 							height={100}
 							className='absolute bottom-0 right-2 transform translate-y-5 -z-10'
-						/>
+							/>
 					</div>
 
 					{/* Left Side - Content */}
@@ -237,6 +313,14 @@ const LandingPage = () => {
 				</div>
 			</section>
 
+			</motion.div>
+			<motion.div
+          variants={fadeInVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+        >
+
 			{/* Benefits Section */}
 			<section className='py-16 relative z-10 flex justify-center'>
 				<div className='container px-4 md:px-6'>
@@ -249,8 +333,8 @@ const LandingPage = () => {
 					<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
 						{benefits.map((benefit, index) => (
 							<Card
-								key={index}
-								className='border-none shadow-sm hover:shadow-md transition-shadow'>
+							key={index}
+							className='border-none shadow-sm hover:shadow-md transition-shadow'>
 								<CardContent className='p-6'>
 									<div className='flex items-start space-x-4'>
 										<div className='mt-1'>
@@ -259,7 +343,7 @@ const LandingPage = () => {
 												alt={benefit.title}
 												width={250}
 												height={250}
-											/>
+												/>
 										</div>
 										<div>
 											<h3 className='font-semibold mb-2 text-lg'>
@@ -276,8 +360,16 @@ const LandingPage = () => {
 					</div>
 				</div>
 			</section>
+						</motion.div>
 
 			{/* Process Steps */}
+			<motion.div
+          variants={fadeInVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+        >
+
 			<section className='py-16 relative z-10'>
 				<div className='container mx-auto px-4 md:px-6'>
 					<h2 className='text-3xl font-bold text-center mb-12'>
@@ -288,11 +380,11 @@ const LandingPage = () => {
 					<div className='flex flex-col max-w-6xl mx-auto'>
 						{steps.map((step, index) => (
 							<Card
-								key={index}
-								className={
-									"relative border-none bg-transparent shadow-none " +
-									(index % 2 !== 0 && "self-end")
-								}>
+							key={index}
+							className={
+								"relative border-none bg-transparent shadow-none " +
+								(index % 2 !== 0 && "self-end")
+							}>
 								<CardContent className='p-6 flex items-center space-x-6'>
 									<div className=''>
 										<Image
@@ -301,7 +393,7 @@ const LandingPage = () => {
 											width={220}
 											height={220}
 											className='mx-auto'
-										/>
+											/>
 									</div>
 									<div className='flex items-end space-x-4'>
 										<div className='text-orange-500 font-bold text-5xl'>
@@ -322,6 +414,14 @@ const LandingPage = () => {
 					</div>
 				</div>
 			</section>
+						</motion.div>
+
+						<motion.div
+          variants={fadeInVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+        >
 
 			{/* Editor Preview Section */}
 			<section className='p-12 bg-gradient-to-t from-white to-[#f5651244] container mx-auto relative z-10'>
@@ -340,7 +440,7 @@ const LandingPage = () => {
 								width={500}
 								height={300}
 								className='shadow-lg rounded-lg'
-							/>
+								/>
 						</div>
 
 						{/* Right: Text & Features */}
@@ -353,8 +453,8 @@ const LandingPage = () => {
 							<ul className='space-y-4'>
 								{features.map((feature, index) => (
 									<li
-										key={index}
-										className='flex items-start space-x-2 text-orange-500'>
+									key={index}
+									className='flex items-start space-x-2 text-orange-500'>
 										<span className='font-bold text-xl'>●</span>
 										<p className='leading-tight'>
 											<span className='font-bold'>{feature.title}</span>
@@ -394,6 +494,14 @@ const LandingPage = () => {
 				</div>
 			</section>
 
+									</motion.div>
+									<motion.div
+          variants={fadeInVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+        >
+
 			{/* Plans Section */}
 			<section className='py-16 relative z-10'>
 				<div className='container px-4 md:px-6 mx-auto text-center'>
@@ -412,8 +520,8 @@ const LandingPage = () => {
 					<div className='grid grid-cols-1 md:grid-cols-2 gap-8 mt-10 max-w-3xl mx-auto'>
 						{plans.map((plan, index) => (
 							<Card
-								key={index}
-								className='border border-orange-500 rounded-lg shadow-sm bg-transparent'>
+							key={index}
+							className='border border-orange-500 rounded-lg shadow-sm bg-transparent'>
 								<CardHeader>
 									<CardTitle className='flex justify-between items-center'>
 										<span className='text-xl font-bold'>{plan.title}</span>
@@ -430,6 +538,14 @@ const LandingPage = () => {
 					</div>
 				</div>
 			</section>
+						</motion.div>
+
+						<motion.div
+          variants={fadeInVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+        >
 
 			{/* AI Credits Section */}
 			<section className='py-16 relative z-10'>
@@ -461,8 +577,8 @@ const LandingPage = () => {
 					<div className='grid grid-cols-1 md:grid-cols-3 gap-8 mt-10'>
 						{aiCreditsFeatures.map((card, index) => (
 							<Card
-								key={index}
-								className='border border-[#f97316] rounded-lg shadow-sm'>
+							key={index}
+							className='border border-[#f97316] rounded-lg shadow-sm'>
 								<CardHeader>
 									<CardTitle className='text-xl font-bold text-[#f97316]'>
 										{card.title}
@@ -478,6 +594,9 @@ const LandingPage = () => {
 					</div>
 				</div>
 			</section>
+						</motion.div>
+			</div>
+		
 
 			{/* One-Time Payment Section */}
 			<section className='bg-[#0B1437] text-white relative overflow-hidden z-10'>
@@ -489,7 +608,7 @@ const LandingPage = () => {
 						<path
 							fill='white'
 							d='M0,0 C320,100 480,100 720,50 C960,0 1120,0 1440,100 L1440,100 L0,100 Z'
-						/>
+							/>
 					</svg>
 				</div>
 
@@ -516,6 +635,7 @@ const LandingPage = () => {
 					</Link>
 				</div>
 			</section>
+							
 
 			<footer className='bg-[#0B1437] py-8 text-white relative z-10'>
 				<div className='container max-w-screen-lg mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8'>
@@ -632,6 +752,7 @@ const LandingPage = () => {
 				</div>
 			</footer>
 		</div>
+		
 	);
 };
 
