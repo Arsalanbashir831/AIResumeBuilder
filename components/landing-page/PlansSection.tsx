@@ -44,14 +44,14 @@ export default function PlansSection() {
 							transition={{ duration: 0.6, ease: "easeOut" }}
 							viewport={{ once: true }}
 							className='relative'>
-							<Card className='border border-orange-500 rounded-2xl bg-white shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 ease-in-out p-6 overflow-hidden'>
+							<Card className='border border-orange-500 rounded-2xl bg-white shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 ease-in-out md:p-6 overflow-hidden'>
 								<div className='absolute top-0 left-0 w-full h-2 bg-orange-500'></div>
 								<CardHeader className='pb-4'>
-									<CardTitle className='flex justify-between items-end text-gray-900'>
+									<CardTitle className='flex flex-col md:flex-row justify-between md:items-end text-gray-900 gap-2'>
 										<div className='text-2xl font-bold text-orange-600'>
 											{plan.title}
 										</div>
-										<div className='flex flex-col text-left'>
+										<div className='flex flex-col items-center text-left'>
 											<span className='font-medium text-sm line-through text-gray-400'>
 												{plan.oldPrice}
 											</span>
