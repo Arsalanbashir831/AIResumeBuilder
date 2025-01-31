@@ -33,7 +33,7 @@ export default function PaymentSection() {
 				<Link
 					href='/signin'
 					className='px-6 sm:px-8 py-3 bg-orange-500 text-white hover:bg-orange-600 text-sm rounded-full mt-6 inline-block'>
-					Get Started with One-Time Access
+					Get Started Free
 				</Link>
 			</div>
 		</section>

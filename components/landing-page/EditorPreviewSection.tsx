@@ -4,20 +4,34 @@ import StatsSection from "./StatsSection";
 
 export default function EditorPreviewSection() {
 	const features = [
+		
+		
 		{
-			title: "Multi-theme & type face",
-			description: "for personalization.",
+		  title: "Multiple Layouts & Templates",
+		  description:
+			"Access a range of ATS-friendly, modern, and creative resume templates designed to fit different job industries and experience levels.",
+		},
+		
+		{
+		  title: "Live Preview & Real-time Edits",
+		  description:
+			"Instantly see how your resume looks as you type and make real-time adjustments to optimize formatting and content.",
 		},
 		{
-			title: "Placeholder resume content",
-			description: "to guide your filling.",
+		  title: "ATS Optimization & Keyword Suggestions",
+		  description:
+			"Get automatic suggestions for job-specific keywords to improve your resume's ATS (Applicant Tracking System) compatibility.",
 		},
 		{
-			title: "Multiple layouts & templates",
-			description: "to choose from.",
+		  title: "One-Click PDF Export",
+		  description:
+			"Download your resume in multiple formats, including PDF and DOCX, ensuring compatibility with job applications and online submissions.",
 		},
-	];
-
+		
+		
+		
+	  ];
+	  
 	return (
 		<section className='p-12 bg-gradient-to-t from-white to-[#f5651244] container mx-auto relative z-10'>
 			<div className='container px-4 md:px-6'>
@@ -44,7 +58,7 @@ export default function EditorPreviewSection() {
 							{features.map((feature, index) => (
 								<li key={index} className='flex items-start space-x-2'>
 									<p className='leading-tight'>
-										<span className='font-bold'>{feature.title}</span>
+										<span className='font-bold text-md'>{feature.title}</span>
 										<br />
 										{feature.description}
 									</p>
