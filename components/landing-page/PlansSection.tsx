@@ -7,14 +7,14 @@ export default function PlansSection() {
 	const plans = [
 		{
 			title: "Basic Plan",
-			oldPrice: "₹250/20",
+			oldPrice: "₹900/20",
 			newPrice: "₹250/20 Credits",
 			description:
 				"More than sufficient to create minimum 50 resumes hassle-free",
 		},
 		{
 			title: "Standard Plan",
-			oldPrice: "₹350/25",
+			oldPrice: "₹1200/25",
 			newPrice: "₹350/25 Credits",
 			description:
 				"More than sufficient to create minimum 100 resumes hassle-free",
