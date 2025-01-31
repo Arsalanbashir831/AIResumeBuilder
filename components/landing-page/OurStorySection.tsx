@@ -32,7 +32,7 @@ export default function OurStorySection() {
 
 				{/* Left Side - Content */}
 				<div>
-					<h2 className='text-3xl sm:text-4xl md:text-5xl mt-4 mb-6 font-bold'>
+					<h2 className='text-3xl sm:text-4xl md:text-5xl mt-4 mb-6 font-bold text-slate-800'>
 						Our Story
 					</h2>
 					<p className='text-gray-600 mb-8 text-base sm:text-lg'>
@@ -52,7 +52,7 @@ export default function OurStorySection() {
 					<Link
 						href='/signin'
 						className='px-6 sm:px-8 py-3 bg-orange-500 text-white hover:bg-orange-600 text-sm rounded-full'>
-						Build your free Resume
+						Build Your Free Resume
 					</Link>
 				</div>
 			</div>

@@ -44,7 +44,7 @@ export default function BenefitsSection() {
 	return (
 		<section className='py-16 relative z-10'>
 			<div className='container px-4 md:px-6 mx-auto'>
-				<h2 className='text-3xl font-bold text-center mb-6'>
+				<h2 className='text-3xl font-bold text-center mb-6 text-slate-800'>
 					Benefits Of Using Our Resume Builder
 				</h2>
 				<h3 className='text-lg text-center text-orange-500 mb-12'>
@@ -66,7 +66,7 @@ export default function BenefitsSection() {
 										/>
 									</div>
 									<div>
-										<h3 className='font-semibold mb-2 text-lg'>
+										<h3 className='font-semibold mb-2 text-lg text-slate-800'>
 											{benefit.title}
 										</h3>
 										<p className='text-sm text-muted-foreground'>

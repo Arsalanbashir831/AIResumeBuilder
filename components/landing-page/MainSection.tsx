@@ -6,7 +6,7 @@ export default function MainSection() {
 		<section className='max-w-7xl mx-auto px-4 py-16 md:py-24 relative z-10'>
 			<div className='grid md:grid-cols-2 gap-12 items-center'>
 				<div className='flex flex-col items-start md:justify-between h-full gap-6 md:gap-12 order-last md:order-first'>
-					<h2 className='text-3xl sm:text-4xl md:text-5xl font-bold md:mb-10'>
+					<h2 className='text-3xl sm:text-4xl md:text-5xl font-bold md:mb-10 text-slate-800'>
 						You can always pick any template you like
 					</h2>
 					<p className='text-gray-600 text-base sm:text-lg'>

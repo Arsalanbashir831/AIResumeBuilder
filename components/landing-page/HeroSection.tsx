@@ -6,7 +6,7 @@ export default function HeroSection() {
 		<section className='max-w-7xl mx-auto px-4 py-16 md:py-24 relative z-10'>
 			<div className='grid grid-cols-1 md:grid-cols-2 gap-12 items-center'>
 				<div className='mt-10 md:mt-0 max-w-xl'>
-					<h1 className='text-3xl sm:text-4xl md:text-5xl font-bold mt-4 mb-6'>
+					<h1 className='text-3xl sm:text-4xl md:text-5xl font-bold mt-4 mb-6 text-slate-800'>
 						India's Own AI-Powered{" "}
 						<span className='text-orange-500'>Resume Builder</span>
 					</h1>

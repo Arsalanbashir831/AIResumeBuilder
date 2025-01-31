@@ -28,10 +28,10 @@ export default function StepsSection() {
 	return (
 		<section className='py-16 relative z-10'>
 			<div className='container mx-auto px-4 md:px-6'>
-				<h2 className='text-3xl font-bold text-center mb-12'>
-					Build your
-					<span className='text-orange-500'> resume </span>
-					in 3 steps
+				<h2 className='text-3xl font-bold text-center mb-12 text-slate-800'>
+					Build Your
+					<span className='text-orange-500'> Resume </span>
+					In 3 Steps
 				</h2>
 				<div className='flex flex-col gap-8 max-w-6xl mx-auto'>
 					{steps.map((step, index) => {

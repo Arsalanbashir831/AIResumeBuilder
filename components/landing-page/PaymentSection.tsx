@@ -9,7 +9,7 @@ export default function PaymentSection() {
 					className='w-full h-auto transform rotate-180'
 					preserveAspectRatio='none'>
 					<path
-						fill='white'
+						fill='#f3f4f6fc'
 						d='M0,0 C320,100 480,100 720,50 C960,0 1120,0 1440,100 L1440,100 L0,100 Z'
 					/>
 				</svg>

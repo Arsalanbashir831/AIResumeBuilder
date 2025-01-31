@@ -25,7 +25,7 @@ export default function PlansSection() {
 		<section className='py-16 relative z-10 '>
 			<div className='container px-4 md:px-6 mx-auto text-center'>
 				{/* Section Header */}
-				<h2 className='text-4xl font-bold'>
+				<h2 className='text-4xl font-bold text-slate-800'>
 					What Do You Get When You{" "}
 					<span className='text-orange-500'>Buy a Plan?</span>
 				</h2>

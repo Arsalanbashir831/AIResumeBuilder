@@ -10,7 +10,7 @@ import { useEffect, useRef, useState } from "react";
 
 export default function StatsSection() {
 	const ref = useRef(null);
-	const isInView = useInView(ref, { once: true, margin: "-100px" }); // Triggers once when visible
+	const isInView = useInView(ref, { once: true, margin: "-100px" });
 
 	// Motion values for animated numbers
 	const usersCount = useMotionValue(0);
@@ -45,7 +45,7 @@ export default function StatsSection() {
 	return (
 		<div ref={ref}>
 			<p className='text-sm text-muted-foreground mt-8 mb-2'>Our Stats</p>
-			<div className='flex items-center gap-8'>
+			<div className='flex items-center gap-8 text-slate-800'>
 				<div>
 					<h3 className='text-3xl font-bold'>{users}+</h3>
 					<p className='text-xs text-muted-foreground'>Users</p>

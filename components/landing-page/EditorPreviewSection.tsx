@@ -22,7 +22,7 @@ export default function EditorPreviewSection() {
 		<section className='p-12 bg-gradient-to-t from-white to-[#f5651244] container mx-auto relative z-10'>
 			<div className='container px-4 md:px-6'>
 				{/* Header */}
-				<h2 className='text-2xl md:text-3xl font-bold mb-6'>
+				<h2 className='text-2xl md:text-3xl font-bold mb-6 text-slate-800'>
 					Glimpse Of Our Platform
 				</h2>
 
@@ -40,7 +40,7 @@ export default function EditorPreviewSection() {
 
 					{/* Right: Text & Features */}
 					<div>
-						<ul className='space-y-4'>
+						<ul className='space-y-4 text-slate-800'>
 							{features.map((feature, index) => (
 								<li key={index} className='flex items-start space-x-2'>
 									<p className='leading-tight'>
