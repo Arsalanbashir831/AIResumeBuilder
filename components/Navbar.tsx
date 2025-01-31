@@ -1,18 +1,18 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import Image from "next/image";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
 import {
 	DropdownMenu,
-	DropdownMenuTrigger,
 	DropdownMenuContent,
 	DropdownMenuItem,
+	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { useAuth } from "@/context/AuthContext";
 import { useSubscriptionContext } from "@/context/CreditsContext";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const Navbar = ({ isDashboard = false }: { isDashboard?: boolean }) => {
 	const [isScrolled, setIsScrolled] = useState(false);
@@ -116,7 +116,7 @@ const Navbar = ({ isDashboard = false }: { isDashboard?: boolean }) => {
 						</DropdownMenu>
 					</div>
 				) : (
-					<div className='flex items-center gap-4'>
+					<div className='flex items-center gap-2 md:gap-4'>
 						{isAuthenticated ? (
 							<Button
 								onClick={() => router.push("/dashboard")}
@@ -128,12 +128,12 @@ const Navbar = ({ isDashboard = false }: { isDashboard?: boolean }) => {
 								<Button
 									variant='outline'
 									onClick={() => router.push("/signup")}
-									className='px-8 border-none font-medium rounded-full shadow-md shadow-[#FFD7C0]'>
+									className='px-6 md:px-8 border-none font-medium rounded-full shadow-md shadow-[#FFD7C0]'>
 									Sign Up
 								</Button>
 								<Button
 									onClick={() => router.push("/signin")}
-									className='px-8 border-none font-medium rounded-full shadow-md shadow-[#CDCDCD]'>
+									className='px-6 md:px-8 border-none font-medium rounded-full shadow-md shadow-[#CDCDCD]'>
 									Sign In
 								</Button>
 							</>

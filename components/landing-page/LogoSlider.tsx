@@ -27,9 +27,9 @@ const logos = [
 
 export default function LogoSlider() {
 	return (
-		<div className="relative m-auto w-full overflow-hidden before:absolute before:left-0 before:top-0 before:z-[2] before:h-full before:w-[100px] before:bg-[linear-gradient(to_right,white_0%,rgba(255,255,255,0)_100%)] before:content-[''] after:absolute after:right-0 after:top-0 after:z-[2] after:h-full after:w-[100px] after:-scale-x-100 after:bg-[linear-gradient(to_right,white_0%,rgba(255,255,255,0)_100%)] after:content-['']">
+		<div className="relative m-auto w-full overflow-hidden before:absolute before:left-0 before:top-0 before:z-[2] before:h-full before:w-[100px] before:bg-[linear-gradient(to_right,white_0%,rgba(255,255,255,0)_60%)] md:before:bg-[linear-gradient(to_right,white_0%,rgba(255,255,255,0)_100%)] before:content-[''] after:absolute after:right-0 after:top-0 after:z-[2] after:h-full after:w-[100px] after:-scale-x-100 after:bg-[linear-gradient(to_right,white_0%,rgba(255,255,255,0)_60%)] md:after:bg-[linear-gradient(to_right,white_0%,rgba(255,255,255,0)_100%)] after:content-['']">
 			<div className='flex items-center justify-center'>
-				<h2 className='mb-6 text-center font-semibold text-3xl'>
+				<h2 className='mb-6 text-center font-bold text-xl md:text-3xl px-4'>
 					Trusted by thousands of{" "}
 					<span className='text-orange-500'>job seekers</span> and still
 					growing.
@@ -55,11 +55,11 @@ export default function LogoSlider() {
 						{logos.map((logo, idx) => (
 							<div
 								key={idx}
-								className='flex w-[200px] items-center justify-center'>
+								className='flex w-24 md:w-[200px] items-center justify-center'>
 								<img
 									src={logo.url || "/placeholder.svg"}
 									alt={`${logo.name} logo`}
-									className='h-[45px] w-auto object-contain'
+									className='h-10 md:h-[45px] w-auto object-contain'
 								/>
 							</div>
 						))}

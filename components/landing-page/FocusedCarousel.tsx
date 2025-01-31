@@ -91,6 +91,21 @@ export default function FocusedCarousel() {
 					))}
 				</AnimatePresence>
 			</div>
+
+			{/* Navigation Dots */}
+			<div className='mt-6 flex justify-center gap-2'>
+				{initialItems.map((item) => (
+					<div
+						key={item.id}
+						onClick={() => handleClick(item.id)}
+						className={`h-3 w-3 rounded-full transition-all duration-300 cursor-pointer ${
+							items.find((i) => i.focused)?.id === item.id
+								? "bg-gray-800 w-4"
+								: "bg-gray-400 w-3"
+						}`}
+					/>
+				))}
+			</div>
 		</div>
 	);
 }
