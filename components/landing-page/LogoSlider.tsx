@@ -4,6 +4,10 @@ import { motion } from "framer-motion";
 
 const logos = [
 	{
+		name: "Amazon",
+		url: "./logos/amazon.svg",
+	},
+	{
 		name: "Oracle",
 		url: "./logos/oracle.svg",
 	},
@@ -79,7 +83,7 @@ export default function LogoSlider() {
 								<img width={150} height={150}
 									src={logo.url || "/placeholder.svg"}
 									alt={`${logo.name} logo`}
-									className='h-10 md:h-[45px] w-auto object-contain'
+									className='h-10 md:h-[100px] w-auto object-contain'
 								/>
 							</div>
 						))}
