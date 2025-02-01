@@ -23,6 +23,26 @@ const logos = [
 		name: "Google",
 		url: "./logos/google.svg",
 	},
+	{
+		name: "cognizant",
+		url: "./logos/cognizant.svg",
+	},
+	{
+		name: "zomato",
+		url: "./logos/zomato.svg",
+	},
+	{
+		name: "TCS",
+		url: "./logos/tcs.svg",
+	},
+	{
+		name: "Walmart",
+		url: "./logos/walmart.svg",
+	},
+	{
+		name: "Amazon",
+		url: "./logos/amazon.svg",
+	},
 ];
 
 export default function LogoSlider() {
