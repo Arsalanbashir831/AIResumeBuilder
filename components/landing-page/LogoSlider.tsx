@@ -76,7 +76,7 @@ export default function LogoSlider() {
 							<div
 								key={idx}
 								className='flex w-24 md:w-[200px] items-center justify-center'>
-								<img
+								<img width={150} height={150}
 									src={logo.url || "/placeholder.svg"}
 									alt={`${logo.name} logo`}
 									className='h-10 md:h-[45px] w-auto object-contain'
