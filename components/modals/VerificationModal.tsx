@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { useRouter } from "next/navigation";
 import { BASE_URL } from "@/app/Constant";
+import { useRouter } from "next/navigation";
+import React, { useState } from "react";
 
 interface ModalProps {
   type: "forget password" | "register";
@@ -55,7 +55,7 @@ const VerificationModal: React.FC<ModalProps> = ({ type, initialStep = 1, onClos
     if (result) {
       if (type === "register") {
         alert("Password reset successful");
-        router.push("/auth");
+         router.push("/onboarding");
       
       }
     }
