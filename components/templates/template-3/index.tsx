@@ -1,8 +1,4 @@
-import React from "react";
-import Header from "./sections/Header";
-import Summary from "./sections/Summary";
-import Experience from "./sections/Experience";
-import Skills from "./sections/Skills";
+import { DUMMY_TEMPLATES_DATA } from "@/data/dummy-templates-data";
 import {
 	Achievement,
 	Certificate,
@@ -11,13 +7,16 @@ import {
 	Language,
 	Project,
 } from "@/types/global";
-import { DUMMY_TEMPLATES_DATA } from "@/data/dummy-templates-data";
-import Education from "./sections/Education";
-import Projects from "./sections/Projects";
+import React from "react";
 import Certificates from "./sections/Certificates";
-import ProfileImage from "./sections/ProfileImage";
-import References from "./sections/References";
+import Education from "./sections/Education";
+import Experience from "./sections/Experience";
+import Header from "./sections/Header";
 import Languages from "./sections/Languages";
+import ProfileImage from "./sections/ProfileImage";
+import Projects from "./sections/Projects";
+import Skills from "./sections/Skills";
+import Summary from "./sections/Summary";
 
 interface TemplateProps {
 	templateData?: {
@@ -75,7 +74,7 @@ const ResumeTemplate: React.FC<TemplateProps> = ({
 						<Languages languages={data.sections.languages} />
 
 						{/* References */}
-						<References />
+						{/* <References /> */}
 					</div>
 
 					{/* Main Content */}
