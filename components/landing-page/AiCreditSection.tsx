@@ -79,7 +79,7 @@ export default function AiCreditSection() {
 						</div>
 						<span>
 							Small tasks, like improving a section using AI, may use 100 tokens
-							and not a whole credit. Think of it like: <br />1 rupee = 100
+							and not a whole credit. Think of it like: <br />1 rupee = 1000
 							paise (not in reality, of course).
 						</span>
 					</li>

@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { Button } from "../ui/button";
 import StatsSection from "./StatsSection";
 
@@ -24,8 +23,7 @@ export default function EditorPreviewSection() {
 		},
 		{
 		  title: "One-Click PDF Export",
-		  description:
-			"Download your resume in multiple formats, including PDF and DOCX, ensuring compatibility with job applications and online submissions.",
+		  description:"Download your resume instantly as a high-quality, professionally formatted PDF, ensuring seamless compatibility with job applications and online submissions.",
 		},
 		
 		
@@ -40,16 +38,20 @@ export default function EditorPreviewSection() {
 					Glimpse Of Our Platform
 				</h2>
 
-				<div className='grid md:grid-cols-2 gap-8 items-center'>
+				<div className='grid md:grid-cols-2 gap-8 items-start'>
 					{/* Left: Image */}
 					<div className='relative'>
-						<Image
+						{/* <Image
 							src='/placeholder-dashboard.png'
 							alt='Resume editor interface'
 							width={500}
 							height={300}
 							className='shadow-lg rounded-lg'
-						/>
+						/> */}
+				<video width={700}
+							height={700}
+							className='shadow-lg rounded-lg' src="/use_resume.mp4" autoPlay loop muted playsInline></video>
+
 					</div>
 
 					{/* Right: Text & Features */}
@@ -69,7 +71,7 @@ export default function EditorPreviewSection() {
 						{/* CTA Button */}
 						<Button
 							variant='default'
-							className='mt-12 bg-orange-500 text-white hover:bg-orange-600 rounded-full px-8'>
+							className='mt-5 bg-orange-500 text-white hover:bg-orange-600 rounded-full px-8'>
 							Create Resume For Free
 						</Button>
 

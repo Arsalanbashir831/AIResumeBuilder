@@ -4,6 +4,10 @@ import { motion } from "framer-motion";
 
 const logos = [
 	{
+		name: "Amazon",
+		url: "./logos/amazon.svg",
+	},
+	{
 		name: "Oracle",
 		url: "./logos/oracle.svg",
 	},
@@ -22,6 +26,26 @@ const logos = [
 	{
 		name: "Google",
 		url: "./logos/google.svg",
+	},
+	{
+		name: "cognizant",
+		url: "./logos/cognizant.svg",
+	},
+	{
+		name: "zomato",
+		url: "./logos/zomato.svg",
+	},
+	{
+		name: "TCS",
+		url: "./logos/tcs.svg",
+	},
+	{
+		name: "Walmart",
+		url: "./logos/walmart.svg",
+	},
+	{
+		name: "Amazon",
+		url: "./logos/amazon.svg",
 	},
 ];
 
@@ -56,10 +80,10 @@ export default function LogoSlider() {
 							<div
 								key={idx}
 								className='flex w-24 md:w-[200px] items-center justify-center'>
-								<img
+								<img width={150} height={150}
 									src={logo.url || "/placeholder.svg"}
 									alt={`${logo.name} logo`}
-									className='h-10 md:h-[45px] w-auto object-contain'
+									className='h-10 md:h-[100px] w-auto object-contain'
 								/>
 							</div>
 						))}
